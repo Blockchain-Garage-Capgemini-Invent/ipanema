@@ -1,10 +1,10 @@
 # Ipanema
 
 ## 📑 Table of Contents
-1. [General Info](#general-info)
-2. [Technologies](#technologies)
-3. [First Steps](#first-steps)
-4. [FAQs](#faqs)
+1. [General Info](#ℹ%EF%B8%8F-general-info)
+2. [Technologies](#-technologies)
+3. [First Steps](#-first-steps)
+4. [FAQs](#%EF%B8%8F-faqs)
 
 ## ℹ️ General Info
 Celo x Huobi: Stablecoin in Web3 &amp; Sustainability
@@ -20,18 +20,17 @@ Celo x Huobi: Stablecoin in Web3 &amp; Sustainability
 - [Developer Resources](https://celo.org/developers)
 - [Tutorials](https://docs.celo.org/blog)
 
-### Ipanema Smart Contract
+### Ipanema: Smart Contract
 The Ipanema smart contract is written in Solidity and will initially be deployed on the [Alfajores testnet](https://docs.celo.org/getting-started/alfajores-testnet).
 
-### Mobile-First dApp
+### Ipanema: Mobile-First dApp
 The Ipanema mobile-first decentralized application is written in Typescript using the [React](https://reactjs.org/) and [Next](https://nextjs.org/) framework.
 
 ## 🚶 First Steps
 
-### Smart Contracts
-
-
-
+1. [Set up a Testnet Development Wallet](https://docs.celo.org/developer-resources/testnet-wallet)
+2. [Deploy on Celo](https://docs.celo.org/developer-resources/deploy-dapp)
+3. [Integrate with Celo](https://docs.celo.org/developer-guide/integrations)
 
 
 ## 🗣️ FAQs

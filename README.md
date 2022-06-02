@@ -32,6 +32,22 @@ The Ipanema mobile-first decentralized application is written in Typescript usin
 2. [Deploy on Celo](https://docs.celo.org/developer-resources/deploy-dapp)
 3. [Integrate with Celo](https://docs.celo.org/developer-guide/integrations)
 
+## Ipanema: Demo Flow
+
+### Preparation
+
+1. Bank customer logs into bank and requests loan on chain
+2. Bank checks in backend eligibility, max loan size and rate
+3. Customer selects credit option
+4. Customer enters wallet public key
+5. Bank verifies customers address by sending souldbound token with a PIN
+6. Customer enters the PIN
+
+### Loan Smart Contract
+
+7. Bank opens funded loan offering
+8. Customer accpets loan offering
+9. Customer repays loan + interest in time | Bank liquidates loan after due date has passed
 
 ## 🗣️ FAQs
 

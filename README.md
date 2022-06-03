@@ -23,6 +23,9 @@ Celo x Huobi: Stablecoin in Web3 &amp; Sustainability
 ### Ipanema: Smart Contract
 The Ipanema smart contract is written in Solidity and will initially be deployed on the [Alfajores testnet](https://docs.celo.org/getting-started/alfajores-testnet).
 
+The ```ERC20.sol``` Contract deploys a test token that can be used to issue test loans.
+The ```multiLoanErc20.sol``` contract enables peer to peer loans using any ERC20 token.
+
 ### Ipanema: Mobile-First dApp
 The Ipanema mobile-first decentralized application is written in Typescript using the [React](https://reactjs.org/) and [Next](https://nextjs.org/) framework.
 

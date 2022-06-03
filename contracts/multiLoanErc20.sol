@@ -75,11 +75,11 @@ contract CentralizedLoan{
     {
         require(!loans[_borrower].isCustomer, "You already have been offered a loan.");
         require(
-            IERC20(terms.ercAddress).allowance(msg.sender, address(this)) >= terms.loanAmount, 
+            IERC20(loans[_borrower].ercAddress).allowance(msg.sender, address(this)) >= loans[_borrower].loanAmount, 
             "Insuficient Allowance"
         );
         require(
-            IERC20(terms.ercAddress).transferFrom(msg.sender,address(this), terms.loanAmount), 
+            IERC20(loans[_borrower].ercAddress).transferFrom(msg.sender,address(this), loans[_borrower].loanAmount), 
             "Loan Funding Failed"
         );
         customers.push(_borrower);
@@ -101,7 +101,7 @@ contract CentralizedLoan{
         //require borrower to recieve the funds
         require(
             // transfer the specified token from this contract to msg.sender
-            IERC20(terms.ercAddress).transfer(borrower, terms.loanAmount),
+            IERC20(loans[_borrower].ercAddress).transfer(borrower, loans[_borrower].loanAmount),
             "Lending ERC20 Token to borrower failed."
         );
     }
@@ -114,13 +114,13 @@ contract CentralizedLoan{
         require(loans[msg.sender].isCustomer, "No loan has been offered to you.");
         require(loans[msg.sender].state == LoanState.Taken, "There is no loan open with your address.");
         require(
-            IERC20(terms.ercAddress).allowance(msg.sender, address(this)) >= terms.loanAmount + terms.interestAmount, 
+            IERC20(loans[_borrower].ercAddress).allowance(msg.sender, address(this)) >= loans[_borrower].loanAmount + loans[_borrower].interestAmount, 
             "Insuficient Allowance"
         );
         require(
-            IERC20(terms.ercAddress).transferFrom(msg.sender, 
+            IERC20(loans[_borrower].ercAddress).transferFrom(msg.sender, 
                 address(lender), 
-                terms.loanAmount + terms.interestAmount),
+                loans[_borrower].loanAmount + loans[_borrower].interestAmount),
             "Payment of borrower to lender failed."
         );
         loans[msg.sender].state = LoanState.Repayed;

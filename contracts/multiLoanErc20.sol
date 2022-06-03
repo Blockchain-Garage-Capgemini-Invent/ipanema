@@ -101,7 +101,7 @@ contract CentralizedLoan{
         //require borrower to recieve the funds
         require(
             // transfer the specified token from this contract to msg.sender
-            IERC20(loans[_borrower].ercAddress).transfer(borrower, loans[_borrower].loanAmount),
+            IERC20(loans[msg.sender].ercAddress).transfer(msg.sender, loans[msg.sender].loanAmount),
             "Lending ERC20 Token to borrower failed."
         );
     }
@@ -114,13 +114,13 @@ contract CentralizedLoan{
         require(loans[msg.sender].isCustomer, "No loan has been offered to you.");
         require(loans[msg.sender].state == LoanState.Taken, "There is no loan open with your address.");
         require(
-            IERC20(loans[_borrower].ercAddress).allowance(msg.sender, address(this)) >= loans[_borrower].loanAmount + loans[_borrower].interestAmount, 
+            IERC20(loans[msg.sender].ercAddress).allowance(msg.sender, address(this)) >= loans[msg.sender].loanAmount + loans[msg.sender].interestAmount, 
             "Insuficient Allowance"
         );
         require(
-            IERC20(loans[_borrower].ercAddress).transferFrom(msg.sender, 
+            IERC20(loans[msg.sender].ercAddress).transferFrom(msg.sender, 
                 address(lender), 
-                loans[_borrower].loanAmount + loans[_borrower].interestAmount),
+                loans[msg.sender].loanAmount + loans[msg.sender].interestAmount),
             "Payment of borrower to lender failed."
         );
         loans[msg.sender].state = LoanState.Repayed;
@@ -129,6 +129,6 @@ contract CentralizedLoan{
 
     function liquidate(address _borrower) public onlyInState(LoanState.Taken) {
         require(block.timestamp > loans[_borrower].repayByTimestamp, "Cannot liquidate before the loan is due");
-        loans[msg.sender].state = LoanState.Defaulted;
+        loans[_borrower].state = LoanState.Defaulted;
     }
 }

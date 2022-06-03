@@ -14,11 +14,27 @@ contract BasicLoan{
 
     Terms public terms;
 
-    event Deposit(
+    event LoanOffered(
         uint _value
     );
 
-    event Allowance(
+    event LoanFunded(
+        address _to,
+        uint _value
+    );
+
+    event LoanTaken(
+        address _to,
+        uint _value
+    );
+
+    event LoanRepaid(
+        address _to,
+        uint _value
+    );
+
+    event LoanDefaulted(
+        address _to,
         uint _value
     );
 
@@ -78,15 +94,9 @@ contract BasicLoan{
         );
         require(
             IERC20(terms.ercAddress).transferFrom(msg.sender, 
-                address(this), 
+                address(lender), 
                 terms.loanAmount + terms.interestAmount),
-            "Payment of borrower failed."
-        );
-        //require lender to recieve the funds
-        require(
-            // transfer the specified token from this contract to msg.sender
-            IERC20(terms.ercAddress).transfer(lender, terms.loanAmount + terms.interestAmount),
-            "Repay cUSD to lender failed."
+            "Payment of borrower to lender failed."
         );
     }
 

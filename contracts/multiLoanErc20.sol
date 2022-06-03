@@ -89,6 +89,13 @@ contract CentralizedLoan{
         loans[_borrower].repayByTimestamp = _repayByTimestamp;
         loans[_borrower].ercAddress = _ercAddress;
         loans[_borrower].state = LoanState.Offered;
+        emit LoanOffered(
+            _borrower,
+            _loanAmount,
+            _interestAmount,
+            _repayByTimestamp,
+            _ercAddress
+        );
     }
 
     function takeLoanAndAcceptTerms()
@@ -103,6 +110,13 @@ contract CentralizedLoan{
             // transfer the specified token from this contract to msg.sender
             IERC20(loans[msg.sender].ercAddress).transfer(msg.sender, loans[msg.sender].loanAmount),
             "Lending ERC20 Token to borrower failed."
+        );
+        emit LoanTaken(
+            msg.sender,
+            loans[msg.sender].loanAmount,
+            loans[msg.sender].interestAmount,
+            loans[msg.sender].repayByTimestamp,
+            loans[msg.sender].ercAddress
         );
     }
 
@@ -125,10 +139,24 @@ contract CentralizedLoan{
         );
         loans[msg.sender].state = LoanState.Repayed;
         loans[msg.sender].isCustomer = false;
+        emit LoanRepaid(
+            msg.sender,
+            loans[msg.sender].loanAmount,
+            loans[msg.sender].interestAmount,
+            loans[msg.sender].repayByTimestamp,
+            loans[msg.sender].ercAddress
+        );
     }
 
     function liquidate(address _borrower) public onlyInState(LoanState.Taken) {
         require(block.timestamp > loans[_borrower].repayByTimestamp, "Cannot liquidate before the loan is due");
         loans[_borrower].state = LoanState.Defaulted;
+        emit LoanDefaulted(
+            _borrower,
+            loans[_borrower].loanAmount,
+            loans[_borrower].interestAmount,
+            loans[_borrower].repayByTimestamp,
+            loans[_borrower].ercAddress
+        );
     }
 }

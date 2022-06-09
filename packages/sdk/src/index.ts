@@ -12,7 +12,8 @@
  **********************************************************************************
  */
 
- import from "@ipanema/contracts/"
- 
- export 
+ import { useContractKit } from "@celo-tools/use-contractkit";
+ import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
+
+
 

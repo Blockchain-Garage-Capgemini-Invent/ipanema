@@ -1,0 +1,149 @@
+/* --- --- --- --- Full Loan Box --- --- --- --- --- --- --- */
+.LoanBoxBackground {
+    width: 400px;
+    height: 470px;
+    margin: auto;
+    border-radius: 24px;
+    background: #202231;
+}
+
+.LoanBoxHeader {
+    height: 50px;
+}
+
+.LoanBoxHeaderText {
+    padding-left: 20px;
+    padding-top: 10px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* --- --- --- --- Each Element --- --- --- --- --- --- --- */
+.LoanBoxElement {
+    width: 360px;
+    height: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 8px;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333333;
+    background: black;
+}
+
+.LoanBoxElement:hover {
+    border-color: #465172;
+}
+
+.LoanBoxElementTitle {
+    margin-top: 5px;
+    margin-left: 10px;
+    color: #BBBBBB;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+/* --- --- --- --- Time Range Element --- --- --- --- --- --- --- */
+.LoanBoxElementTime {
+    margin-left: 16px;
+    margin-right: 16px;
+    margin-top: 20px;
+}
+
+.LoanBoxElementTimeInfo {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+}
+
+.LoanBoxElementTimeInputRange {
+    margin-top: 6px;
+    margin-left: 15px;
+    width: 230px;
+    outline: none;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.LoanBoxElementTimeInputRange:hover {
+    opacity: 1;
+}
+
+/* --- --- --- --- Amount Element --- --- --- --- --- --- --- */
+.LoanBoxElementAmountEditText {
+    height: 25px;
+    width: 150px;
+    margin-top: 10px;
+    margin-left: 20px;
+    
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 20px;
+}
+
+.LoanBoxElementAmountChooseButton {
+    width: 50px;
+    height: 20px;
+    margin-left: 10px;
+    background: #323449;
+    border-radius: 12px;
+    border: none;
+    opacity: 0.8;
+}
+
+.LoanBoxElementAmountChooseButton:hover {
+    opacity: 1;
+}
+
+.LoanBoxElementAmountInfoText {
+    margin-left: 20px;
+    margin-top: 5px;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    font-weight: 800;}
+
+/* --- --- --- --- Interest Rate Element --- --- --- --- --- --- --- */
+.LoanBoxElementInfo {
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.LoanBoxElementTextField {
+    margin-top: 25px;
+    margin-left: 40px;
+    color: #BBBBBB;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+/* --- --- --- --- Loan Button --- --- --- --- --- --- --- */
+.LoanBoxButtonElement {
+    width: 360px;
+    height: 50px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 16px;
+    border-radius: 12px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #333333;
+    background: #2E74FF;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.LoanBoxButtonElement:hover {
+    opacity: 1;
+}
+
+

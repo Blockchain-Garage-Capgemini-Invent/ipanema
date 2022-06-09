@@ -1,0 +1,12 @@
+.HeaderTitle {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+}
+
+hr {
+    height: 1px;
+    background-color: grey;
+    border: none;
+    opacity: 0.5;
+}

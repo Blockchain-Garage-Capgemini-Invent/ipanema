@@ -1,5 +1,37 @@
 {
-  "dependencies": {
-    "truffle": "^5.5.17"
+  "name": "@ipanema/monorepo",
+  "version": "1.0.0",
+  "description": "ipanema monorepo",
+  "private": true,
+  "scripts": {
+    "react-app:dev": "yarn workspace @ipanema/app dev",
+    "react-app:build": "yarn workspace @ipanema/app build",
+    "react-app:start": "yarn workspace @ipanema/app start",
+    "react-app:lint": "yarn workspace @ipanema/app lint",
+    "hardhat:test": "yarn workspace @ipanema/hardhat test",
+    "hardhat:deploy": "yarn workspace @ipanema/hardhat deploy",
+    "hardhat:watch": "yarn workspace @ipanema/hardhat watch",
+    "hardhat:accounts": "yarn workspace @ipanema/hardhat accounts",
+    "hardhat:devchain": "yarn workspace @ipanema/hardhat devchain",
+    "hardhat:fork-mainnet": "yarn workspace @ipanema/hardhat fork-mainnet",
+    "hardhat:deploy-reset-watch": "yarn workspace @ipanema/hardhat deploy-reset-watch",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "contract-types": "cd packages/hardhat && yarn && npx hardhat typechain",
+    "build-ui": "yarn contract-types && cd packages/react-app && yarn && yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CG-Europe-ABL/ipanema.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CG-Europe-ABL/ipanema/issues"
+  },
+  "homepage": "https://github.com/CG-Europe-ABL/ipanema#readme",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
   }
 }

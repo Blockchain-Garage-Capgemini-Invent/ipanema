@@ -1,5 +1,5 @@
 {
-  "name": "ipanema-sdk",
+  "name": "@ipanema/sdk",
   "version": "1.0.0",
   "description": "This SDK is used to interact with the smart contract on the blockchain.",
   "author": {
@@ -20,9 +20,13 @@
     "dev": "tsc --watch",
     "start": "node build/src/index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@ipanema/hardhat": "^1.0.0",
+    "@celo-tools/use-contractkit": "^3.0.1",
+    "@celo/contractkit": "^1.5.2",
+    "web3": "1.7.4-rc.1"
+  },
   "devDependencies": {
-    "@types/dotenv": "^8.2.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^14.11.2",
     "@typescript-eslint/eslint-plugin": "^5.18.0",

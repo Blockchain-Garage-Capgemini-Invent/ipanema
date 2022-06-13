@@ -73,6 +73,7 @@ contract CentralizedLoan{
     public
     payable
     {
+        require(msg.sender == lender, "Only the lender can offer a loan");
         require(!loans[_borrower].isCustomer, "You already have been offered a loan.");
         require(
             IERC20(loans[_borrower].ercAddress).allowance(msg.sender, address(this)) >= loans[_borrower].loanAmount, 
@@ -149,6 +150,7 @@ contract CentralizedLoan{
     }
 
     function liquidate(address _borrower) public onlyInState(LoanState.Taken) {
+        require(msg.sender == borrower, "Only the lender can liquidate the loan");
         require(block.timestamp > loans[_borrower].repayByTimestamp, "Cannot liquidate before the loan is due");
         loans[_borrower].state = LoanState.Defaulted;
         emit LoanDefaulted(

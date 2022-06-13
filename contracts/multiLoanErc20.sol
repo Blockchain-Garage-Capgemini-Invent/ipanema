@@ -108,11 +108,12 @@ contract CentralizedLoan{
     }
 
     function recallOffer(address _borrower) 
-    public 
-    onlyInstate(LoanState.Offered)
+    public
     {
         require(msg.sender == lender, "Only the lender can recall an offer");
         require(loans[_borrower].isCustomer, "No loan is currently offered to the borrower specified");
+        //check loan state manually since it seens to ahve to be unique
+        require(loans[_borrower].state == LoanState.Offered, "The loan is not in the offered state");
         require(
             IERC20(loans[_borrower].ercAddress).transfer(address(msg.sender), loans[_borrower].loanAmount), 
             "Loan Recall Failed"
@@ -177,7 +178,7 @@ contract CentralizedLoan{
     }
 
     function liquidate(address _borrower) public onlyInState(LoanState.Taken) {
-        require(msg.sender == borrower, "Only the lender can liquidate the loan");
+        require(msg.sender == _borrower, "Only the lender can liquidate the loan");
         require(block.timestamp > loans[_borrower].repayByTimestamp, "Cannot liquidate before the loan is due");
         loans[_borrower].state = LoanState.Defaulted;
         emit LoanDefaulted(

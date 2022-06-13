@@ -30,6 +30,7 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "skipLibCheck": true,
+    "resolveJsonModule": true,
 
     /* Experimental Options */
     "experimentalDecorators": true,

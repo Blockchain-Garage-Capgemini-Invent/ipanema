@@ -1,0 +1,10 @@
+{
+  "version": "0.2",
+  "ignorePaths": ["package.json", "node_modules/", "dist/"],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [],
+  "ignoreWords": [],
+  "import": [],
+  "enabled": true
+}

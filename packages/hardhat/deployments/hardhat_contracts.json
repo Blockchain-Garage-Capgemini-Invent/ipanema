@@ -1,284 +1,25 @@
 {
-  "1337": {
-    "localhost": {
+  "1337": [
+    {
       "name": "localhost",
       "chainId": "1337",
-      "contracts": {
-        "Greeter": {
-          "address": "0x871DD7C2B4b25E1Aa18728e9D5f2Af4C4e431f5c",
-          "abi": [
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greet",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
-            {
-              "inputs": [],
-              "name": "greet",
-              "outputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greeting",
-                  "type": "string"
-                }
-              ],
-              "name": "setGreeting",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        },
-        "Storage": {
-          "address": "0x0B1ba0af832d7C05fD64161E0Db78E85978E8082",
-          "abi": [
-            {
-              "inputs": [],
-              "name": "retrieve",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "num",
-                  "type": "uint256"
-                }
-              ],
-              "name": "store",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        }
-      }
+      "contracts": {}
     }
-  },
-  "42220": {
-    "celo": {
+  ],
+  "42220": [
+    {
       "name": "celo",
       "chainId": "42220",
-      "contracts": {
-        "Greeter": {
-          "address": "0xD37fec909cf776472C1de7E9e8951065B0F53FC5",
-          "abi": [
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greet",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
-            {
-              "inputs": [],
-              "name": "greet",
-              "outputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greeting",
-                  "type": "string"
-                }
-              ],
-              "name": "setGreeting",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        },
-        "Storage": {
-          "address": "0x971f1E92DdCf8EbaF9f2Ed83bfEe87e3E2816B81",
-          "abi": [
-            {
-              "inputs": [],
-              "name": "retrieve",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "num",
-                  "type": "uint256"
-                }
-              ],
-              "name": "store",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        }
-      }
+      "contracts": {}
     }
-  },
-  "44787": {
-    "alfajores": {
+  ],
+  "44787": [
+    {
       "name": "alfajores",
       "chainId": "44787",
       "contracts": {
-        "Greeter": {
-          "address": "0xc7576A90cE35cb1614EdA509ee766Ea7377b5759",
-          "abi": [
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greet",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "nonpayable",
-              "type": "constructor"
-            },
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": false,
-                  "internalType": "string",
-                  "name": "greeting",
-                  "type": "string"
-                },
-                {
-                  "indexed": false,
-                  "internalType": "address",
-                  "name": "sender",
-                  "type": "address"
-                }
-              ],
-              "name": "newGreeting",
-              "type": "event"
-            },
-            {
-              "inputs": [],
-              "name": "greet",
-              "outputs": [
-                {
-                  "internalType": "string",
-                  "name": "",
-                  "type": "string"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "string",
-                  "name": "_greeting",
-                  "type": "string"
-                }
-              ],
-              "name": "setGreeting",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        },
-        "Storage": {
-          "address": "0x5ba3ec4808A655381452f4b58C929e4200B4DF69",
-          "abi": [
-            {
-              "anonymous": false,
-              "inputs": [
-                {
-                  "indexed": false,
-                  "internalType": "uint256",
-                  "name": "number",
-                  "type": "uint256"
-                },
-                {
-                  "indexed": false,
-                  "internalType": "address",
-                  "name": "sender",
-                  "type": "address"
-                }
-              ],
-              "name": "newNumber",
-              "type": "event"
-            },
-            {
-              "inputs": [],
-              "name": "retrieve",
-              "outputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "",
-                  "type": "uint256"
-                }
-              ],
-              "stateMutability": "view",
-              "type": "function"
-            },
-            {
-              "inputs": [
-                {
-                  "internalType": "uint256",
-                  "name": "num",
-                  "type": "uint256"
-                }
-              ],
-              "name": "store",
-              "outputs": [],
-              "stateMutability": "nonpayable",
-              "type": "function"
-            }
-          ]
-        },
         "CentralizedLoan": {
-          "address": "0x836e59977f925502fC63a946b19A6b2E5c715024",
+          "address": "0x3fC6F1E69f2d3Ce8Ccc9fDCcf0326f458e198BC9",
           "abi": [
             {
               "inputs": [],
@@ -578,5 +319,5 @@
         }
       }
     }
-  }
+  ]
 }

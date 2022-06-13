@@ -15,7 +15,7 @@ function AccountDetails() {
   return (
     <>
       {network && network.name !== "Alfajores" ? (
-        <Typography style={{ color: "#00adb5" }}>
+        <Typography style={{ color: "red" }}>
           {network.name} is not supported, please switch to Alfajores!
         </Typography>
       ) : (

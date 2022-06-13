@@ -14,9 +14,38 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
 interface State {
-  time: Date | null;
+  date: Date | null;
   amount: number;
-  interestRate: number;
+  rate: number;
+}
+
+async function getLoanRate(date: Date | null, amount: number): Promise<number> {
+  try {
+    const response = await fetch("http://localhost:3000/api/loan", {
+      method: "GET",
+      body: JSON.stringify({
+        repay_date: date,
+        amount: amount,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error! status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("result is: ", JSON.stringify(result, null, 4));
+    return result;
+  } catch (err) {
+    // setErr(err.message);
+  } finally {
+    // setIsLoading(false);
+  }
+  return 0;
 }
 
 export default function LoanBox() {
@@ -24,9 +53,9 @@ export default function LoanBox() {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [values, setValues] = React.useState<State>({
-    time: new Date(Date.now()),
+    date: new Date(Date.now()),
     amount: 0,
-    interestRate: 0,
+    rate: 0,
   });
 
   const handleChange =
@@ -34,12 +63,14 @@ export default function LoanBox() {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  const handleChangeTime = (newValue: Date | null) => {
-    setValues({ ...values, time: newValue });
+  const handleChangeDate = (newValue: Date | null) => {
+    setValues({ ...values, date: newValue });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log(values);
+    const rate = await getLoanRate(values.date, values.amount);
+    setValues({ ...values, rate: rate });
   };
 
   return (
@@ -61,16 +92,16 @@ export default function LoanBox() {
                       <DesktopDatePicker
                         label="Repay date"
                         inputFormat="dd/MM/yyyy"
-                        value={values.time}
-                        onChange={handleChangeTime}
+                        value={values.date}
+                        onChange={handleChangeDate}
                         renderInput={(params) => <TextField {...params} />}
                       />
                     ) : (
                       <MobileDatePicker
                         label="Repay date"
                         inputFormat="dd/MM/yyyy"
-                        value={values.time}
-                        onChange={handleChangeTime}
+                        value={values.date}
+                        onChange={handleChangeDate}
                         renderInput={(params) => <TextField {...params} />}
                       />
                     )}
@@ -99,8 +130,8 @@ export default function LoanBox() {
                 <OutlinedInput
                   id="outlined-adornment-interest-rate"
                   type="number"
-                  value={values.interestRate}
-                  onChange={handleChange("interestRate")}
+                  value={values.rate}
+                  onChange={handleChange("rate")}
                   startAdornment={
                     <InputAdornment position="start">%</InputAdornment>
                   }

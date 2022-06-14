@@ -84,11 +84,11 @@ contract CentralizedLoan{
         require(msg.sender == lender, "Only the lender can offer a loan");
         require(!loans[_borrower].isCustomer, "This customer has already been offered a loan");
         require(
-            IERC20(loans[_borrower].ercAddress).allowance(msg.sender, address(this)) >= loans[_borrower].loanAmount, 
+            IERC20(_ercAddress).allowance(address(msg.sender), address(this)) >= _loanAmount, 
             "Insuficient Allowance"
         );
         require(
-            IERC20(loans[_borrower].ercAddress).transferFrom(msg.sender,address(this), loans[_borrower].loanAmount), 
+            IERC20(_ercAddress).transferFrom(address(msg.sender), address(this), _loanAmount), 
             "Loan Funding Failed"
         );
         customers.push(_borrower);
@@ -126,6 +126,37 @@ contract CentralizedLoan{
             loans[_borrower].interestAmount,
             loans[_borrower].repayByTimestamp,
             loans[_borrower].ercAddress
+        );
+    }
+
+    function getLoan(address _borrower) public view returns (
+        uint256 _loanAmount, 
+        uint256 _interestAmount, 
+        uint256 _repayByTimestamp, 
+        address _ercAddress
+    ) {
+        require(msg.sender == lender, "Only the lender can call this function");
+        require(loans[_borrower].isCustomer, "No loan is currently offered to the borrower specified");
+        return (
+            loans[_borrower].loanAmount,
+            loans[_borrower].interestAmount,
+            loans[_borrower].repayByTimestamp,
+            loans[_borrower].ercAddress
+        );
+    }
+
+    function getMyLoan() public view returns (
+        uint256 _loanAmount, 
+        uint256 _interestAmount, 
+        uint256 _repayByTimestamp, 
+        address _ercAddress
+    ) {
+        require(loans[msg.sender].isCustomer, "No loan is currently offered to you");
+        return (
+            loans[msg.sender].loanAmount,
+            loans[msg.sender].interestAmount,
+            loans[msg.sender].repayByTimestamp,
+            loans[msg.sender].ercAddress
         );
     }
 

@@ -13,8 +13,8 @@
  */
 
 import { ContractKit, newKit } from "@celo/contractkit";
-import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
+import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 
 export class Contract {
   private kit: ContractKit;

@@ -1,9 +1,9 @@
 import { CustomThemeProvider } from "./contexts/userTheme";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import {CeloProvider, useCelo} from "@celo/react-celo";
+import { CeloProvider } from "@celo/react-celo";
 import "@celo/react-celo/lib/styles.css";
-import Header, {truncateAddress} from "./components/Header";
-import LoanBox from "./components/LoanBox";
+import Header from "./components/Header";
+// import LoanBox from "./components/LoanBox";
 import MaintenanceBox from "./components/MaintenanceBox";
 import Footer from "./components/Footer";
 
@@ -31,8 +31,8 @@ export default function App() {
         <Router>
           <Header />
           <Routes>
-              {/*<Route path="/" element={<LoanBox />} />*/}
-              <Route path="/" element={<MaintenanceBox />} />
+            {/*<Route path="/" element={<LoanBox />} />*/}
+            <Route path="/" element={<MaintenanceBox />} />
           </Routes>
           <Footer />
         </Router>

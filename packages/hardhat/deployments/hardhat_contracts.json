@@ -19,7 +19,7 @@
       "chainId": "44787",
       "contracts": {
         "CentralizedLoan": {
-          "address": "0xC11a5cfD8228AC57FC2b1766b8E4605D13B8D67C",
+          "address": "0xd51De2080C0d61D5aC9015C14BAd21aD14EdA69a",
           "abi": [
             {
               "inputs": [],
@@ -224,6 +224,68 @@
                 {
                   "internalType": "address",
                   "name": "",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_borrower",
+                  "type": "address"
+                }
+              ],
+              "name": "getLoan",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_loanAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_interestAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_repayByTimestamp",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_ercAddress",
+                  "type": "address"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getMyLoan",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_loanAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_interestAmount",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_repayByTimestamp",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "_ercAddress",
                   "type": "address"
                 }
               ],

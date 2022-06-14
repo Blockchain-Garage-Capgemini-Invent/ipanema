@@ -1,3 +1,17 @@
+/*   ____                                 _       _   ___                      _
+ *  / ___|__ _ _ __   __ _  ___ _ __ ___ (_)_ __ (_) |_ _|_ ____   _____ _ __ | |_
+ * | |   / _` | '_ \ / _` |/ _ \ '_ ` _ \| | '_ \| |  | || '_ \ \ / / _ \ '_ \| __|
+ * | |__| (_| | |_) | (_| |  __/ | | | | | | | | | |  | || | | \ V /  __/ | | | |_
+ *  \____\__,_| .__/ \__, |\___|_| |_| |_|_|_| |_|_| |___|_| |_|\_/ \___|_| |_|\__|
+ *            |_|    |___/
+ **********************************************************************************
+ *      MaintenanceBox.tsx
+ *      Created on: 13.06.22
+ *      Author:     Volker Dufner
+ *      Copyright (c) 2022 Capgemini Invent. All rights reserved.
+ **********************************************************************************
+ */
+
 import * as React from "react";
 import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
@@ -19,13 +33,16 @@ interface State {
   rate: number;
 }
 
-async function getLoanRate(date: Date | null, amount: number): Promise<number> {
+async function postLoan(state: State): Promise<boolean> {
   try {
-    const response = await fetch("http://localhost:3000/api/loan", {
-      method: "GET",
+    const response = await fetch("http://localhost:3000/api/v1/loan", {
+      method: "POST",
       body: JSON.stringify({
-        repay_date: date,
-        amount: amount,
+        loanAmount: state.amount,
+        interestAmount: state.rate,
+        // repayByTimestamp: state.date?.getTime() / 1000, // TODO: Fix undefined
+        borrower: "0x0000000000000000000000000000000000000000",
+        ercAddress: "0x0000000000000000000000000000000000000000",
       }),
       headers: {
         "Content-Type": "application/json",
@@ -35,18 +52,29 @@ async function getLoanRate(date: Date | null, amount: number): Promise<number> {
 
     if (!response.ok) {
       throw new Error(`Error! status: ${response.status}`);
+      return false;
     }
 
-    const result = await response.json();
-    console.log("result is: ", JSON.stringify(result, null, 4));
-    return result;
+    // OPTIONAL: handle response here, e.g. show transaction id or whatever
+    return true;
   } catch (err) {
     // setErr(err.message);
   } finally {
     // setIsLoading(false);
   }
-  return 0;
+  return false;
 }
+
+// async function takeLoanAndAcceptTerms(): Promise<boolean> {
+//   try {
+//     // TODO: implement
+//   } catch (err) {
+//     // setErr(err.message);
+//   } finally {
+//     // setIsLoading(false);
+//   }
+//   return false;
+// }
 
 export default function LoanBox() {
   const theme = useTheme();
@@ -55,7 +83,7 @@ export default function LoanBox() {
   const [values, setValues] = React.useState<State>({
     date: new Date(Date.now()),
     amount: 0,
-    rate: 0,
+    rate: 5,
   });
 
   const handleChange =
@@ -69,8 +97,7 @@ export default function LoanBox() {
 
   const handleSubmit = async () => {
     console.log(values);
-    const rate = await getLoanRate(values.date, values.amount);
-    setValues({ ...values, rate: rate });
+    await postLoan(values);
   };
 
   return (
@@ -130,8 +157,8 @@ export default function LoanBox() {
                 <OutlinedInput
                   id="outlined-adornment-interest-rate"
                   type="number"
-                  value={values.rate}
-                  onChange={handleChange("rate")}
+                  value={5}
+                  disabled={true}
                   startAdornment={
                     <InputAdornment position="start">%</InputAdornment>
                   }

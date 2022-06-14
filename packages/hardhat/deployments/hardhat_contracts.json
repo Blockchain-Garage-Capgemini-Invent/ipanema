@@ -19,7 +19,7 @@
       "chainId": "44787",
       "contracts": {
         "CentralizedLoan": {
-          "address": "0x3fC6F1E69f2d3Ce8Ccc9fDCcf0326f458e198BC9",
+          "address": "0xC11a5cfD8228AC57FC2b1766b8E4605D13B8D67C",
           "abi": [
             {
               "inputs": [],
@@ -98,6 +98,43 @@
                 }
               ],
               "name": "LoanOffered",
+              "type": "event"
+            },
+            {
+              "anonymous": false,
+              "inputs": [
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "_borrower",
+                  "type": "address"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "_loanAmount",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "_interestAmount",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "uint256",
+                  "name": "_repayByTimestamp",
+                  "type": "uint256"
+                },
+                {
+                  "indexed": false,
+                  "internalType": "address",
+                  "name": "_ercAddress",
+                  "type": "address"
+                }
+              ],
+              "name": "LoanRecalled",
               "type": "event"
             },
             {
@@ -299,6 +336,19 @@
               "name": "offerLoan",
               "outputs": [],
               "stateMutability": "payable",
+              "type": "function"
+            },
+            {
+              "inputs": [
+                {
+                  "internalType": "address",
+                  "name": "_borrower",
+                  "type": "address"
+                }
+              ],
+              "name": "recallOffer",
+              "outputs": [],
+              "stateMutability": "nonpayable",
               "type": "function"
             },
             {

@@ -18,13 +18,8 @@ pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract CentralizedLoan {
-    enum LoanState {
-        Offered,
-        Taken,
-        Repayed,
-        Defaulted
-    }
+contract CentralizedLoan{
+    enum LoanState {Offered, Recalled, Taken, Repayed, Defaulted}
 
     struct Loans {
         bool isCustomer;
@@ -40,6 +35,14 @@ contract CentralizedLoan {
     address[] public customers;
 
     event LoanOffered(
+        address _borrower,
+        uint256 _loanAmount,
+        uint256 _interestAmount,
+        uint256 _repayByTimestamp,
+        address _ercAddress
+    );
+
+    event LoanRecalled(
         address _borrower,
         uint256 _loanAmount,
         uint256 _interestAmount,
@@ -72,10 +75,7 @@ contract CentralizedLoan {
     );
 
     modifier onlyInState(LoanState expectedState) {
-        require(
-            loans[msg.sender].state == expectedState,
-            "Not allowed in this state"
-        );
+        require(loans[msg.sender].state == expectedState, "Not allowed in this state");
         _;
     }
 
@@ -84,38 +84,25 @@ contract CentralizedLoan {
     }
 
     address payable public lender;
-
+    
     function offerLoan(
-        uint256 _loanAmount,
-        uint256 _interestAmount,
-        uint256 _repayByTimestamp,
-        address _borrower,
+        uint256 _loanAmount, 
+        uint256 _interestAmount, 
+        uint256 _repayByTimestamp, 
+        address _borrower, 
         address _ercAddress
-    ) public payable {
-
-        console.log(
-            "New loan offering\nLender address: %s\nBorrower address: %s\nLoan amount: %d",
-            msg.sender,
-            _borrower,
-            _loanAmount
-        );
+    ) 
+    public
+    payable
+    {
+        require(msg.sender == lender, "Only the lender can offer a loan");
+        require(!loans[_borrower].isCustomer, "This customer has already been offered a loan");
         require(
-            !loans[_borrower].isCustomer,
-            "You already have been offered a loan."
-        );
-        require(
-            IERC20(loans[_borrower].ercAddress).allowance(
-                msg.sender,
-                address(this)
-            ) >= loans[_borrower].loanAmount,
+            IERC20(loans[_borrower].ercAddress).allowance(msg.sender, address(this)) >= loans[_borrower].loanAmount, 
             "Insuficient Allowance"
         );
         require(
-            IERC20(loans[_borrower].ercAddress).transferFrom(
-                msg.sender,
-                address(this),
-                loans[_borrower].loanAmount
-            ),
+            IERC20(loans[_borrower].ercAddress).transferFrom(msg.sender,address(this), loans[_borrower].loanAmount), 
             "Loan Funding Failed"
         );
         customers.push(_borrower);
@@ -134,27 +121,38 @@ contract CentralizedLoan {
         );
     }
 
-    function takeLoanAndAcceptTerms() public onlyInState(LoanState.Offered) {
-        console.log(
-            "The borrower wants to take out the loan and accepts the terms\nBorrower address: %s",
-            msg.sender
-        );
+    function recallOffer(address _borrower) 
+    public
+    {
+        require(msg.sender == lender, "Only the lender can recall an offer");
+        require(loans[_borrower].isCustomer, "No loan is currently offered to the borrower specified");
+        //check loan state manually since it seens to ahve to be unique
+        require(loans[_borrower].state == LoanState.Offered, "The loan is not in the offered state");
         require(
-            loans[msg.sender].isCustomer,
-            "No loan has been offered to you."
+            IERC20(loans[_borrower].ercAddress).transfer(address(msg.sender), loans[_borrower].loanAmount), 
+            "Loan Recall Failed"
         );
-        require(
-            loans[msg.sender].state == LoanState.Offered,
-            "You have already taken your loan."
+        loans[_borrower].state = LoanState.Recalled;
+        loans[_borrower].isCustomer = false;
+        emit LoanRecalled(
+            _borrower,
+            loans[_borrower].loanAmount,
+            loans[_borrower].interestAmount,
+            loans[_borrower].repayByTimestamp,
+            loans[_borrower].ercAddress
         );
+    }
+
+    function takeLoanAndAcceptTerms()
+    public
+    onlyInState(LoanState.Offered)
+    {
+        require(loans[msg.sender].isCustomer, "No loan has been offered to you.");
         loans[msg.sender].state = LoanState.Taken;
         //require borrower to recieve the funds
         require(
             // transfer the specified token from this contract to msg.sender
-            IERC20(loans[msg.sender].ercAddress).transfer(
-                msg.sender,
-                loans[msg.sender].loanAmount
-            ),
+            IERC20(loans[msg.sender].ercAddress).transfer(msg.sender, loans[msg.sender].loanAmount),
             "Lending ERC20 Token to borrower failed."
         );
         emit LoanTaken(
@@ -166,33 +164,20 @@ contract CentralizedLoan {
         );
     }
 
-    function repay() public payable onlyInState(LoanState.Taken) {
-        console.log(
-            "The borrower wants to repay the loan\nBorrower address: %s",
-            msg.sender
-        );
+    function repay() 
+    public
+    payable
+    onlyInState(LoanState.Taken)
+    {
+        require(loans[msg.sender].isCustomer, "No loan has been offered to you.");
         require(
-            loans[msg.sender].isCustomer,
-            "No loan has been offered to you."
-        );
-        require(
-            loans[msg.sender].state == LoanState.Taken,
-            "There is no loan open with your address."
-        );
-        require(
-            IERC20(loans[msg.sender].ercAddress).allowance(
-                msg.sender,
-                address(this)
-            ) >=
-                loans[msg.sender].loanAmount + loans[msg.sender].interestAmount,
+            IERC20(loans[msg.sender].ercAddress).allowance(msg.sender, address(this)) >= loans[msg.sender].loanAmount + loans[msg.sender].interestAmount, 
             "Insuficient Allowance"
         );
         require(
-            IERC20(loans[msg.sender].ercAddress).transferFrom(
-                msg.sender,
-                address(lender),
-                loans[msg.sender].loanAmount + loans[msg.sender].interestAmount
-            ),
+            IERC20(loans[msg.sender].ercAddress).transferFrom(msg.sender, 
+                address(lender), 
+                loans[msg.sender].loanAmount + loans[msg.sender].interestAmount),
             "Payment of borrower to lender failed."
         );
         loans[msg.sender].state = LoanState.Repayed;
@@ -207,10 +192,8 @@ contract CentralizedLoan {
     }
 
     function liquidate(address _borrower) public onlyInState(LoanState.Taken) {
-        require(
-            block.timestamp > loans[_borrower].repayByTimestamp,
-            "Cannot liquidate before the loan is due"
-        );
+        require(msg.sender == _borrower, "Only the lender can liquidate the loan");
+        require(block.timestamp > loans[_borrower].repayByTimestamp, "Cannot liquidate before the loan is due");
         loans[_borrower].state = LoanState.Defaulted;
         emit LoanDefaulted(
             _borrower,

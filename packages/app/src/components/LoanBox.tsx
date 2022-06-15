@@ -119,7 +119,7 @@ export default function LoanBox() {
                         inputFormat="dd/MM/yyyy"
                         value={values.date}
                         onChange={handleChangeDate}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={params => <TextField {...params} />}
                       />
                     ) : (
                       <MobileDatePicker
@@ -127,7 +127,7 @@ export default function LoanBox() {
                         inputFormat="dd/MM/yyyy"
                         value={values.date}
                         onChange={handleChangeDate}
-                        renderInput={(params) => <TextField {...params} />}
+                        renderInput={params => <TextField {...params} />}
                       />
                     )}
                   </Stack>

@@ -29,7 +29,7 @@ function AccountDetails() {
         <Button
           color="inherit"
           variant="outlined"
-          onClick={() => connect().catch((e) => console.log(e))}
+          onClick={() => connect().catch(e => console.log(e))}
         >
           Connect wallet
         </Button>
@@ -52,7 +52,7 @@ export default function Header() {
             <AccountDetails />
             <ThemeSwitcher
               sx={{ m: 1 }}
-              onChange={(e) => setTheme(e.target.checked)}
+              onChange={e => setTheme(e.target.checked)}
               checked={themeContext}
             />
           </Toolbar>

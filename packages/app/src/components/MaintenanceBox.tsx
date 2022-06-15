@@ -50,7 +50,7 @@ export default function MaintenanceBox() {
 
   const handleSubmit = async () => {
     try {
-      await performActions(async (kit) => {
+      await performActions(async kit => {
         // TODO: Make approval for the loan contract to spend the token
         // Damn, why is the kit.contracts.getErc20() missing?
         console.log("Approving loan contract to spend token");

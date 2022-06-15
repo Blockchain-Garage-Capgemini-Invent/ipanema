@@ -13,6 +13,7 @@
  */
 
 import * as React from "react";
+import { useNavigate } from "react-router-dom"
 import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -26,6 +27,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import {useCelo} from "@celo/react-celo";
 
 interface State {
   date: Date | null;
@@ -79,6 +81,13 @@ async function postLoan(state: State): Promise<boolean> {
 export default function LoanBox() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const navigate = useNavigate();
+  const { address, network } = useCelo();
+
+  const connected = address && network && network.name === "Alfajores";
+  if (!connected) {
+    navigate("/");
+  }
 
   const [values, setValues] = React.useState<State>({
     date: new Date(Date.now()),

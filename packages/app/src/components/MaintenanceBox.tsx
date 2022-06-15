@@ -12,6 +12,8 @@
  **********************************************************************************
  */
 
+import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
@@ -23,6 +25,17 @@ import { useSnackbar } from "notistack";
 export default function MaintenanceBox() {
   const { kit, address, network, performActions } = useCelo();
   const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
+
+  const connected = address && network && network.name === "Alfajores";
+  if (!connected) {
+    navigate("/");
+  }
+
+  const activeLoan = false;
+  if (!activeLoan) {
+    navigate("/getloan");
+  }
 
   interface ContractJSON {
     [key: string]: any;

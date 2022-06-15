@@ -14,6 +14,7 @@
 
 import { Contract } from "./contract";
 import express from "express";
+import cors from "cors";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -26,6 +27,7 @@ const main = async () => {
   const app = express();
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+  app.use(cors());
 
   const contract = new Contract();
   await contract.init();

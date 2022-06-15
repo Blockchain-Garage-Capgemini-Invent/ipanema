@@ -22,6 +22,14 @@ import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.js
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
 
+enum LoanState {
+  Offered,
+  Recalled,
+  Taken,
+  Repayed,
+  Defaulted,
+}
+
 export default function MaintenanceBox() {
   const { kit, address, network, performActions } = useCelo();
   const { enqueueSnackbar } = useSnackbar();
@@ -60,6 +68,9 @@ export default function MaintenanceBox() {
       console.log("Getting loan information from address:", address);
       const loanData = await loanContract.methods.getMyLoan().call();
       console.log(loanData);
+      if (Number(loanData._state) !== LoanState.Taken) {
+        navigate("/getloan");
+      }
       const loanAmount = kit.connection.web3.utils.fromWei(loanData._loanAmount, "ether");
       const interestAmount = kit.connection.web3.utils.fromWei(loanData._interestAmount, "ether");
       setRepaymentAmount(Number(loanAmount) + Number(interestAmount));

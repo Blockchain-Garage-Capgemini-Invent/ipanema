@@ -12,8 +12,8 @@
  **********************************************************************************
  */
 
-import { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
@@ -32,11 +32,6 @@ export default function MaintenanceBox() {
     navigate("/");
   }
 
-  const activeLoan = false;
-  if (!activeLoan) {
-    navigate("/getloan");
-  }
-
   interface ContractJSON {
     [key: string]: any;
   }
@@ -49,26 +44,30 @@ export default function MaintenanceBox() {
     contractAddress,
   ) as any as CentralizedLoan;
 
+  const [repaymentAmount, setRepaymentAmount] = useState(0);
+  const [ercAddress, setErcAddress] = useState("");
 
-
-  // TODO: Read from contract
-  const [loan, setLoan] = useState({});
   useEffect(() => {
     // You need to restrict it at some point
     // This is just dummy code and should be replaced by actual
-    if (!loan) {
-      getLoan();
+    if (!repaymentAmount || !ercAddress) {
+      getLoanInformation();
     }
   }, []);
 
-  const getLoan = async () => {
-      try{
-        const loanData = await loanContract.methods.getMyLoan().call();
-        console.log(loanData);
-        //setLoan(loanData);
-      }catch (err) {
-        console.log(err);
-      }
+  const getLoanInformation = async () => {
+    try {
+      console.log("Getting loan information from address:", address);
+      const loanData = await loanContract.methods.getMyLoan().call();
+      console.log(loanData);
+      const loanAmount = kit.connection.web3.utils.fromWei(loanData._loanAmount, "ether");
+      const interestAmount = kit.connection.web3.utils.fromWei(loanData._interestAmount, "ether");
+      setRepaymentAmount(Number(loanAmount) + Number(interestAmount));
+      setErcAddress(loanData._ercAddress);
+    } catch (err) {
+      console.log(err);
+      navigate("/getloan");
+    }
   };
 
   // const repaymentAmount = 0;

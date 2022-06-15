@@ -13,7 +13,7 @@
  */
 
 import * as React from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -27,7 +27,10 @@ import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-import {useCelo} from "@celo/react-celo";
+import { useCelo } from "@celo/react-celo";
+import { StableToken } from "@celo/contractkit/lib/celo-tokens";
+// import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
+// import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 
 interface State {
   date: Date | null;
@@ -35,20 +38,19 @@ interface State {
   rate: number;
 }
 
-async function postLoan(state: State): Promise<boolean> {
+async function postLoan(state: State, borrower: string, ercAddress: string): Promise<boolean> {
   try {
     const response = await fetch("http://localhost:3000/api/v1/loan", {
       method: "POST",
       body: JSON.stringify({
         loanAmount: state.amount,
         interestAmount: state.rate,
-        // repayByTimestamp: state.date?.getTime() / 1000, // TODO: Fix undefined
-        borrower: "0x0000000000000000000000000000000000000000",
-        ercAddress: "0x0000000000000000000000000000000000000000",
+        repayByTimestamp: state.date ? state.date.getTime() / 1000 : 0,
+        borrower: borrower,
+        ercAddress: ercAddress,
       }),
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
       },
     });
 
@@ -81,13 +83,25 @@ async function postLoan(state: State): Promise<boolean> {
 export default function LoanBox() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { kit, address, network } = useCelo();
   const navigate = useNavigate();
-  const { address, network } = useCelo();
 
   const connected = address && network && network.name === "Alfajores";
   if (!connected) {
     navigate("/");
   }
+
+  // interface ContractJSON {
+  //   [key: string]: any;
+  // }
+  // const contractAbi = (deployedContracts as ContractJSON)[network.chainId.toString()][0].contracts
+  //     .CentralizedLoan.abi;
+  // const contractAddress = (deployedContracts as ContractJSON)[network.chainId.toString()][0]
+  //     .contracts.CentralizedLoan.address;
+  // const loanContract = new kit.connection.web3.eth.Contract(
+  //     contractAbi,
+  //     contractAddress,
+  // ) as any as CentralizedLoan;
 
   const [values, setValues] = React.useState<State>({
     date: new Date(Date.now()),
@@ -105,7 +119,8 @@ export default function LoanBox() {
 
   const handleSubmit = async () => {
     console.log(values);
-    await postLoan(values);
+    const token = await kit.contracts.getStableToken(StableToken.cUSD);
+    await postLoan(values, address!, token.address);
   };
 
   return (

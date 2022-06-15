@@ -1,15 +1,24 @@
+// import { useNavigate } from "react-router-dom"
 import {Button, Card, CardContent, Grid, Typography} from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
 
 export default function ConnectWallet() {
 
-    const { address, network, connect, destroy } = useCelo();
+    const { connect } = useCelo();
 
     const handleSubmit = async () => {
         try {
             // TODO: what happens when connected
-            connect().catch((e) => console.log(e));
+            const connector = await connect();
+            if (!connector.initialised) {
+                // TODO: Warning
+            }
+            else
+            {
+                // const navigate = useNavigate();
+                // navigate(`/maintenance`);
+            }
         } catch (err) {
             console.log(err);
         }

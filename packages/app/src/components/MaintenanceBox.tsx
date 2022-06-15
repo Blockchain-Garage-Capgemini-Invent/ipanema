@@ -18,9 +18,12 @@ import { useCelo } from "@celo/react-celo";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
+import {useSnackbar} from "notistack";
 
 export default function MaintenanceBox() {
   const { kit, address, network, performActions } = useCelo();
+  const { enqueueSnackbar } = useSnackbar();
+
   interface ContractJSON {
     [key: string]: any;
   }
@@ -37,6 +40,15 @@ export default function MaintenanceBox() {
 
   // TODO: Read from contract
   var repaymentAmount: number = 0;
+
+  // const loadRepaymentAmount = async () => {
+  //   try{
+  //     const loanData = await loanContract.methods.getMyLoan();
+  //     repaymentAmount = loanData["loanAmount"] + loanData["interestAmount"];
+  //   }catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   const handleSubmit = async () => {
     try {
@@ -74,6 +86,7 @@ export default function MaintenanceBox() {
         console.log("Repayment:\n", repayTx);
 
         // TODO: Show notification
+        enqueueSnackbar('Loan successfully repaid');
       });
     } catch (err) {
       console.log(err);

@@ -10,9 +10,6 @@ import MaintenanceBox from "./components/MaintenanceBox";
 // import Footer from "./components/Footer";
 
 export default function App() {
-  // const { network } = useCelo();
-  // const connected = network && network.name === "Alfajores";
-
   return (
     <CustomThemeProvider>
       <SnackbarProvider>

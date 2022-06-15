@@ -171,7 +171,8 @@ contract CentralizedLoan {
       uint256 _loanAmount,
       uint256 _interestAmount,
       uint256 _repayByTimestamp,
-      address _ercAddress
+      address _ercAddress,
+      LoanState _state
     )
   {
     require(msg.sender == lender, "Only the lender can call this function");
@@ -183,7 +184,8 @@ contract CentralizedLoan {
       loans[_borrower].loanAmount,
       loans[_borrower].interestAmount,
       loans[_borrower].repayByTimestamp,
-      loans[_borrower].ercAddress
+      loans[_borrower].ercAddress,
+      loans[_borrower].state
     );
   }
 
@@ -194,7 +196,8 @@ contract CentralizedLoan {
       uint256 _loanAmount,
       uint256 _interestAmount,
       uint256 _repayByTimestamp,
-      address _ercAddress
+      address _ercAddress,
+      LoanState _state
     )
   {
     require(
@@ -205,7 +208,8 @@ contract CentralizedLoan {
       loans[msg.sender].loanAmount,
       loans[msg.sender].interestAmount,
       loans[msg.sender].repayByTimestamp,
-      loans[msg.sender].ercAddress
+      loans[msg.sender].ercAddress,
+      loans[msg.sender].state
     );
   }
 

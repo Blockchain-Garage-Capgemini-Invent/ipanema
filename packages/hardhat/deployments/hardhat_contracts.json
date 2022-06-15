@@ -19,7 +19,7 @@
       "chainId": "44787",
       "contracts": {
         "CentralizedLoan": {
-          "address": "0xd51De2080C0d61D5aC9015C14BAd21aD14EdA69a",
+          "address": "0x42364B29A61894B70D40356a00C23bf8Ec4E9d4f",
           "abi": [
             {
               "inputs": [],
@@ -259,6 +259,11 @@
                   "internalType": "address",
                   "name": "_ercAddress",
                   "type": "address"
+                },
+                {
+                  "internalType": "enum CentralizedLoan.LoanState",
+                  "name": "_state",
+                  "type": "uint8"
                 }
               ],
               "stateMutability": "view",
@@ -287,6 +292,11 @@
                   "internalType": "address",
                   "name": "_ercAddress",
                   "type": "address"
+                },
+                {
+                  "internalType": "enum CentralizedLoan.LoanState",
+                  "name": "_state",
+                  "type": "uint8"
                 }
               ],
               "stateMutability": "view",

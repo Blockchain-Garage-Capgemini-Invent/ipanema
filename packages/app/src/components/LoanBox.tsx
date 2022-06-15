@@ -86,10 +86,9 @@ export default function LoanBox() {
     rate: 5,
   });
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
+  const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
 
   const handleChangeDate = (newValue: Date | null) => {
     setValues({ ...values, date: newValue });
@@ -106,9 +105,8 @@ export default function LoanBox() {
         <Grid item sm={6} xs={12} sx={{ m: 2 }}>
           <Typography variant="h3">Get a loan from your bank</Typography>
           <Typography variant="body1">
-            Welcome to the Ipanema DeFi borrowing platform. Here you can get
-            DeFi loans from your bank in just a few minutes! These loans are
-            currently on Celo network.
+            Welcome to the Ipanema DeFi borrowing platform. Here you can get DeFi loans from your
+            bank in just a few minutes! These loans are currently on Celo network.
           </Typography>
           <Card sx={{ mt: 5 }}>
             <CardContent>
@@ -136,42 +134,29 @@ export default function LoanBox() {
                 </LocalizationProvider>
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
-                <InputLabel htmlFor="outlined-adornment-amount">
-                  Amount
-                </InputLabel>
+                <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-amount"
                   type="number"
                   value={values.amount}
                   onChange={handleChange("amount")}
-                  startAdornment={
-                    <InputAdornment position="start">cUSD</InputAdornment>
-                  }
+                  startAdornment={<InputAdornment position="start">cUSD</InputAdornment>}
                   label="Amount"
                 />
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
-                <InputLabel htmlFor="outlined-adornment-interest-rate">
-                  Interest Rate
-                </InputLabel>
+                <InputLabel htmlFor="outlined-adornment-interest-rate">Interest Rate</InputLabel>
                 <OutlinedInput
                   id="outlined-adornment-interest-rate"
                   type="number"
                   value={5}
                   disabled={true}
-                  startAdornment={
-                    <InputAdornment position="start">%</InputAdornment>
-                  }
+                  startAdornment={<InputAdornment position="start">%</InputAdornment>}
                   label="Interest Rate"
                 />
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
-                <Button
-                  variant="contained"
-                  type="submit"
-                  color="primary"
-                  onClick={handleSubmit}
-                >
+                <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
                   Get Loan!
                 </Button>
               </FormControl>

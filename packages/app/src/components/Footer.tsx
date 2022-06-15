@@ -7,11 +7,7 @@ export default function Footer() {
   return (
     <footer style={{ justifyContent: "center" }}>
       <Link href={capgeminiInventLink} target="_blank">
-        <img
-          src={capgeminiInventLogo}
-          alt="Capgemini Invent Logo"
-          width="200"
-        />
+        <img src={capgeminiInventLogo} alt="Capgemini Invent Logo" width="200" />
       </Link>
     </footer>
   );

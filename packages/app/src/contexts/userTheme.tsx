@@ -1,10 +1,4 @@
-import {
-  createTheme,
-  CssBaseline,
-  ThemeProvider,
-  useMediaQuery,
-  PaletteMode,
-} from "@mui/material";
+import { createTheme, CssBaseline, ThemeProvider, useMediaQuery, PaletteMode } from "@mui/material";
 import React, { PropsWithChildren, useContext } from "react";
 
 const getDesignTokens = (mode: PaletteMode) => ({
@@ -43,10 +37,7 @@ export const CustomThemeProvider = (props: PropsWithChildren<unknown>) => {
     else setTheme(checked);
   };
   const { children } = props;
-  const mTheme = React.useMemo(
-    () => createTheme(getDesignTokens(themeString(theme))),
-    [theme]
-  );
+  const mTheme = React.useMemo(() => createTheme(getDesignTokens(themeString(theme))), [theme]);
   return (
     <CustomThemeContext.Provider
       value={{

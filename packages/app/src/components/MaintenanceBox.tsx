@@ -18,7 +18,7 @@ import { useCelo } from "@celo/react-celo";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
-import {useSnackbar} from "notistack";
+import { useSnackbar } from "notistack";
 
 export default function MaintenanceBox() {
   const { kit, address, network, performActions } = useCelo();
@@ -27,19 +27,17 @@ export default function MaintenanceBox() {
   interface ContractJSON {
     [key: string]: any;
   }
-  const contractAbi = (deployedContracts as ContractJSON)[
-    network.chainId.toString()
-  ][0].contracts.CentralizedLoan.abi;
-  const contractAddress = (deployedContracts as ContractJSON)[
-    network.chainId.toString()
-  ][0].contracts.CentralizedLoan.address;
+  const contractAbi = (deployedContracts as ContractJSON)[network.chainId.toString()][0].contracts
+    .CentralizedLoan.abi;
+  const contractAddress = (deployedContracts as ContractJSON)[network.chainId.toString()][0]
+    .contracts.CentralizedLoan.address;
   const loanContract = new kit.connection.web3.eth.Contract(
     contractAbi,
-    contractAddress
+    contractAddress,
   ) as any as CentralizedLoan;
 
   // TODO: Read from contract
-  var repaymentAmount: number = 0;
+  const repaymentAmount = 0;
 
   // const loadRepaymentAmount = async () => {
   //   try{
@@ -58,7 +56,7 @@ export default function MaintenanceBox() {
         console.log("Approving loan contract to spend token");
         const amountToExchange = kit.connection.web3.utils.toWei(
           repaymentAmount.toString(),
-          "ether"
+          "ether",
         );
         // TODO: Check which token is being used (from the contract)
         const token = await kit.contracts.getStableToken(StableToken.cUSD);
@@ -70,23 +68,18 @@ export default function MaintenanceBox() {
 
         // Check the allowance
         console.log("Checking allowance");
-        const allowanceTx = await token.allowance(
-          address as string,
-          loanContract.options.address
-        );
+        const allowanceTx = await token.allowance(address as string, loanContract.options.address);
         console.log("Allowance to spend", allowanceTx.toNumber());
 
         // Make the repayment
         console.log("Making repayment");
         const estimateGas = await loanContract.methods.repay().estimateGas();
         console.log("Estimated gas:", estimateGas);
-        const repayTx = await loanContract.methods
-          .repay()
-          .send({ from: address as string });
+        const repayTx = await loanContract.methods.repay().send({ from: address as string });
         console.log("Repayment:\n", repayTx);
 
         // TODO: Show notification
-        enqueueSnackbar('Loan successfully repaid');
+        enqueueSnackbar("Loan successfully repaid");
       });
     } catch (err) {
       console.log(err);
@@ -101,12 +94,7 @@ export default function MaintenanceBox() {
             <Typography variant="h5">Repay your Loan</Typography>
             <Typography variant="body1">Amount: {repaymentAmount}</Typography>
             <FormControl fullWidth sx={{ m: 1 }}>
-              <Button
-                variant="contained"
-                type="submit"
-                color="primary"
-                onClick={handleSubmit}
-              >
+              <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
                 Make repay payment
               </Button>
             </FormControl>

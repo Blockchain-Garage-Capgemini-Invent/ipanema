@@ -1,7 +1,7 @@
 import { CustomThemeProvider } from "./contexts/userTheme";
 import { BrowserRouter as BrowserRouter, Route, Routes } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
-import { CeloProvider, useCelo } from "@celo/react-celo";
+import { CeloProvider } from "@celo/react-celo";
 import "@celo/react-celo/lib/styles.css";
 import Header from "./components/Header";
 import LoanBox from "./components/LoanBox";
@@ -10,8 +10,8 @@ import MaintenanceBox from "./components/MaintenanceBox";
 import Footer from "./components/Footer";
 
 export default function App() {
-  const { network } = useCelo();
-  const connected = network && network.name === "Alfajores";
+  // const { network } = useCelo();
+  // const connected = network && network.name === "Alfajores";
 
   return (
     <CustomThemeProvider>
@@ -27,11 +27,11 @@ export default function App() {
           <BrowserRouter>
             <Header />
             <Routes>
-              <Route path="/connect" element={<ConnectWallet />} />
-              {connected && <Route path="/getloan" element={<LoanBox />} />}
-              {connected && <Route path="/maintenance" element={<MaintenanceBox />} />}
+              <Route path="/" element={<ConnectWallet />} />
+              <Route path="/getloan" element={<LoanBox />} />
+              <Route path="/maintenance" element={<MaintenanceBox />} />
             </Routes>
-            <Footer />
+            {/*<Footer />*/}
           </BrowserRouter>
         </CeloProvider>
       </SnackbarProvider>

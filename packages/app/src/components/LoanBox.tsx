@@ -43,9 +43,9 @@ async function postLoan(state: State, borrower: string, ercAddress: string): Pro
     const response = await fetch("http://localhost:3000/api/v1/loan", {
       method: "POST",
       body: JSON.stringify({
-        loanAmount: state.amount,
+        loanAmount: Number(state.amount),
         interestAmount: state.rate,
-        repayByTimestamp: state.date ? state.date.getTime() / 1000 : 0,
+        repayByTimestamp: state.date ? Math.round(state.date.getTime() / 1000) : 0,
         borrower: borrower,
         ercAddress: ercAddress,
       }),
@@ -181,7 +181,7 @@ export default function LoanBox() {
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
                 <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
-                  Get Loan!
+                  Get Loan
                 </Button>
               </FormControl>
             </CardContent>

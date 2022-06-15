@@ -14,7 +14,7 @@ function AccountDetails() {
 
   return (
     <>
-      {network && network.name !== "Alfajores" ? (
+      {address && network && network.name !== "Alfajores" ? (
         <Typography style={{ color: "red" }}>
           {network.name} is not supported, please switch to Alfajores!
         </Typography>

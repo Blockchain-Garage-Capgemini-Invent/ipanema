@@ -49,8 +49,29 @@ export default function MaintenanceBox() {
     contractAddress,
   ) as any as CentralizedLoan;
 
+
+
   // TODO: Read from contract
-  const repaymentAmount = 0;
+  const [loan, setLoan] = useState({});
+  useEffect(() => {
+    // You need to restrict it at some point
+    // This is just dummy code and should be replaced by actual
+    if (!loan) {
+      getLoan();
+    }
+  }, []);
+
+  const getLoan = async () => {
+      try{
+        const loanData = await loanContract.methods.getMyLoan().call();
+        console.log(loanData);
+        //setLoan(loanData);
+      }catch (err) {
+        console.log(err);
+      }
+  };
+
+  // const repaymentAmount = 0;
 
   // const loadRepaymentAmount = async () => {
   //   try{

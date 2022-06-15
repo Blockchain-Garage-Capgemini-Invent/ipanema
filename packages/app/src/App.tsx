@@ -7,7 +7,7 @@ import Header from "./components/Header";
 import LoanBox from "./components/LoanBox";
 import ConnectWallet from "./components/ConnectWallet";
 import MaintenanceBox from "./components/MaintenanceBox";
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 
 export default function App() {
   // const { network } = useCelo();
@@ -31,7 +31,6 @@ export default function App() {
               <Route path="/getloan" element={<LoanBox />} />
               <Route path="/maintenance" element={<MaintenanceBox />} />
             </Routes>
-            {/*<Footer />*/}
           </BrowserRouter>
         </CeloProvider>
       </SnackbarProvider>

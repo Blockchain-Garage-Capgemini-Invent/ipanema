@@ -30,10 +30,10 @@ export const CustomThemeContext = React.createContext<{
   setTheme: (checked: boolean) => void;
 }>({
   theme: undefined,
-  setTheme: () => {},
+  setTheme: () => undefined,
 });
 
-export const CustomThemeProvider = (props: PropsWithChildren<{}>) => {
+export const CustomThemeProvider = (props: PropsWithChildren<unknown>) => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
   const [theme, setTheme] = React.useState(prefersDarkMode);
   const themeString = (b: boolean) => (b ? "dark" : "light");

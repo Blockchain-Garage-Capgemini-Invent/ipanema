@@ -65,7 +65,7 @@ export default function MaintenanceBox() {
 
   const getLoanInformation = async () => {
     try {
-      console.log("Getting loan information from address:", address);
+      console.log("Requesting loan information");
       const loanData = await loanContract.methods.getMyLoan().call();
       console.log(loanData);
       if (Number(loanData._state) !== LoanState.Taken) {
@@ -81,27 +81,15 @@ export default function MaintenanceBox() {
     }
   };
 
-  // const repaymentAmount = 0;
-
-  // const loadRepaymentAmount = async () => {
-  //   try{
-  //     const loanData = await loanContract.methods.getMyLoan();
-  //     repaymentAmount = loanData["loanAmount"] + loanData["interestAmount"];
-  //   }catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-
   const handleSubmit = async () => {
     try {
       await performActions(async kit => {
-        // TODO: Make approval for the loan contract to spend the token
-        // Damn, why is the kit.contracts.getErc20() missing?
         console.log("Approving loan contract to spend token");
         const amountToExchange = kit.connection.web3.utils.toWei(
           repaymentAmount.toString(),
           "ether",
         );
+        // Damn, why is the kit.contracts.getErc20() missing?
         // TODO: Check which token is being used (from the contract)
         const token = await kit.contracts.getStableToken(StableToken.cUSD);
         const approveTx = await token
@@ -109,6 +97,10 @@ export default function MaintenanceBox() {
           .send({ from: address as string });
         const approveReceipt = await approveTx.waitReceipt();
         console.log("Approve receipt:\n", approveReceipt);
+        if (!approveReceipt.status) {
+          enqueueSnackbar("Failed to approve loan contract", { variant: "error" });
+          return;
+        }
 
         // Check the allowance
         console.log("Checking allowance");
@@ -121,12 +113,16 @@ export default function MaintenanceBox() {
         console.log("Estimated gas:", estimateGas);
         const repayTx = await loanContract.methods.repay().send({ from: address as string });
         console.log("Repayment:\n", repayTx);
-
-        // TODO: Show notification
-        enqueueSnackbar("Loan successfully repaid");
+        if (!repayTx.status) {
+          enqueueSnackbar("Failed to repay loan", { variant: "error" });
+          return;
+        }
+        enqueueSnackbar("Loan successfully repaid!", { variant: "success" });
+        navigate("/getloan");
       });
     } catch (err) {
       console.log(err);
+      enqueueSnackbar("Failed to repay loan", { variant: "error" });
     }
   };
 

@@ -96,7 +96,7 @@ export default function LoanBox() {
   ) as any as CentralizedLoan;
 
   const [values, setValues] = React.useState<State>({
-    date: new Date(Date.now()),
+    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     amount: 1,
     rate: 5,
   });
@@ -147,7 +147,7 @@ export default function LoanBox() {
           <Typography variant="h3">Get a loan from your bank</Typography>
           <Typography variant="body1">
             Welcome to the Ipanema DeFi borrowing platform. Here you can get DeFi loans from your
-            bank in just a few minutes! These loans are currently on Celo network.
+            bank in just a few seconds! These loans are currently on Celo Alfajores network.
           </Typography>
           <Card sx={{ mt: 5 }}>
             <CardContent>

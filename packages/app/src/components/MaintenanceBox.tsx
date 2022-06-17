@@ -14,7 +14,9 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
+import { Button, Card, CardContent, Grid, Typography, Stack, Chip } from "@mui/material";
+import DateRangeIcon from "@mui/icons-material/DateRange";
+import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
@@ -53,6 +55,7 @@ export default function MaintenanceBox() {
   ) as any as CentralizedLoan;
 
   const [repaymentAmount, setRepaymentAmount] = useState(0);
+  const [date, setDate] = useState(new Date());
   const [ercAddress, setErcAddress] = useState("");
 
   useEffect(() => {
@@ -74,6 +77,7 @@ export default function MaintenanceBox() {
       const loanAmount = kit.connection.web3.utils.fromWei(loanData._loanAmount, "ether");
       const interestAmount = kit.connection.web3.utils.fromWei(loanData._interestAmount, "ether");
       setRepaymentAmount(Number(loanAmount) + Number(interestAmount));
+      setDate(new Date(Number(loanData._repayByTimestamp) * 1000));
       setErcAddress(loanData._ercAddress);
     } catch (err) {
       console.log(err);
@@ -129,15 +133,35 @@ export default function MaintenanceBox() {
   return (
     <Grid sx={{ m: 1 }} container justifyContent="center">
       <Grid item sm={6} xs={12} sx={{ m: 2 }}>
+        <Typography variant="h3">Repay your loan</Typography>
+        <Typography variant="body1">
+          Thank you for using our service to get a DeFi loan from your bank.
+          <br />
+          Please note that repaying before the deadline will result in a positive score, which will
+          improve the terms of your next loan.
+        </Typography>
         <Card sx={{ mt: 5 }}>
           <CardContent>
-            <Typography variant="h5">Repay your Loan</Typography>
-            <Typography variant="body1">Amount: {repaymentAmount}</Typography>
-            <FormControl fullWidth sx={{ m: 1 }}>
-              <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
-                Make repay payment
-              </Button>
-            </FormControl>
+            <Stack direction="column" spacing={1} justifyContent="left">
+              <Typography variant="h5">Loan conditions</Typography>
+              <Chip
+                icon={<DateRangeIcon />}
+                label={date.toLocaleString()}
+                variant="outlined"
+                style={{ width: "fit-content" }}
+              />
+              <Chip
+                icon={<CurrencyBitcoinIcon />}
+                label={repaymentAmount + " cUSD"}
+                variant="outlined"
+                style={{ width: "fit-content" }}
+              />
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
+                  Make repayment
+                </Button>
+              </FormControl>
+            </Stack>
           </CardContent>
         </Card>
       </Grid>

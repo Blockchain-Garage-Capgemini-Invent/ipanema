@@ -14,7 +14,8 @@
 
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, CardContent, Grid, Typography, Button } from "@mui/material";
+import { Card, CardContent, Grid, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import FormControl from "@mui/material/FormControl";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -29,8 +30,9 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import { useCelo } from "@celo/react-celo";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
-// import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
-// import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
+import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
+import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
+import { useSnackbar } from "notistack";
 
 interface State {
   date: Date | null;
@@ -44,7 +46,7 @@ async function postLoan(state: State, borrower: string, ercAddress: string): Pro
       method: "POST",
       body: JSON.stringify({
         loanAmount: Number(state.amount),
-        interestAmount: state.rate,
+        interestAmount: Number(state.amount) * (state.rate / 100),
         repayByTimestamp: state.date ? Math.round(state.date.getTime() / 1000) : 0,
         borrower: borrower,
         ercAddress: ercAddress,
@@ -69,21 +71,11 @@ async function postLoan(state: State, borrower: string, ercAddress: string): Pro
   return false;
 }
 
-// async function takeLoanAndAcceptTerms(): Promise<boolean> {
-//   try {
-//     // TODO: implement
-//   } catch (err) {
-//     // setErr(err.message);
-//   } finally {
-//     // setIsLoading(false);
-//   }
-//   return false;
-// }
-
 export default function LoanBox() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { kit, address, network } = useCelo();
+  const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
   const connected = address && network && network.name === "Alfajores";
@@ -91,23 +83,25 @@ export default function LoanBox() {
     navigate("/");
   }
 
-  // interface ContractJSON {
-  //   [key: string]: any;
-  // }
-  // const contractAbi = (deployedContracts as ContractJSON)[network.chainId.toString()][0].contracts
-  //     .CentralizedLoan.abi;
-  // const contractAddress = (deployedContracts as ContractJSON)[network.chainId.toString()][0]
-  //     .contracts.CentralizedLoan.address;
-  // const loanContract = new kit.connection.web3.eth.Contract(
-  //     contractAbi,
-  //     contractAddress,
-  // ) as any as CentralizedLoan;
+  interface ContractJSON {
+    [key: string]: any;
+  }
+  const contractAbi = (deployedContracts as ContractJSON)[network.chainId.toString()][0].contracts
+    .CentralizedLoan.abi;
+  const contractAddress = (deployedContracts as ContractJSON)[network.chainId.toString()][0]
+    .contracts.CentralizedLoan.address;
+  const loanContract = new kit.connection.web3.eth.Contract(
+    contractAbi,
+    contractAddress,
+  ) as any as CentralizedLoan;
 
   const [values, setValues] = React.useState<State>({
     date: new Date(Date.now()),
-    amount: 0,
+    amount: 1,
     rate: 5,
   });
+
+  const [loading, setLoading] = React.useState(false);
 
   const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -117,10 +111,33 @@ export default function LoanBox() {
     setValues({ ...values, date: newValue });
   };
 
+  const takeLoanAndAcceptTerms = async () => {
+    try {
+      console.log("Taking the loan");
+      const estimateGas = await loanContract.methods.takeLoanAndAcceptTerms().estimateGas();
+      console.log("Estimated gas:", estimateGas);
+      const takeLoanTx = await loanContract.methods
+        .takeLoanAndAcceptTerms()
+        .send({ from: address as string });
+      console.log("Loan:\n", takeLoanTx);
+      if (!takeLoanTx.status) {
+        enqueueSnackbar("Error taking the loan!", { variant: "error" });
+        return;
+      }
+      enqueueSnackbar("Congratulations! You have taken a loan!", { variant: "success" });
+      navigate("/maintenance");
+    } catch (err) {
+      console.log(err);
+      enqueueSnackbar("Error taking the loan!", { variant: "error" });
+    }
+  };
+
   const handleSubmit = async () => {
-    console.log(values);
+    setLoading(true);
     const token = await kit.contracts.getStableToken(StableToken.cUSD);
     await postLoan(values, address!, token.address);
+    await takeLoanAndAcceptTerms();
+    setLoading(false);
   };
 
   return (
@@ -180,9 +197,16 @@ export default function LoanBox() {
                 />
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
-                <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
+                <LoadingButton
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  loading={loading}
+                  loadingIndicator="Waiting for approval..."
+                  onClick={handleSubmit}
+                >
                   Get Loan
-                </Button>
+                </LoadingButton>
               </FormControl>
             </CardContent>
           </Card>

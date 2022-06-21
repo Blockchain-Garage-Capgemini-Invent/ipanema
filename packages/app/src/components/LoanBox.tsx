@@ -93,6 +93,7 @@ export default function LoanBox() {
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {
     try {
+      console.log("authHeader: ", getAuthentication());
       const response = await fetch("http://localhost:3000/loan", {
         method: "POST",
         body: JSON.stringify({

@@ -22,18 +22,16 @@ export async function login(username: string, password: string): Promise<boolean
     body: JSON.stringify({ username: username, password: password }),
   });
 
-  const text = await response.text();
-  const data = text && JSON.parse(text);
   if (!response.ok) {
     // auto logout if 401 response returned from api
     if (response.status === 401) {
       logout();
     }
-    console.log((data && data.message) || response.statusText);
+    console.log("Login failed: " + response.status);
     return false;
   }
 
-  if (!data) {
+  if (!response.body) {
     console.log("No data returned from server");
     return false;
   }
@@ -41,8 +39,7 @@ export async function login(username: string, password: string): Promise<boolean
   // store user details and basic auth credentials in local storage
   // to keep user logged in between page refreshes
   console.log("Storing user data in local storage");
-  data.authdata = window.btoa(username + ":" + password);
-  localStorage.setItem("user", JSON.stringify(data));
+  localStorage.setItem("user", window.btoa(username + ":" + password));
   return true;
 }
 

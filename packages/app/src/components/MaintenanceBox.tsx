@@ -23,7 +23,7 @@ import { StableToken } from "@celo/contractkit/lib/celo-tokens";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
-import { authHeader } from "../helpers/auth";
+import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 
 enum LoanState {
@@ -39,7 +39,7 @@ export default function MaintenanceBox() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  if (!authHeader()) {
+  if (!getAuthentication()) {
     logout();
     navigate("/");
   }

@@ -12,15 +12,13 @@
  **********************************************************************************
  */
 
-export function authHeader(): any {
+export function getAuthentication(): any {
   // return authorization header with basic auth credentials
-  const item = localStorage.getItem("user");
-  if (!item) {
+  const user = localStorage.getItem("user");
+  if (!user) {
     console.log("No user found");
     return "";
   }
-  const user = JSON.parse(item);
-  if (user && user.data.authdata) {
-    return { Authorization: "Basic " + user.data.authdata };
-  }
+
+  return "Basic " + user;
 }

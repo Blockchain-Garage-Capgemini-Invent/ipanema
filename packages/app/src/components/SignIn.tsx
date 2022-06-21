@@ -18,8 +18,7 @@ import { Avatar, Box, FormControl, Grid, Link, TextField, Typography } from "@mu
 import { LoadingButton } from "@mui/lab";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useSnackbar } from "notistack";
-import { login, logout } from "../services/user";
-import { authHeader } from "../helpers/auth";
+import { login } from "../services/user";
 
 interface defaultValues {
   email: string;
@@ -34,11 +33,6 @@ export default function SignIn() {
     password: "12345678",
   });
   const [loading, setLoading] = React.useState(false);
-
-  if (!authHeader()) {
-    logout();
-    navigate("/");
-  }
 
   const handleChange =
     (prop: keyof defaultValues) => (event: React.ChangeEvent<HTMLInputElement>) => {

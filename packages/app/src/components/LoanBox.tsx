@@ -37,7 +37,7 @@ import { StableToken } from "@celo/contractkit/lib/celo-tokens";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
-import { authHeader } from "../helpers/auth";
+import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 
 interface defaultValues {
@@ -53,7 +53,7 @@ export default function LoanBox() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  if (!authHeader()) {
+  if (!getAuthentication()) {
     logout();
     navigate("/");
   }
@@ -93,7 +93,6 @@ export default function LoanBox() {
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {
     try {
-      console.log("authHeader: ", authHeader());
       const response = await fetch("http://localhost:3000/loan", {
         method: "POST",
         body: JSON.stringify({
@@ -105,7 +104,7 @@ export default function LoanBox() {
         }),
         headers: {
           "Content-Type": "application/json",
-          Authorization: authHeader(),
+          Authorization: getAuthentication(),
         },
       });
 

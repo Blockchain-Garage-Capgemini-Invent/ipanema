@@ -16,14 +16,14 @@ import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
-import { authHeader } from "../helpers/auth";
+import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 
 export default function ConnectWallet() {
   const navigate = useNavigate();
   const { address, network, connect } = useCelo();
 
-  if (!authHeader()) {
+  if (!getAuthentication()) {
     logout();
     navigate("/");
   }

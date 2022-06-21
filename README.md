@@ -12,9 +12,10 @@ Celo x Huobi: Stablecoin in Web3 &amp; Sustainability
 Ipanema is a platform that enables banks to grant loans via the Celo blockchain to their customers. The platform provides a frontend for customers to start loan requests and a backend that simulates a banking infrastructure. Loans can be provided in the stablecoins that are offered by the Celo blockchain. 
 
 ### The Problem
-In the last years decentralized finance protocols that work independent from banks and the traditional infrastructure recorded a giant development. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values in the form of digital token. Many financial services are rebuilt by DeFi but due to the missing authentification tools, loans can only be provided if a collateral is locked up in a smart contract. 
-Parallel to this traditional banks implemented online banking applications that offer a user-friendly frontend, while relying on legacy infrastructure. 
-The lack in providing loans is a large opportunity for banks. Ipanema solves this issues by building a bridge between banks and authenticated DeFi users. 
+In the last years decentralized finance protocols that operate independent from banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values in the form of digital token. Many financial services are rebuilt by DeFi but due to the missing authentification tools, loans can only be provided if a asset is locked up in a smart contract as collateral. 
+Parallel to this traditional banks implemented online banking applications that offer a user-friendly frontend, while relying on legacy banking infrastructure. 
+The lack in providing loans in DeFi is a large opportunity for banks. 
+Ipanema solves this issues by building a bridge between banks and authenticated DeFi users.
 
 ## 🧑‍💻 Technologies
 

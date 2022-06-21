@@ -14,7 +14,7 @@ In the last years, decentralized finance protocols that operate independently fr
 Parallel to this, traditional banks implemented online banking applications that offer a user-friendly frontend with secure KYC solutions meeting all regulatory requirements. The banking systems rely on legacy banking infrastructure that was set up decades ago therefore many systems are not up to date and processes are slow and expensive. 
 
 ### Large Opportunity
-Blockchains provide layers for settlements and transactions that are faster, more secure, more transparent, and more interoperable than in the banking world. But the lack of providing loans in DeFi is a large opportunity for banks. With Ipanema, they can easily get access to the DeFi world and offer loans in cryptocurrencies to their customers. Ipanema builds the bridge between the traditional world and the blockchain ecosystem, by combin-ing the advantages of banking interfaces with KYC solutions and the open world of blockchains. 
+Blockchains provide layers for settlements and transactions that are faster, more secure, more transparent, and more interoperable than in the banking world. But the lack of providing loans in DeFi is a large opportunity for banks. With Ipanema, they can easily get access to the DeFi world and offer loans in cryptocurrencies to their customers. Ipanema builds the bridge between the traditional world and the blockchain ecosystem, by combining the advantages of banking interfaces with KYC solutions and the open world of blockchains. 
 
 ### Team & Background
 Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stablecoin in Web3 &amp; Sustaina-bility. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 

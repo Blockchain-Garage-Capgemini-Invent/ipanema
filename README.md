@@ -7,13 +7,14 @@
 4. [FAQs](#%EF%B8%8F-faqs)
 
 ## ℹ️ General Info
-Ipanema is a platform that enables banks to grant loans via the Celo blockchain to their customers. The platform provides a frontend for customers to start loan requests and a backend that simulates a banking infrastructure. Loans can be provided in the stablecoins that are offered by the Celo blockchain. 
+Ipanema builds the bridge between traditional banks and the blockchain ecosystem. It is a platform that enables banks to grant loans via the Celo blockchain to their customers. The platform provides a frontend for customers to start loan requests and a backend that simulates a banking infrastructure. Loans can be provided in the stablecoins that are offered on the Celo blockchain. 
 
 ### The Problem
-In the last years decentralized finance protocols that operate independent from banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values in the form of digital token. Many financial services are rebuilt in DeFi but due to the missing authentification tools, loans can only be provided if a asset is locked up in a smart contract as collateral. 
-Parallel to this, traditional banks implemented online banking applications that offer a user-friendly frontend, while relying on legacy banking infrastructure. 
-The lack in providing loans in DeFi is a large opportunity for banks. 
-Ipanema solves this issues by building a bridge between banks and authenticated DeFi users.
+In the last years, decentralized finance protocols that operate independent from banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values in the form of digital token. Many financial services are already rebuilt in DeFi. Due to the missing authentication tools, loans can only be provided if an asset is locked up in a smart contract as collateral. This keeps DeFi developers from creating many more use-cases. 
+Parallel to this, traditional banks implemented online banking applications that offer a user-friendly frontend with secure KYC solutions meeting all regulatoric requrements. The banking systems relies on legacy banking infrastructure that was set up decades ago therefore many systems are not up to date and processes are slow and expensive. 
+
+### Large Opportunity
+Blockchains provide layers for settlements and transactions that are faster, more secure, more transparent and more interoperable than in the banking world. But the lack in providing loans in DeFi is a large opportunity for banks. With Ipanema they can easily get access to the DeFi world and offer loans in cryptocurrencies to their customers. Ipanema builds the bridge between the traditional world and the blockchain ecosystem, by combining the advantages of banking interfaces with KYC solutions and the open world of blockchains. 
 
 ### Team & Background
 Ipanema was created as part of the Celo x Huobi Hackathon with focus on Stablecoin in Web3 &amp; Sustainability. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 

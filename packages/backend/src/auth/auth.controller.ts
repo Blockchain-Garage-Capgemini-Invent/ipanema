@@ -53,13 +53,13 @@ class AuthController {
     try {
         console.log("[SERVER] authenticate request: " + JSON.stringify(req.headers));
       const authHeader = req.headers.authorization;
-      if (!authHeader || authHeader == "null") {
+      if (!authHeader || !authHeader.split(" ")[1]) {
         console.log("[SERVER] auth header is missing");
         res.status(401).send({ status: "unauthorized - missing parameter" });
         return;
       }
 
-      const credentials = Buffer.from(authHeader, "base64").toString("binary");
+      const credentials = Buffer.from(authHeader.split(" ")[1], "base64").toString("binary");
       const [username, password] = credentials.split(":");
       if (!username || !password) {
         console.log("[SERVER] no username or password");

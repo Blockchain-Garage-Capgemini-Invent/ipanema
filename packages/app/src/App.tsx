@@ -7,6 +7,7 @@ import Header from "./components/Header";
 import LoanBox from "./components/LoanBox";
 import ConnectWallet from "./components/ConnectWallet";
 import MaintenanceBox from "./components/MaintenanceBox";
+import SignIn from "./components/SignIn";
 // import Footer from "./components/Footer";
 
 export default function App() {
@@ -24,7 +25,9 @@ export default function App() {
           <BrowserRouter>
             <Header />
             <Routes>
-              <Route path="/" element={<ConnectWallet />} />
+              <Route path="/" element={<SignIn />} />
+              <Route path="/signin" element={<SignIn />} />
+              <Route path="/connect" element={<ConnectWallet />} />
               <Route path="/getloan" element={<LoanBox />} />
               <Route path="/maintenance" element={<MaintenanceBox />} />
             </Routes>

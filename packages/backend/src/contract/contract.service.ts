@@ -5,7 +5,7 @@
  *  \____\__,_| .__/ \__, |\___|_| |_| |_|_|_| |_|_| |___|_| |_|\_/ \___|_| |_|\__|
  *            |_|    |___/
  **********************************************************************************
- *      contract.ts
+ *      contract.service.ts
  *      Created on: 14.06.22
  *      Author:     Volker Dufner
  *      Copyright (c) 2022 Capgemini Invent. All rights reserved.
@@ -15,8 +15,11 @@
 import { ContractKit, newKit } from "@celo/contractkit";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
+import * as dotenv from "dotenv";
 
-export class Contract {
+dotenv.config();
+
+export class ContractService {
   private kit: ContractKit;
   private loanContract: CentralizedLoan;
 
@@ -30,22 +33,21 @@ export class Contract {
 
   public async init(): Promise<void> {
     const chainId = await this.kit.connection.chainId();
+
     interface ContractJSON {
       [key: string]: any;
     }
+
     console.log("[CONTRACT] Chain ID", chainId);
-    const abi = (deployedContracts as ContractJSON)[chainId.toString()][0]
-      .contracts.CentralizedLoan.abi;
-    const address = (deployedContracts as ContractJSON)[chainId.toString()][0]
-      .contracts.CentralizedLoan.address;
+    const abi = (deployedContracts as ContractJSON)[chainId.toString()][0].contracts.CentralizedLoan
+      .abi;
+    const address = (deployedContracts as ContractJSON)[chainId.toString()][0].contracts
+      .CentralizedLoan.address;
     this.loanContract = new this.kit.connection.web3.eth.Contract(
       abi,
-      address
+      address,
     ) as any as CentralizedLoan;
-    console.log(
-      "[CONTRACT] Loan contract address",
-      this.loanContract.options.address
-    );
+    console.log("[CONTRACT] Loan contract address", this.loanContract.options.address);
   }
 
   public async offerLoan(
@@ -53,15 +55,12 @@ export class Contract {
     interestAmount: number,
     repayByTimestamp: number,
     borrower: string,
-    ercAddress: string
-  ): Promise<void> {
+    ercAddress: string,
+  ): Promise<any> {
     // Make approval for the loan contract to spend the token
     console.log("[CONTRACT] Approving loan contract to spend token");
     const token = await this.kit.contracts.getErc20(ercAddress);
-    const amountToExchange = this.kit.web3.utils.toWei(
-      loanAmount.toString(),
-      "ether"
-    );
+    const amountToExchange = this.kit.web3.utils.toWei(loanAmount.toString(), "ether");
     const approveTx = await token
       .approve(this.loanContract.options.address, amountToExchange)
       .send({ from: process.env.ADDRESS as string });
@@ -72,7 +71,7 @@ export class Contract {
     console.log("[CONTRACT] Checking allowance");
     const allowanceTx = await token.allowance(
       process.env.ADDRESS as string,
-      this.loanContract.options.address
+      this.loanContract.options.address,
     );
     console.log("[CONTRACT] Allowance to spend", allowanceTx.toNumber());
 
@@ -85,25 +84,27 @@ export class Contract {
           this.kit.web3.utils.toWei(interestAmount.toString(), "ether"),
           repayByTimestamp,
           borrower,
-          ercAddress
+          ercAddress,
         )
         .estimateGas({ from: process.env.ADDRESS as string });
 
       console.log("[CONTRACT] Estimated gas", estimateGas);
 
-      const loanOffer = await this.loanContract.methods
+      const offerLoanTx = await this.loanContract.methods
         .offerLoan(
           amountToExchange,
           this.kit.web3.utils.toWei(interestAmount.toString(), "ether"),
           repayByTimestamp,
           borrower,
-          ercAddress
+          ercAddress,
         )
         .send({ from: process.env.ADDRESS as string, gas: estimateGas });
-      console.log("[CONTRACT] Loan offer:\n", loanOffer);
+      console.log("[CONTRACT] Loan offer:\n", offerLoanTx);
       console.log(
-        "[CONTRACT] ============================== Loan offered, waiting for next request =============================="
+        "[CONTRACT] ============================== Loan offered, waiting for next request ==============================",
       );
+
+      return offerLoanTx;
     } catch (e) {
       console.log("[CONTRACT] Error:\n", e);
     }

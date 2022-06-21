@@ -6,13 +6,14 @@
  *            |_|    |___/
  **********************************************************************************
  *      index.ts
- *      Created on: 08.06.22
+ *      Created on: 14.06.22
  *      Author:     Volker Dufner
  *      Copyright (c) 2022 Capgemini Invent. All rights reserved.
  **********************************************************************************
  */
 
-import { Contract } from "./contract";
+import { AuthRoutes } from "./auth/auth.routes";
+import { ContractRoutes } from "./contract/contract.routes";
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
@@ -29,35 +30,8 @@ const main = async () => {
   app.use(express.urlencoded({ extended: true }));
   app.use(cors());
 
-  const contract = new Contract();
-  await contract.init();
-
-  app.post("/api/v1/loan", async (req, res) => {
-    console.log("[Server] Request at /api/loan:\n", req.body);
-    try {
-      if (
-        !req.body.loanAmount ||
-        !req.body.interestAmount ||
-        !req.body.repayByTimestamp ||
-        !req.body.borrower ||
-        !req.body.ercAddress
-      ) {
-        res.status(400).send({ status: "bad request" });
-        return;
-      }
-      await contract.offerLoan(
-        req.body.loanAmount,
-        req.body.interestAmount,
-        req.body.repayByTimestamp,
-        req.body.borrower,
-        req.body.ercAddress
-      );
-      res.status(200).send({ status: "ok" });
-    } catch (e) {
-      console.error("[Server] Error at /api/loan:\n", e);
-      res.status(500).send({ status: "error" });
-    }
-  });
+  AuthRoutes.configureRoutes(app);
+  ContractRoutes.configureRoutes(app);
 
   app.listen(port, () => {
     console.log(`[Server] Server is running at https://localhost:${port}`);

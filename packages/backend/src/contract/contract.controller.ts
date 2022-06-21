@@ -29,6 +29,7 @@ class ContractController {
     try {
       if (
         !req.body.loanAmount ||
+        !req.body.interestAmount ||
         !req.body.repayByTimestamp ||
         !req.body.borrower ||
         !req.body.ercAddress
@@ -56,7 +57,8 @@ class ContractController {
         return;
       }
 
-      // const interestAmount = FinancialController.claculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
+      // TODO: Compare interestAmount
+      const interestAmount = FinancialController.claculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
 
       const offerLoanTx = await this.contract.offerLoan(
         req.body.loanAmount,

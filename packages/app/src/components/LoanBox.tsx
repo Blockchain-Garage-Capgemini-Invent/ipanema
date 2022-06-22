@@ -78,7 +78,7 @@ export default function LoanBox() {
   const [formValues, setFormValues] = React.useState<defaultValues>({
     date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     amount: 1,
-    rate: 5,
+    rate: 0,
   });
   const [loading, setLoading] = React.useState(false);
 
@@ -89,6 +89,10 @@ export default function LoanBox() {
 
   const handleChangeDate = (newValue: Date | null) => {
     setFormValues({ ...formValues, date: newValue });
+  };
+
+  const calculateInterestRate = () => {
+
   };
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {

@@ -12,26 +12,28 @@
  **********************************************************************************
  */
 
-import {getFinancialData} from "./financialdata";
+import { getFinancialData } from "./financialdata";
 
 export class FinancialService {
-    constructor() {
-        console.log("[FinancialService] created");
-    }
+  constructor() {
+    console.log("[FinancialService] created");
+  }
 
-    public getBaseInterest(username: string): number | undefined {
-        const baseInterest = 2;
-        const financialData = getFinancialData(username);
-        if (!financialData) {
-            console.log("[FinancialService] base interest calculation failed");
-            return undefined;
-        }
-        const historicInterest = (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 - financialData.balance * 0.00001;
-        return baseInterest + historicInterest;
+  public getBaseInterest(username: string): number | undefined {
+    const baseInterest = 2;
+    const financialData = getFinancialData(username);
+    if (!financialData) {
+      console.log("[FinancialService] base interest calculation failed");
+      return undefined;
     }
+    const historicInterest =
+      (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
+      financialData.balance * 0.00001;
+    return baseInterest + historicInterest;
+  }
 
-    // TODO: implement this into contract.controller.ts
-    /*
+  // TODO: implement this into contract.controller.ts
+  /*
     public calculateInterestAmount(loanAmount: number, repayByTimestamp: number) {
         const baseInterest = 2;
         const durationInterest = (repayByTimestamp - Math.floor(Date.now() / 1000)) * 0.0000001

@@ -14,7 +14,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { ContractService } from "./contract.service";
-import {FinancialService} from "../financial/financial.service";
+import { FinancialService } from "../financial/financial.service";
 
 class ContractController {
   private contract: ContractService;

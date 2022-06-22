@@ -12,33 +12,35 @@
  **********************************************************************************
  */
 
-import {NextFunction, Request, Response} from "express";
-import {FinancialService} from "./financial.service";
+import { NextFunction, Request, Response } from "express";
+import { FinancialService } from "./financial.service";
 
-class FinancialController{
-    private financialService: FinancialService;
+class FinancialController {
+  private financialService: FinancialService;
 
-    constructor() {
-        console.log("[FINANCIAL] created");
-        this.financialService = new FinancialService();
+  constructor() {
+    console.log("[FINANCIAL] created");
+    this.financialService = new FinancialService();
+  }
+
+  public async getBaseInterest(req: Request, res: Response, next: NextFunction) {
+    console.log("[FINANCIAL] get base interest request");
+    try {
+      const baseInterest = this.financialService.getBaseInterest(res.locals.username);
+      if (!baseInterest) {
+        console.log("[FINANCIAL] base interest calculation failed");
+        res
+          .status(500)
+          .send({ status: "internal server error - base interest calculation failed" });
+      }
+
+      console.log("[FINANCIAL] interest calculation successful");
+      res.status(200).send({ status: "interest calculation successful", tx: baseInterest });
+    } catch (e) {
+      console.error("[FINANCIAL] Error at baseInterest:\n", e);
+      res.status(500).send({ status: "error" });
     }
-
-    public async getBaseInterest(req: Request, res: Response, next: NextFunction) {
-        console.log("[FINANCIAL] get base interest request");
-        try {
-            const baseInterest = this.financialService.getBaseInterest(res.locals.username);
-            if (!baseInterest) {
-                console.log("[FINANCIAL] base interest calculation failed");
-                res.status(500).send({ status: "internal server error - base interest calculation failed" });
-            }
-
-            console.log("[FINANCIAL] interest calculation successful");
-            res.status(200).send({ status: "interest calculation successful", tx: baseInterest });
-        } catch (e) {
-            console.error("[FINANCIAL] Error at baseInterest:\n", e);
-            res.status(500).send({ status: "error" });
-        }
-    }
+  }
 }
 
 export default new FinancialController();

@@ -22,13 +22,20 @@
 //
 
 interface FinancialData {
-    username: string;
-    balance: number;
-    income_last_month: number;
-    expenses_last_month: number;
+  username: string;
+  balance: number;
+  income_last_month: number;
+  expenses_last_month: number;
 }
-const financialDatabase: FinancialData[] = [{ username: "max.muster@capgemini.com", balance: 10254.98, income_last_month: 3014.56, expenses_last_month: -2234.41 }]
+const financialDatabase: FinancialData[] = [
+  {
+    username: "max.muster@capgemini.com",
+    balance: 10254.98,
+    income_last_month: 3014.56,
+    expenses_last_month: -2234.41,
+  },
+];
 
 export function getFinancialData(username: string): FinancialData | undefined {
-    return financialDatabase.find(user => user.username === username);
+  return financialDatabase.find(user => user.username === username);
 }

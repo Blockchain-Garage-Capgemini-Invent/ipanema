@@ -17,8 +17,8 @@ import { ContractRoutes } from "./contract/contract.routes";
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import {FinancialService} from "./financial/financial.service";
-import {FinancialRoutes} from "./financial/financial.routes";
+import { FinancialService } from "./financial/financial.service";
+import { FinancialRoutes } from "./financial/financial.routes";
 dotenv.config();
 
 const host: string = process.env.HOST || "localhost";

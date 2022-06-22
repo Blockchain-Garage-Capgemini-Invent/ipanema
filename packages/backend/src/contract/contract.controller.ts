@@ -25,7 +25,7 @@ class ContractController {
     this.contract.init();
   }
 
-  public async offerLoan(req: Request, res: Response, next: NextFunction) {
+  public async offerLoan(req: Request, res: Response) {
     console.log("[CONTRACT] offer loan request");
     try {
       if (

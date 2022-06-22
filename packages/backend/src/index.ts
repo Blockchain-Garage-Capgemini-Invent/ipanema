@@ -12,12 +12,11 @@
  **********************************************************************************
  */
 
-import { AuthRoutes } from "./auth/auth.routes";
-import { ContractRoutes } from "./contract/contract.routes";
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
-import { FinancialService } from "./financial/financial.service";
+import { AuthRoutes } from "./auth/auth.routes";
+import { ContractRoutes } from "./contract/contract.routes";
 import { FinancialRoutes } from "./financial/financial.routes";
 dotenv.config();
 

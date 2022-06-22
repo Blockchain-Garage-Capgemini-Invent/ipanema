@@ -17,6 +17,6 @@ import AuthController from "../auth/auth.controller";
 
 export class AuthRoutes {
   public static configureRoutes(app: Application) {
-    app.route("/login").post(AuthController.login);
+    app.route("/login").post(AuthController.login.bind(AuthController));
   }
 }

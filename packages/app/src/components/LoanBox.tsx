@@ -43,6 +43,7 @@ import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
+import {useEffect} from "react";
 
 interface defaultValues {
   token: StableToken;
@@ -57,6 +58,7 @@ export default function LoanBox() {
   const { kit, address, network } = useCelo();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  let baseInterest: number;
 
   if (!getAuthentication()) {
     logout();
@@ -90,7 +92,7 @@ export default function LoanBox() {
   const [loading, setLoading] = React.useState(false);
 
   const handleChange = (prop: keyof defaultValues) => (event: any) => {
-    calculateInterestRate();
+    updateInterestRate();
     if (prop === "token") {
       setFormValues({ ...formValues, [prop]: event.target.value as StableToken });
     } else if (prop === "date") {
@@ -104,12 +106,18 @@ export default function LoanBox() {
     setFormValues({ ...formValues, date: newValue });
   };
 
-  const calculateInterestRate = () => {
+  useEffect(() => {
+    // You need to restrict it at some point
+    // This is just dummy code and should be replaced by actual
+    if (!baseInterest) {
+      getInterestRate();
+    }
+  }, []);
+
+  const getInterestRate = async () => {
     // baseInterest = interest based on account history (will be taken from backend at the beginning)
     // conditionalInterest = interest based on amount and time range (will be calculated in the frontend)
     // interestRate = baseInterest + conditional Interest (will be calculated in the frontend AND in the backend)
-    const conditionalInterest = formValues.amount * 0.0001;
-    let baseInterest = 5;
 
     try {
       const response = await fetch("http://localhost:3000/interest", {
@@ -125,12 +133,20 @@ export default function LoanBox() {
         return false;
       }
       // OPTIONAL: show transaction id or whatever
-      baseInterest = JSON.parse(response.body)["interest_rate"];
+      if (!response.body) {
+        console.log("No data returned from server");
+        return false;
+      }
+      baseInterest = JSON.parse(response.body.toString()).interest_rate;
       return true;
     } catch (err) {
       enqueueSnackbar("Error submitting loan information!", { variant: "error" });
       console.log(err);
     }
+  };
+
+  const updateInterestRate = () => {
+    const conditionalInterest = formValues.amount * 0.0001;
     setFormValues({...formValues, rate: (baseInterest + conditionalInterest)})
   };
 

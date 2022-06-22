@@ -14,7 +14,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { ContractService } from "./contract.service";
-import { FinancialController } from "../finance/financial.controller";
+import {FinancialService} from "../financial/financial.service";
 
 class ContractController {
   private contract: ContractService;
@@ -30,7 +30,7 @@ class ContractController {
     try {
       if (
         !req.body.loanAmount ||
-        !req.body.interestAmount ||
+        !req.body.interestAmount || // we calculate this from scratch in the backend and do not need it here
         !req.body.repayByTimestamp ||
         !req.body.borrower ||
         !req.body.ercAddress
@@ -59,11 +59,12 @@ class ContractController {
       }
 
       // TODO: Compare interestAmount
-      const interestAmount = FinancialController.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
+      // TODO: Calculate full interest amount here
+      const interestAmount = FinancialService.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
 
       const offerLoanTx = await this.contract.offerLoan(
         req.body.loanAmount,
-        req.body.interestAmount,
+        interestAmount,
         req.body.repayByTimestamp,
         req.body.borrower,
         req.body.ercAddress,

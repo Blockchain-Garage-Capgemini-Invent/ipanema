@@ -73,6 +73,12 @@ class ContractController {
         req.body.loanAmount,
         req.body.repayByTimestamp,
       );
+      if (interestRate === undefined) {
+        console.log("[CONTRACT] interest rate not found");
+        res.status(500).send({ status: "internal server error - interest rate not found" });
+        return;
+      }
+
       const interestAmount = req.body.loanAmount * interestRate;
 
       const offerLoanTx = await this.contract.offerLoan(

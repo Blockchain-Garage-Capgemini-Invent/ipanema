@@ -190,7 +190,7 @@ export default function LoanBox() {
     setLoading(true);
     const token = await kit.contracts.getStableToken(formValues.token);
     if (await postLoan(formValues, address!, token.address)) {
-      takeLoanAndAcceptTerms();
+      await takeLoanAndAcceptTerms();
     }
     setLoading(false);
   };

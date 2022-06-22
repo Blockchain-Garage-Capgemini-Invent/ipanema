@@ -28,12 +28,13 @@ class ContractController {
   public async offerLoan(req: Request, res: Response, next: NextFunction) {
     console.log("[CONTRACT] offer loan request");
     try {
+      console.log("[CONTRACT] body:", JSON.stringify(req.body));
       if (
-        !req.body.loanAmount ||
-        !req.body.interestAmount || // we calculate this from scratch in the backend and do not need it here
-        !req.body.repayByTimestamp ||
-        !req.body.borrower ||
-        !req.body.ercAddress
+        req.body.loanAmount === undefined ||
+        req.body.interestAmount === undefined || // we calculate this from scratch in the backend and do not need it here
+        req.body.repayByTimestamp === undefined ||
+        req.body.borrower === undefined ||
+        req.body.ercAddress === undefined
       ) {
         console.log("[CONTRACT] missing parameter");
         res.status(400).send({ status: "bad request - missing parameter" });
@@ -41,6 +42,10 @@ class ContractController {
       } else if (req.body.loanAmount <= 0) {
         console.log("[CONTRACT] loanAmount <= 0");
         res.status(400).send({ status: "bad request - loanAmount <= 0" });
+        return;
+      } else if (req.body.interestAmount <= 0) {
+        console.log("[CONTRACT] interestAmount <= 0");
+        res.status(400).send({ status: "bad request - interestAmount <= 0" });
         return;
       } else if (
         new Date(req.body.repayByTimestamp * 1000) <= new Date(Date.now() + 1000 * 60 * 60 * 24)
@@ -60,11 +65,17 @@ class ContractController {
 
       // TODO: Compare interestAmount
       // TODO: Calculate full interest amount here
-      const interestAmount = FinancialService.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
+      // const interestAmount = FinancialService.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
+
+      if (!this.contract) {
+        console.log("[CONTRACT] contract not initialized");
+        res.status(500).send({ status: "internal server error - contract not initialized" });
+        return;
+      }
 
       const offerLoanTx = await this.contract.offerLoan(
         req.body.loanAmount,
-        interestAmount,
+        req.body.interestAmount,
         req.body.repayByTimestamp,
         req.body.borrower,
         req.body.ercAddress,

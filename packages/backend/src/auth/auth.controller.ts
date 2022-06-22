@@ -23,7 +23,6 @@ class AuthController {
   public async login(req: Request, res: Response) {
     console.log("[SERVER] login request");
     try {
-      console.log("[SERVER] login request: " + JSON.stringify(req.body));
       if (!req.body.username || !req.body.password) {
         console.log("[SERVER] no username or password");
         res.status(400).send({ status: "bad request - missing parameter" });
@@ -51,7 +50,7 @@ class AuthController {
   public async authenticate(req: Request, res: Response, next: NextFunction) {
     console.log("[SERVER] authenticate request");
     try {
-        console.log("[SERVER] authenticate request: " + JSON.stringify(req.headers));
+      console.log("[SERVER] authenticate request: " + JSON.stringify(req.headers));
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.split(" ")[1]) {
         console.log("[SERVER] auth header is missing");

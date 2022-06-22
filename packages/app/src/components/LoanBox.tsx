@@ -90,6 +90,7 @@ export default function LoanBox() {
   const [loading, setLoading] = React.useState(false);
 
   const handleChange = (prop: keyof defaultValues) => (event: any) => {
+    calculateInterestRate();
     if (prop === "token") {
       setFormValues({ ...formValues, [prop]: event.target.value as StableToken });
     } else if (prop === "date") {
@@ -103,13 +104,35 @@ export default function LoanBox() {
     setFormValues({ ...formValues, date: newValue });
   };
 
-  // TODO: get base interest from backend
-  // TODO: calculate current interest and show to user
-  // const calculateInterestRate = () => {
+  const calculateInterestRate = () => {
     // baseInterest = interest based on account history (will be taken from backend at the beginning)
     // conditionalInterest = interest based on amount and time range (will be calculated in the frontend)
     // interestRate = baseInterest + conditional Interest (will be calculated in the frontend AND in the backend)
-  // };
+    const conditionalInterest = formValues.amount * 0.0001;
+    let baseInterest = 5;
+
+    try {
+      const response = await fetch("http://localhost:3000/interest", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: getAuthentication(),
+        },
+      });
+
+      if (!response.ok) {
+        enqueueSnackbar("Error submitting loan information!", { variant: "error" });
+        return false;
+      }
+      // OPTIONAL: show transaction id or whatever
+      baseInterest = JSON.parse(response.body)["interest_rate"];
+      return true;
+    } catch (err) {
+      enqueueSnackbar("Error submitting loan information!", { variant: "error" });
+      console.log(err);
+    }
+    setFormValues({...formValues, rate: (baseInterest + conditionalInterest)})
+  };
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {
     try {

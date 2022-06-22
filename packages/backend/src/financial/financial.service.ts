@@ -15,23 +15,35 @@
 import {getFinancialData} from "./financialdata";
 
 export class FinancialService {
+    private borrowerAddress: String;
 
-    public async getBaseInterest() {
-        const baseInterest = 2;
-        const {balance, income_last_month, expenses_last_month} = getFinancialData();
-        const historicInterest = (expenses_last_month - income_last_month) * 0.0001 - balance * 0.00001;
-
-        return baseInterest + historicInterest;
+    constructor(borrowerAddress: String) {
+        this.borrowerAddress = borrowerAddress;
     }
 
-    static calculateInterestAmount(loanAmount: number, repayByTimestamp: number) {
+    public async getBaseInterest() {
+        try{
+            const baseInterest = 2;
+            const {balance, income_last_month, expenses_last_month} = getFinancialData(this.borrowerAddress);
+            const historicInterest = (expenses_last_month - income_last_month) * 0.0001 - balance * 0.00001;
+
+            return baseInterest + historicInterest;
+        } catch (e) {
+            console.error("Error at getBaseInterest:\n", e);
+        }
+    }
+
+    // TODO: implement this into contract.controller.ts
+    /*
+    public calculateInterestAmount(loanAmount: number, repayByTimestamp: number) {
         const baseInterest = 2;
         const durationInterest = (repayByTimestamp - Math.floor(Date.now() / 1000)) * 0.0000001
         const conditionalInterest = loanAmount * 0.0001
 
-        const {balance, income_last_month, expenses_last_month} = getFinancialData();
+        const {balance, income_last_month, expenses_last_month} = getFinancialData(this.borrowerAddress);
         const historicInterest = (expenses_last_month - income_last_month) * 0.0001 - balance * 0.00001;
 
         return baseInterest + durationInterest + conditionalInterest + historicInterest;
     }
+     */
 }

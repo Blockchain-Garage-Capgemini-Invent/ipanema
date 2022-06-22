@@ -12,6 +12,11 @@
  **********************************************************************************
  */
 
-export function getFinancialData() {
-  return { balance: 10254.98, income_last_month: 3014.56, expenses_last_month: -2234.41 };
+export function getFinancialData(borrowerAddress: String): Promise<any>{
+  if (!borrowerAddress) {
+    console.log("[FINANCIALDATA] borrowerAddress param missing");
+    return {balance: 0, income_last_month: 0, expenses_last_month: 0};
+  } else {
+    return {balance: 10254.98, income_last_month: 3014.56, expenses_last_month: -2234.41};
+  }
 }

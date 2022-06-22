@@ -1,16 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="af09adc1-d4e6-49f9-a142-43db826d80ec" name="Changes" comment="" />
+    <list default="true" id="af09adc1-d4e6-49f9-a142-43db826d80ec" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../app/src/components/SignIn.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/helpers/auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../app/src/services/user.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/auth/auth.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/auth/auth.routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/auth/auth.service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/auth/auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/contract/contract.controller.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/contract/contract.routes.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/finance/financialdata.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../app/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/components/ConnectWallet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/components/ConnectWallet.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/components/Footer.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/components/LoanBox.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../app/src/components/LoanBox.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../app/src/components/TimePicker.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env-example" beforeDir="false" afterPath="$PROJECT_DIR$/.env-example" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/contract.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/contract/contract.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2AW5Lzsl0GuI42ntBxwxG6JbPmz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -20,14 +57,22 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/tim/Downloads/ipanema-develop",
+    "last_opened_file_path": "/Users/volker/Projekte/ipanema/packages/backend",
     "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.detected.package.standard": "true",
+    "node.js.selected.package.eslint": "",
+    "node.js.selected.package.standard": "",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/home/tim/Downloads/WebStorm-221.5787.30/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/auth" />
+      <recent name="$PROJECT_DIR$/src/contract" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -37,10 +82,22 @@
       <option name="presentableId" value="Default" />
       <updated>1655112449112</updated>
       <workItem from="1655112450461" duration="40000" />
+      <workItem from="1655736560620" duration="11293000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

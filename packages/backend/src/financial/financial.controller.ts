@@ -16,37 +16,26 @@ import {NextFunction, Request, Response} from "express";
 import {FinancialService} from "./financial.service";
 
 class FinancialController{
-    private financial: FinancialService;
+    private financialService: FinancialService;
 
     constructor() {
-        console.log("FinancialController created");
-        this.financial = new FinancialService();
+        console.log("[FINANCIAL] created");
+        this.financialService = new FinancialService();
     }
 
     public async getBaseInterest(req: Request, res: Response, next: NextFunction) {
         console.log("[FINANCIAL] get base interest request");
         try {
-            if (!req.body.borrower) {
-                console.log("[CONTRACT] missing parameter");
-                res.status(400).send({ status: "bad request - missing parameter" });
-                return;
-            } else if (req.body.borrower.length !== 42) {
-                console.log("[CONTRACT] borrower length != 42");
-                res.status(400).send({ status: "bad request - borrower address is not valid" });
-                return;
-            }
-
-            const baseInterest = await this.financial.getBaseInterest();
-
+            const baseInterest = this.financialService.getBaseInterest(res.locals.username);
             if (!baseInterest) {
                 console.log("[FINANCIAL] base interest calculation failed");
-                res.status(500).send({ status: "offer loan failed" });
+                res.status(500).send({ status: "internal server error - base interest calculation failed" });
             }
 
             console.log("[FINANCIAL] interest calculation successful");
             res.status(200).send({ status: "interest calculation successful", tx: baseInterest });
         } catch (e) {
-            console.error("Error at baseInterest:\n", e);
+            console.error("[FINANCIAL] Error at baseInterest:\n", e);
             res.status(500).send({ status: "error" });
         }
     }

@@ -15,22 +15,19 @@
 import {getFinancialData} from "./financialdata";
 
 export class FinancialService {
-    private borrowerAddress: String;
-
-    constructor(borrowerAddress: String) {
-        this.borrowerAddress = borrowerAddress;
+    constructor() {
+        console.log("[FinancialService] created");
     }
 
-    public async getBaseInterest() {
-        try{
-            const baseInterest = 2;
-            const {balance, income_last_month, expenses_last_month} = getFinancialData(this.borrowerAddress);
-            const historicInterest = (expenses_last_month - income_last_month) * 0.0001 - balance * 0.00001;
-
-            return baseInterest + historicInterest;
-        } catch (e) {
-            console.error("Error at getBaseInterest:\n", e);
+    public getBaseInterest(username: string): number | undefined {
+        const baseInterest = 2;
+        const financialData = getFinancialData(username);
+        if (!financialData) {
+            console.log("[FinancialService] base interest calculation failed");
+            return undefined;
         }
+        const historicInterest = (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 - financialData.balance * 0.00001;
+        return baseInterest + historicInterest;
     }
 
     // TODO: implement this into contract.controller.ts

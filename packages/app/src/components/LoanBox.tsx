@@ -105,11 +105,11 @@ export default function LoanBox() {
 
   // TODO: get base interest from backend
   // TODO: calculate current interest and show to user
-  const calculateInterestRate = () => {
+  // const calculateInterestRate = () => {
     // baseInterest = interest based on account history (will be taken from backend at the beginning)
     // conditionalInterest = interest based on amount and time range (will be calculated in the frontend)
     // interestRate = baseInterest + conditional Interest (will be calculated in the frontend AND in the backend)
-  };
+  // };
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {
     try {

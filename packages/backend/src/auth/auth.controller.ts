@@ -79,6 +79,7 @@ class AuthController {
       }
 
       console.log("[SERVER] user authenticated: " + username);
+      res.locals.username = username;
       next();
     } catch (e) {
       console.error("Error at authenticate:\n", e);

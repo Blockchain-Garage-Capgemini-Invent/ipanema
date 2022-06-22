@@ -12,12 +12,12 @@
  **********************************************************************************
  */
 
-import { Application } from "express";
+import {Application} from "express";
 import AuthController from "../auth/auth.controller";
-import {FinancialController} from "./financial.controller";
+import FinancialController from "./financial.controller";
 
-export class ContractRoutes {
+export class FinancialRoutes {
     public static configureRoutes(app: Application) {
-        app.route("/interest").post([AuthController.authenticate, FinancialController.getBaseInterest]);
+        app.route("/interest").get([AuthController.authenticate, FinancialController.getBaseInterest]);
     }
 }

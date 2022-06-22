@@ -17,6 +17,8 @@ import { ContractRoutes } from "./contract/contract.routes";
 import express from "express";
 import cors from "cors";
 import * as dotenv from "dotenv";
+import {FinancialService} from "./financial/financial.service";
+import {FinancialRoutes} from "./financial/financial.routes";
 dotenv.config();
 
 const host: string = process.env.HOST || "localhost";
@@ -32,6 +34,7 @@ const main = async () => {
 
   AuthRoutes.configureRoutes(app);
   ContractRoutes.configureRoutes(app);
+  FinancialRoutes.configureRoutes(app);
 
   app.listen(port, () => {
     console.log(`[Server] Server is running at https://localhost:${port}`);

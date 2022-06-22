@@ -85,7 +85,7 @@ export default function LoanBox() {
     token: StableToken.cUSD,
     date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     amount: 1,
-    rate: 0,
+    rate: 5,
   });
   const [loading, setLoading] = React.useState(false);
 
@@ -238,7 +238,7 @@ export default function LoanBox() {
                   id="interest-rate"
                   label="Interest Rate"
                   type="number"
-                  value={5}
+                  value={formValues.rate}
                   disabled={true}
                   endAdornment={<InputAdornment position="end">%</InputAdornment>}
                 />

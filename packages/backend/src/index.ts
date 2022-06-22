@@ -36,8 +36,8 @@ const main = async () => {
   ContractRoutes.configureRoutes(app);
   FinancialRoutes.configureRoutes(app);
 
-  app.listen(port, () => {
-    console.log(`[Server] Server is running at https://localhost:${port}`);
+  app.listen(port, host, () => {
+    console.log(`[Server] listen on http://${host}:${port}`);
   });
 };
 

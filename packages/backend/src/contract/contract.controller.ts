@@ -14,7 +14,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { ContractService } from "./contract.service";
-import {FinancialService} from "../financial/financial.service";
+import { FinancialService } from "../financial/financial.service";
 
 class ContractController {
   private contract: ContractService;
@@ -60,7 +60,19 @@ class ContractController {
 
       // TODO: Compare interestAmount
       // TODO: Calculate full interest amount here
-      const interestRate = FinancialService.calculateInterestAmount(res.locals.username, req.body.loanAmount, req.body.repayByTimestamp);
+      // const interestAmount = FinancialService.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
+
+      if (this.contract === undefined) {
+        console.log("[CONTRACT] contract not initialized");
+        res.status(500).send({ status: "internal server error - contract not initialized" });
+        return;
+      }
+
+      const interestRate = FinancialService.calculateInterestAmount(
+        res.locals.username,
+        req.body.loanAmount,
+        req.body.repayByTimestamp,
+      );
       const interestAmount = req.body.loanAmount * interestRate;
 
       const offerLoanTx = await this.contract.offerLoan(
@@ -79,7 +91,7 @@ class ContractController {
       console.log("[CONTRACT] offer loan successful");
       res.status(200).send({ status: "offer loan successful", tx: offerLoanTx });
     } catch (e) {
-      console.error("Error at offerLoan:\n", e);
+      console.error("[CONTRACT] error at offerLoan:\n", e);
       res.status(500).send({ status: "error" });
     }
   }

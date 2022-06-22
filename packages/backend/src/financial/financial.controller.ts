@@ -34,9 +34,11 @@ class FinancialController {
           .send({ status: "internal server error - base interest calculation failed" });
       }
       console.log("[FINANCIAL] interest calculation successful");
-      res.status(200).send({ status: "interest calculation successful", base_interest: baseInterest });
+      res
+        .status(200)
+        .send({ status: "interest calculation successful", base_interest: baseInterest });
     } catch (e) {
-      console.error("[FINANCIAL] Error at baseInterest:\n", e);
+      console.error("[FINANCIAL] error at getBaseInterest:\n", e);
       res.status(500).send({ status: "error" });
     }
   }

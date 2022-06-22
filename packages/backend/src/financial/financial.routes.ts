@@ -5,7 +5,7 @@
  *  \____\__,_| .__/ \__, |\___|_| |_| |_|_|_| |_|_| |___|_| |_|\_/ \___|_| |_|\__|
  *            |_|    |___/
  **********************************************************************************
- *      contract.routes.ts
+ *      financial.routes.ts
  *      Created on: 22.06.22
  *      Author:     Tim Schmitz
  *      Copyright (c) 2022 Capgemini Invent. All rights reserved.

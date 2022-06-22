@@ -17,30 +17,30 @@ import { User } from "./auth.service";
 
 class AuthController {
   constructor() {
-    console.log("AuthController created");
+    console.log("[AUTH] created");
   }
 
   public async login(req: Request, res: Response) {
-    console.log("[SERVER] login request");
+    console.log("[AUTH] login request");
     try {
       if (!req.body.username || !req.body.password) {
-        console.log("[SERVER] no username or password");
+        console.log("[AUTH] no username or password");
         res.status(400).send({ status: "bad request - missing parameter" });
         return;
       }
 
       const user = User.getUser(req.body.username);
       if (!user) {
-        console.log("[SERVER] user not found: " + req.body.username);
+        console.log("[AUTH] user not found: " + req.body.username);
         res.status(403).send({ status: "forbidden - user not found" });
         return;
       } else if (user.password !== req.body.password) {
-        console.log("[SERVER] wrong password for user: " + req.body.username);
+        console.log("[AUTH] wrong password for user: " + req.body.username);
         res.status(403).send({ status: "forbidden - wrong password" });
         return;
       }
 
-      console.log("[SERVER] user authenticated: " + req.body.username);
+      console.log("[AUTH] user authenticated: " + req.body.username);
       res.status(200).send({ status: "ok", data: user });
     } catch (err) {
       res.status(500).send({ status: "error", error: err });
@@ -48,12 +48,12 @@ class AuthController {
   }
 
   public async authenticate(req: Request, res: Response, next: NextFunction) {
-    console.log("[SERVER] authenticate request");
+    console.log("[AUTH] authenticate request");
     try {
-      console.log("[SERVER] authenticate request: " + JSON.stringify(req.headers));
+      console.log("[AUTH] authenticate request: " + JSON.stringify(req.headers));
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.split(" ")[1]) {
-        console.log("[SERVER] auth header is missing");
+        console.log("[AUTH] auth header is missing");
         res.status(401).send({ status: "unauthorized - missing parameter" });
         return;
       }
@@ -61,27 +61,27 @@ class AuthController {
       const credentials = Buffer.from(authHeader.split(" ")[1], "base64").toString("binary");
       const [username, password] = credentials.split(":");
       if (!username || !password) {
-        console.log("[SERVER] no username or password");
+        console.log("[AUTH] no username or password");
         res.status(401).send({ status: "unauthorized - missing credentials" });
         return;
       }
 
       const user = User.getUser(username);
       if (!user) {
-        console.log("[SERVER] user not found: " + username);
+        console.log("[AUTH] user not found: " + username);
         res.status(403).send({ status: "forbidden - user not found" });
         return;
       } else if (user.password !== password) {
-        console.log("[SERVER] wrong password for user: " + username);
+        console.log("[AUTH] wrong password for user: " + username);
         res.status(403).send({ status: "forbidden - wrong password" });
         return;
       }
 
-      console.log("[SERVER] user authenticated: " + username);
+      console.log("[AUTH] user authenticated: " + username);
       res.locals.username = username;
       next();
     } catch (e) {
-      console.error("Error at authenticate:\n", e);
+      console.error("[AUTH] error at authenticate:\n", e);
       res.status(500).send({ status: "error" });
     }
   }

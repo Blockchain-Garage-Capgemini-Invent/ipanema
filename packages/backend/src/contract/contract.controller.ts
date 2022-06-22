@@ -12,7 +12,7 @@
  **********************************************************************************
  */
 
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import { ContractService } from "./contract.service";
 import { FinancialService } from "../financial/financial.service";
 

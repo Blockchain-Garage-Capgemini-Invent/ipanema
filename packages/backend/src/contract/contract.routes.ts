@@ -18,6 +18,8 @@ import ContractController from "./contract.controller";
 
 export class ContractRoutes {
   public static configureRoutes(app: Application) {
-    app.route("/loan").post([AuthController.authenticate, ContractController.offerLoan.bind(ContractController)]);
+    app
+      .route("/loan")
+      .post([AuthController.authenticate, ContractController.offerLoan.bind(ContractController)]);
   }
 }

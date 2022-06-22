@@ -12,7 +12,7 @@
  **********************************************************************************
  */
 
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { FinancialService } from "./financial.service";
 
 class FinancialController {
@@ -23,7 +23,7 @@ class FinancialController {
     this.financialService = new FinancialService();
   }
 
-  public async getBaseInterest(req: Request, res: Response, next: NextFunction) {
+  public async getBaseInterest(req: Request, res: Response) {
     console.log("[FINANCIAL] get base interest request");
     try {
       const baseInterest = this.financialService.getBaseInterest(res.locals.username);

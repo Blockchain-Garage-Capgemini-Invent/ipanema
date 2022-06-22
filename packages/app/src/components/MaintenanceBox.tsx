@@ -25,6 +25,7 @@ import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
+import { StableTokenWrapper } from "@celo/contractkit/lib/wrappers/StableTokenWrapper";
 
 enum LoanState {
   Offered,
@@ -52,6 +53,7 @@ export default function MaintenanceBox() {
   interface ContractJSON {
     [key: string]: any;
   }
+
   const contractAbi = (deployedContracts as ContractJSON)[network.chainId.toString()][0].contracts
     .CentralizedLoan.abi;
   const contractAddress = (deployedContracts as ContractJSON)[network.chainId.toString()][0]
@@ -100,10 +102,26 @@ export default function MaintenanceBox() {
           repaymentAmount.toString(),
           "ether",
         );
-        // Damn, why is the kit.contracts.getErc20() missing?
-        // TODO: Check which token is being used (from the contract)
-        const token = await kit.contracts.getStableToken(StableToken.cUSD);
-        const approveTx = await token
+
+        // TODO: This is a hack, but it works for now
+        let token: StableTokenWrapper;
+        kit.celoTokens.getAddress(StableToken.cUSD).then(async cUSDAddress => {
+          if (cUSDAddress === ercAddress) {
+            token = await kit.contracts.getStableToken(StableToken.cUSD);
+          }
+        });
+        kit.celoTokens.getAddress(StableToken.cEUR).then(async cEURAddress => {
+          if (cEURAddress === ercAddress) {
+            token = await kit.contracts.getStableToken(StableToken.cEUR);
+          }
+        });
+        kit.celoTokens.getAddress(StableToken.cREAL).then(async cREALAddress => {
+          if (cREALAddress === ercAddress) {
+            token = await kit.contracts.getStableToken(StableToken.cREAL);
+          }
+        });
+
+        const approveTx = await token!
           .approve(loanContract.options.address, amountToExchange)
           .send({ from: address as string });
         const approveReceipt = await approveTx.waitReceipt();
@@ -115,7 +133,7 @@ export default function MaintenanceBox() {
 
         // Check the allowance
         console.log("Checking allowance");
-        const allowanceTx = await token.allowance(address as string, loanContract.options.address);
+        const allowanceTx = await token!.allowance(address as string, loanContract.options.address);
         console.log("Allowance to spend", allowanceTx.toNumber());
 
         // Make the repayment

@@ -18,9 +18,13 @@ import {
   Card,
   CardContent,
   FormControl,
+  FormHelperText,
   Grid,
   InputAdornment,
+  InputLabel,
+  MenuItem,
   OutlinedInput,
+  Select,
   Stack,
   TextField,
   Typography,
@@ -41,6 +45,7 @@ import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 
 interface defaultValues {
+  token: StableToken;
   date: Date | null;
   amount: number;
   rate: number;
@@ -66,6 +71,7 @@ export default function LoanBox() {
   interface ContractJSON {
     [key: string]: any;
   }
+
   const contractAbi = (deployedContracts as ContractJSON)[network.chainId.toString()][0].contracts
     .CentralizedLoan.abi;
   const contractAddress = (deployedContracts as ContractJSON)[network.chainId.toString()][0]
@@ -76,16 +82,22 @@ export default function LoanBox() {
   ) as any as CentralizedLoan;
 
   const [formValues, setFormValues] = React.useState<defaultValues>({
+    token: StableToken.cUSD,
     date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     amount: 1,
     rate: 0,
   });
   const [loading, setLoading] = React.useState(false);
 
-  const handleChange =
-    (prop: keyof defaultValues) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFormValues({ ...formValues, [prop]: event.target.value });
-    };
+  const handleChange = (prop: keyof defaultValues) => (event: any) => {
+    if (prop === "token") {
+      setFormValues({ ...formValues, [prop]: event.target.value as StableToken });
+    } else if (prop === "date") {
+      setFormValues({ ...formValues, [prop]: event.target.value as Date });
+    } else if (prop === "amount") {
+      setFormValues({ ...formValues, [prop]: parseFloat(event.target.value) });
+    }
+  };
 
   const handleChangeDate = (newValue: Date | null) => {
     setFormValues({ ...formValues, date: newValue });
@@ -101,7 +113,6 @@ export default function LoanBox() {
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {
     try {
-      console.log("authHeader: ", getAuthentication());
       const response = await fetch("http://localhost:3000/loan", {
         method: "POST",
         body: JSON.stringify({
@@ -154,7 +165,7 @@ export default function LoanBox() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const token = await kit.contracts.getStableToken(StableToken.cUSD);
+    const token = await kit.contracts.getStableToken(formValues.token);
     if (await postLoan(formValues, address!, token.address)) {
       takeLoanAndAcceptTerms();
     }
@@ -196,21 +207,40 @@ export default function LoanBox() {
                 </LocalizationProvider>
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
-                <OutlinedInput
-                  type="number"
-                  value={formValues.amount}
-                  onChange={handleChange("amount")}
-                  startAdornment={<InputAdornment position="start">cUSD</InputAdornment>}
-                  label="Amount"
-                />
+                <InputLabel htmlFor="token">Token</InputLabel>
+                <Select
+                  id="token"
+                  label="Token"
+                  value={formValues.token}
+                  onChange={handleChange("token")}
+                >
+                  <MenuItem value={StableToken.cUSD}>cUSD</MenuItem>
+                  <MenuItem value={StableToken.cEUR}>cEUR</MenuItem>
+                  <MenuItem value={StableToken.cREAL}>cREAL</MenuItem>
+                </Select>
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="amount">Amount</InputLabel>
                 <OutlinedInput
+                  id="amount"
+                  label="Amount"
+                  type="number"
+                  value={formValues.amount}
+                  endAdornment={<InputAdornment position="end">{formValues.token}</InputAdornment>}
+                  onChange={handleChange("amount")}
+                  error={formValues.amount <= 0}
+                />
+                {formValues.amount <= 0 ? (<FormHelperText id="amount" error>The amount must be greater than 0</FormHelperText>) : null}
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <InputLabel htmlFor="interest-rate">Interest Rate</InputLabel>
+                <OutlinedInput
+                  id="interest-rate"
+                  label="Interest Rate"
                   type="number"
                   value={5}
                   disabled={true}
-                  startAdornment={<InputAdornment position="start">%</InputAdornment>}
-                  label="Interest Rate"
+                  endAdornment={<InputAdornment position="end">%</InputAdornment>}
                 />
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>

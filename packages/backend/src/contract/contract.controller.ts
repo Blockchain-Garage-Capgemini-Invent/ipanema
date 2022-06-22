@@ -58,10 +58,6 @@ class ContractController {
         return;
       }
 
-      // TODO: Compare interestAmount
-      // TODO: Calculate full interest amount here
-      // const interestAmount = FinancialService.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
-
       if (this.contract === undefined) {
         console.log("[CONTRACT] contract not initialized");
         res.status(500).send({ status: "internal server error - contract not initialized" });
@@ -80,6 +76,11 @@ class ContractController {
       }
 
       const interestAmount = req.body.loanAmount * interestRate;
+      if (interestAmount !== req.body.interestAmount) {
+        console.log("[CONTRACT] interest amount mismatch");
+        res.status(500).send({ status: "internal server error - interest amount mismatch" });
+        return;
+      }
 
       const offerLoanTx = await this.contract.offerLoan(
         req.body.loanAmount,

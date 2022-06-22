@@ -14,6 +14,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { ContractService } from "./contract.service";
+import { FinancialController } from "../finance/financial.controller";
 
 class ContractController {
   private contract: ContractService;
@@ -58,7 +59,7 @@ class ContractController {
       }
 
       // TODO: Compare interestAmount
-      const interestAmount = FinancialController.claculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
+      const interestAmount = FinancialController.calculateInterestAmount(req.body.loanAmount, req.body.repayByTimestamp);
 
       const offerLoanTx = await this.contract.offerLoan(
         req.body.loanAmount,

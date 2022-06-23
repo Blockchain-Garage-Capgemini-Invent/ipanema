@@ -25,6 +25,6 @@ export class FinancialService {
   }
 
   static calculateInterestAmount(username: string, loanAmount: number, repayByTimestamp: number): number {
-    return loanAmount * this.getBaseInterestRate(username)!;
+    return (loanAmount * 0.001) + this.getBaseInterestRate(username)!;
   }
 }

@@ -19,13 +19,13 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
+import { MiniContractKit } from "@celo/contractkit/lib/mini-kit";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
-import { StableTokenWrapper } from "@celo/contractkit/lib/wrappers/StableTokenWrapper";
 
 enum LoanState {
   Offered,
@@ -33,6 +33,23 @@ enum LoanState {
   Taken,
   Repayed,
   Defaulted,
+}
+
+async function getStableToken(kit: MiniContractKit, ercAddress: string): Promise<StableToken> {
+  let tokenAddress = await kit.celoTokens.getAddress(StableToken.cUSD);
+  if (tokenAddress === ercAddress) {
+    return StableToken.cUSD;
+  }
+  tokenAddress = await kit.celoTokens.getAddress(StableToken.cEUR);
+  if (tokenAddress === ercAddress) {
+    return StableToken.cEUR;
+  }
+  tokenAddress = await kit.celoTokens.getAddress(StableToken.cREAL);
+  if (tokenAddress === ercAddress) {
+    return StableToken.cREAL;
+  }
+  console.log("Failed to resolve token address", ercAddress);
+  return StableToken.cUSD;
 }
 
 export default function MaintenanceBox() {
@@ -66,6 +83,7 @@ export default function MaintenanceBox() {
   const [repaymentAmount, setRepaymentAmount] = useState(0);
   const [date, setDate] = useState(new Date());
   const [ercAddress, setErcAddress] = useState("");
+  const [stableToken, setStableToken] = useState<StableToken>();
 
   useEffect(() => {
     // You need to restrict it at some point
@@ -79,7 +97,7 @@ export default function MaintenanceBox() {
     try {
       console.log("Requesting loan information");
       const loanData = await loanContract.methods.getMyLoan().call();
-      console.log(loanData);
+      console.log("Loan information: ", loanData);
       if (Number(loanData._state) !== LoanState.Taken) {
         navigate("/getloan");
       }
@@ -88,6 +106,8 @@ export default function MaintenanceBox() {
       setRepaymentAmount(Number(loanAmount) + Number(interestAmount));
       setDate(new Date(Number(loanData._repayByTimestamp) * 1000));
       setErcAddress(loanData._ercAddress);
+      const stableToken = await getStableToken(kit, loanData._ercAddress);
+      setStableToken(stableToken);
     } catch (err) {
       console.log(err);
       navigate("/getloan");
@@ -102,25 +122,8 @@ export default function MaintenanceBox() {
           repaymentAmount.toString(),
           "ether",
         );
-
-        // TODO: This is a hack, but it works for now
-        let token: StableTokenWrapper;
-        kit.celoTokens.getAddress(StableToken.cUSD).then(async cUSDAddress => {
-          if (cUSDAddress === ercAddress) {
-            token = await kit.contracts.getStableToken(StableToken.cUSD);
-          }
-        });
-        kit.celoTokens.getAddress(StableToken.cEUR).then(async cEURAddress => {
-          if (cEURAddress === ercAddress) {
-            token = await kit.contracts.getStableToken(StableToken.cEUR);
-          }
-        });
-        kit.celoTokens.getAddress(StableToken.cREAL).then(async cREALAddress => {
-          if (cREALAddress === ercAddress) {
-            token = await kit.contracts.getStableToken(StableToken.cREAL);
-          }
-        });
-
+        const stableToken = await getStableToken(kit, ercAddress);
+        const token = await kit.contracts.getStableToken(stableToken);
         const approveTx = await token!
           .approve(loanContract.options.address, amountToExchange)
           .send({ from: address as string });
@@ -177,7 +180,7 @@ export default function MaintenanceBox() {
               />
               <Chip
                 icon={<CurrencyBitcoinIcon />}
-                label={repaymentAmount + " cUSD"}
+                label={repaymentAmount + " " + stableToken}
                 variant="outlined"
                 style={{ width: "fit-content" }}
               />

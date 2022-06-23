@@ -17,9 +17,9 @@ Parallel to this, traditional banks implemented online banking applications that
 Blockchains provide layers for settlements and transactions that are faster, more secure, more transparent, and more interoperable than in the banking world. But the lack of providing loans in DeFi is a large opportunity for banks. With Ipanema, they can easily get access to the DeFi world and offer loans in cryptocurrencies to their customers. Ipanema builds the bridge between the traditional world and the blockchain ecosystem, by combining the advantages of banking interfaces with KYC solutions and the open world of blockchains. 
 
 ### Team & Background
-Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stablecoin in Web3 &amp; Sustaina-bility. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 
+Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stablecoin in Web3 &amp; Sustainability. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 
 
-The Ipanema team consists of the german Capgemini Invent programmers Volker Dufner, Tim Schmitz and Jo-nas Engelhardt. 
+The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and consultants [Seyhan Ilhan](https://github.com/seyhdervis). 
 
 ## 🧑‍💻 Technologies
 
@@ -64,14 +64,14 @@ The Ipanema mobile-first decentralized application is written in Typescript usin
 The customer has no collateral by default if the loan is not repaid the bank can take legal actions in the real world in contrast to other DeFi applications. 
 
 ## 📣 What comes next?
-The current version of Ipanema gives just a small insight into how banks could be integrated into the decentral-ized financial system. 
+The current version of Ipanema gives just a small insight into how banks could be integrated into the decentralized financial system. 
 In the future, updates can be implemented that provide a better user experience, and more functionality and that help to meet current and incoming regulations. 
 
-- Customer verification/KYC: banks are generally not allowed to provide loans to unauthenticated customers. Ipanema will integrate functions that use the bank’s KYC methods to verify each customer. Example: the cus-tomer enters his wallet address in his online banking application where KYC was already done. The bank will send a verification token to the customer’s wallet. Only customers with a verification token will be allowed to take loans. 
+- Customer verification/KYC: banks are generally not allowed to provide loans to unauthenticated customers. Ipanema will integrate functions that use the bank’s KYC methods to verify each customer. Example: the customer enters his wallet address in his online banking application where KYC was already done. The bank will send a verification token to the customer’s wallet. Only customers with a verification token will be allowed to take loans. 
 
-- Several categories of loans: currently there is only one version of fixed loans, that have to be fully repaid after a certain time. In the future, more versions of loans for example with variable interest rates and variable re-payments could be implemented. 
+- Several categories of loans: currently there is only one version of fixed loans, that have to be fully repaid after a certain time. In the future, more versions of loans for example with variable interest rates and variable repayments could be implemented. 
 
-- Full integration in a bank’s backend: the bank will be able to implement its risk models and provide each cus-tomer with a calculated interest rate.  
+- Full integration in a bank’s backend: the bank will be able to implement its risk models and provide each customer with a calculated interest rate.  
 
 ## 🗣️ FAQs
 

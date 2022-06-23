@@ -25,25 +25,25 @@ class AuthController {
     try {
       if (!req.body.username || !req.body.password) {
         console.log("[AUTH] no username or password");
-        res.status(400).send({ status: "bad request - missing parameter" });
+        res.status(400).json({ status: "bad request - missing parameter" });
         return;
       }
 
       const user = User.getUser(req.body.username);
       if (!user) {
         console.log("[AUTH] user not found: " + req.body.username);
-        res.status(403).send({ status: "forbidden - user not found" });
+        res.status(403).json({ status: "forbidden - user not found" });
         return;
       } else if (user.password !== req.body.password) {
         console.log("[AUTH] wrong password for user: " + req.body.username);
-        res.status(403).send({ status: "forbidden - wrong password" });
+        res.status(403).json({ status: "forbidden - wrong password" });
         return;
       }
 
       console.log("[AUTH] user authenticated: " + req.body.username);
-      res.status(200).send({ status: "ok", data: user });
+      res.status(200).json({ status: "ok", data: user });
     } catch (err) {
-      res.status(500).send({ status: "error", error: err });
+      res.status(500).json({ status: "error", error: err });
     }
   }
 
@@ -54,7 +54,7 @@ class AuthController {
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.split(" ")[1]) {
         console.log("[AUTH] auth header is missing");
-        res.status(401).send({ status: "unauthorized - missing parameter" });
+        res.status(401).json({ status: "unauthorized - missing parameter" });
         return;
       }
 
@@ -62,18 +62,18 @@ class AuthController {
       const [username, password] = credentials.split(":");
       if (!username || !password) {
         console.log("[AUTH] no username or password");
-        res.status(401).send({ status: "unauthorized - missing credentials" });
+        res.status(401).json({ status: "unauthorized - missing credentials" });
         return;
       }
 
       const user = User.getUser(username);
       if (!user) {
         console.log("[AUTH] user not found: " + username);
-        res.status(403).send({ status: "forbidden - user not found" });
+        res.status(403).json({ status: "forbidden - user not found" });
         return;
       } else if (user.password !== password) {
         console.log("[AUTH] wrong password for user: " + username);
-        res.status(403).send({ status: "forbidden - wrong password" });
+        res.status(403).json({ status: "forbidden - wrong password" });
         return;
       }
 
@@ -82,7 +82,7 @@ class AuthController {
       next();
     } catch (e) {
       console.error("[AUTH] error at authenticate:\n", e);
-      res.status(500).send({ status: "error" });
+      res.status(500).json({ status: "error" });
     }
   }
 }

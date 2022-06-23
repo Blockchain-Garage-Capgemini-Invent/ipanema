@@ -15,8 +15,6 @@
 import { getFinancialData } from "./financialdata";
 
 export class FinancialService {
-  constructor() {}
-
   public getBaseInterest(username: string): number | undefined {
     console.log("[FINANCIAL] get base interest for user: " + username);
     const baseInterest = 2;

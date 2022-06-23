@@ -36,31 +36,31 @@ class ContractController {
         !req.body.ercAddress
       ) {
         console.log("[CONTRACT] missing parameter");
-        res.status(400).send({ status: "bad request - missing parameter" });
+        res.status(400).json({ status: "bad request - missing parameter" });
         return;
       } else if (req.body.loanAmount <= 0) {
         console.log("[CONTRACT] loanAmount <= 0");
-        res.status(400).send({ status: "bad request - loanAmount <= 0" });
+        res.status(400).json({ status: "bad request - loanAmount <= 0" });
         return;
       } else if (
         new Date(req.body.repayByTimestamp * 1000) <= new Date(Date.now() + 1000 * 60 * 60 * 24)
       ) {
         console.log("[CONTRACT] repayByTimestamp <= now + 1 day");
-        res.status(400).send({ status: "bad request - repayByTimestamp <= now + 1 day" });
+        res.status(400).json({ status: "bad request - repayByTimestamp <= now + 1 day" });
         return;
       } else if (req.body.borrower.length !== 42) {
         console.log("[CONTRACT] borrower length != 42");
-        res.status(400).send({ status: "bad request - borrower address is not valid" });
+        res.status(400).json({ status: "bad request - borrower address is not valid" });
         return;
       } else if (req.body.ercAddress.length !== 42) {
         console.log("[CONTRACT] ercAddress length != 42");
-        res.status(400).send({ status: "bad request - ercAddress is not valid" });
+        res.status(400).json({ status: "bad request - ercAddress is not valid" });
         return;
       }
 
       if (this.contract === undefined) {
         console.log("[CONTRACT] contract not initialized");
-        res.status(500).send({ status: "internal server error - contract not initialized" });
+        res.status(500).json({ status: "internal server error - contract not initialized" });
         return;
       }
 
@@ -71,14 +71,14 @@ class ContractController {
       );
       if (interestRate === undefined) {
         console.log("[CONTRACT] interest rate not found");
-        res.status(500).send({ status: "internal server error - interest rate not found" });
+        res.status(500).json({ status: "internal server error - interest rate not found" });
         return;
       }
 
       const interestAmount = req.body.loanAmount * interestRate;
       if (interestAmount !== req.body.interestAmount) {
         console.log("[CONTRACT] interest amount mismatch");
-        res.status(500).send({ status: "internal server error - interest amount mismatch" });
+        res.status(500).json({ status: "internal server error - interest amount mismatch" });
         return;
       }
 
@@ -92,14 +92,14 @@ class ContractController {
 
       if (!offerLoanTx) {
         console.log("[CONTRACT] offer loan failed");
-        res.status(500).send({ status: "offer loan failed" });
+        res.status(500).json({ status: "offer loan failed" });
       }
 
       console.log("[CONTRACT] offer loan successful");
-      res.status(200).send({ status: "offer loan successful", tx: offerLoanTx });
+      res.status(200).json({ status: "offer loan successful", tx: offerLoanTx });
     } catch (e) {
       console.error("[CONTRACT] error at offerLoan:\n", e);
-      res.status(500).send({ status: "error" });
+      res.status(500).json({ status: "error" });
     }
   }
 }

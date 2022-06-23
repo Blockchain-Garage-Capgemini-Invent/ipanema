@@ -43,7 +43,7 @@ import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
-import {useEffect} from "react";
+import { useEffect } from "react";
 
 interface defaultValues {
   token: StableToken;
@@ -143,7 +143,7 @@ export default function LoanBox() {
 
   const updateInterestRate = () => {
     const conditionalInterest = formValues.amount * 0.0001;
-    setFormValues({...formValues, rate: (baseInterest + conditionalInterest)})
+    setFormValues({ ...formValues, rate: baseInterest + conditionalInterest });
   };
 
   const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {

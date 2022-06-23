@@ -21,37 +21,14 @@ Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stable
 
 The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and consultants [Seyhan Ilhan](https://github.com/seyhdervis). 
 
-## 🧑‍💻 Technologies
+## 🔄 Live Demo
 
-### Celo: Mobile-First DeFi Platform
-
-[Celo](https://celo.org/) is a fully EVM compatible proof-of-stake layer-1 protocol, featuring a fast ultralight client and built-in seigniorage stablecoins, collateralized by crypto and natural assets.
-
-- [Whitepapers](https://celo.org/papers)
-- [Docs](https://docs.celo.org/)
-- [Developer Resources](https://celo.org/developers)
-- [Tutorials](https://docs.celo.org/blog)
-
-### Ipanema: Smart Contract
-The Ipanema smart contract is written in Solidity and will initially be deployed on the [Alfajores test-net](https://docs.celo.org/getting-started/alfajores-testnet).
-
-The ```ERC20.sol``` Contract deploys a test token that can be used to issue test loans.
-The ```multiLoanErc20.sol``` contract enables peer-to-peer loans using any ERC20 token.
-
-### Ipanema: Mobile-First dApp
-The Ipanema mobile-first decentralized application is written in Typescript using the [Re-act](https://reactjs.org/) and [Next](https://nextjs.org/) framework.
-
-## 🚶 First Steps
-
-1. [Set up a Testnet Development Wallet](https://docs.celo.org/developer-resources/testnet-wallet)
-2. [Deploy on Celo](https://docs.celo.org/developer-resources/deploy-dapp)
-3. [Integrate with Celo](https://docs.celo.org/developer-guide/integrations)
-
-## Ipanema: Demo Flow
+The live demo version of Ipanema can be tested here: http://159.69.213.123/
 
 ### Authetication
-1. Customer creates wallet and enters address into the online banking application
-2. Bank verifies wallet
+1. Customer logs into his/hers online banking account
+2. Customer connects a wallet of his/her choice to receive the loan.
+3. (planned) Bank verifies wallet
 
 ### Taking a loan
 3. Customer uses Ipanema frontend to request loan
@@ -73,7 +50,32 @@ In the future, updates can be implemented that provide a better user experience,
 
 - Full integration in a bank’s backend: the bank will be able to implement its risk models and provide each customer with a calculated interest rate.  
 
-## 🗣️ FAQs
+## 🧑‍💻 Technologies
+
+### Celo: Mobile-First DeFi Platform
+
+[Celo](https://celo.org/) is a fully EVM compatible proof-of-stake layer-1 protocol, featuring a fast ultralight client and built-in seigniorage stablecoins, collateralized by crypto and natural assets.
+
+- [Whitepapers](https://celo.org/papers)
+- [Docs](https://docs.celo.org/)
+- [Developer Resources](https://celo.org/developers)
+- [Tutorials](https://docs.celo.org/blog)
+
+### Ipanema: Smart Contract
+The Ipanema smart contract is written in Solidity and will initially be deployed on the [Alfajores test-net](https://docs.celo.org/getting-started/alfajores-testnet).
+
+The ```multiLoanErc20.sol``` contract enables peer-to-peer loans using any ERC20 token.
+
+### Ipanema: Backend
+The backend consists of a service that demonstrates the banks backend, inclduing the wallet and calculation of the credit conditions. It is also written in Typescript and uses the Celo [ContractKit](https://github.com/celo-org/celo-monorepo/tree/master/packages/sdk/contractkit) to access the Ipanema smart contract.
+
+### Ipanema: Mobile-First dApp
+The Ipanema mobile-first decentralized application is written in Typescript using the [React](https://reactjs.org/) framework. Using the [react-celo](https://github.com/celo-org/react-celo) React hook, we manage access to celo with an integrated headless modal system for connecting to the wallet of your choice.
+
+# 🏗️ How to build/run
+
+TODO
+
 
 --- 
 Copyright: [Volker Dufner](https://github.com/dFohlen) @ Capgemini Invent | 2022

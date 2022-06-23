@@ -77,7 +77,12 @@ class ContractController {
 
       const interestAmount = req.body.loanAmount * interestRate;
       if (interestAmount !== req.body.interestAmount) {
-        console.log("[CONTRACT] interest amount mismatch");
+        console.log(
+          "[CONTRACT] interest amount mismatch - backend: " +
+            interestAmount +
+            " vs app: " +
+            req.body.interestAmount,
+        );
         res.status(500).json({ status: "internal server error - interest amount mismatch" });
         return;
       }

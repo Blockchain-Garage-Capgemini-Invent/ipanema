@@ -17,31 +17,23 @@ import { getFinancialData } from "./financialdata";
 export class FinancialService {
   public getBaseInterest(username: string): number | undefined {
     console.log("[FINANCIAL] get base interest for user: " + username);
-    const baseInterest = 2;
     const financialData = getFinancialData(username);
     if (!financialData) {
       console.log("[FINANCIAL] financial data for user " + username + " not found");
       return undefined;
     }
-    const historicInterest =
-      (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
-      financialData.balance * 0.00001;
-    return baseInterest + historicInterest;
+    return (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
+        financialData.balance * 0.00001;
   }
 
   static calculateInterestAmount(username: string, loanAmount: number, repayByTimestamp: number) {
-    const baseInterest = 2;
     const financialData = getFinancialData(username);
     if (!financialData) {
       console.log("[FINANCIAL] base interest calculation failed");
       return undefined;
     }
-    const historicInterest =
-      (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
-      financialData.balance * 0.00001;
-
     const conditionalInterest = loanAmount * 0.0001;
-
-    return baseInterest + historicInterest + conditionalInterest;
+    return conditionalInterest + (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
+        financialData.balance * 0.00001;
   }
 }

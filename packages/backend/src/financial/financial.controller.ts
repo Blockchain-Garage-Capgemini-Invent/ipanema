@@ -23,23 +23,24 @@ class FinancialController {
     this.financialService = new FinancialService();
   }
 
-  public async getBaseInterest(req: Request, res: Response) {
-    console.log("[FINANCIAL] get base interest request");
+  public async getLoanRate(req: Request, res: Response) {
+    console.log("[FINANCIAL] get loan rate request");
     try {
-      const baseInterest = this.financialService.getBaseInterest(res.locals.username);
-      if (!baseInterest) {
+      console.log("[FINANCIAL] get base interest for user: " + res.locals.username);
+      const loanRate = FinancialService.getLoanRate(res.locals.username);
+      if (!loanRate) {
         console.log("[FINANCIAL] base interest calculation failed");
         res
           .status(500)
-          .json({ status: "internal server error - base interest calculation failed" });
+          .json({ status: "internal server error - get loan rate failed" });
         return;
       }
-      console.log("[FINANCIAL] interest calculation successful");
+      console.log("[FINANCIAL] loan rate for user: " + res.locals.username + " is: " + loanRate);
       res
         .status(200)
-        .json({ status: "interest calculation successful", base_interest: baseInterest });
+        .json({ status: "get loan rate successful", loan_rate: loanRate });
     } catch (e) {
-      console.error("[FINANCIAL] error at getBaseInterest:\n", e);
+      console.error("[FINANCIAL] error at getLoanRate:\n", e);
       res.status(500).json({ status: "error" });
     }
   }

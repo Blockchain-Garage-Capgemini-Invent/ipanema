@@ -15,25 +15,16 @@
 import { getFinancialData } from "./financialdata";
 
 export class FinancialService {
-  public getBaseInterest(username: string): number | undefined {
-    console.log("[FINANCIAL] get base interest for user: " + username);
+  static getLoanRate(username: string): number | undefined {
     const financialData = getFinancialData(username);
     if (!financialData) {
       console.log("[FINANCIAL] financial data for user " + username + " not found");
       return undefined;
     }
-    return (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
-        financialData.balance * 0.00001;
+    return (financialData.average_income_per_month / financialData.average_expenses_last_month * -1) + (1 / financialData.balance);
   }
 
-  static calculateInterestAmount(username: string, loanAmount: number, repayByTimestamp: number) {
-    const financialData = getFinancialData(username);
-    if (!financialData) {
-      console.log("[FINANCIAL] base interest calculation failed");
-      return undefined;
-    }
-    const conditionalInterest = loanAmount * 0.0001;
-    return conditionalInterest + (financialData.expenses_last_month - financialData.income_last_month) * 0.0001 -
-        financialData.balance * 0.00001;
+  static calculateInterestAmount(username: string, loanAmount: number, repayByTimestamp: number): number {
+    return loanAmount * this.getLoanRate(username)!;
   }
 }

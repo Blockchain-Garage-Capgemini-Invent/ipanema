@@ -45,20 +45,12 @@ import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 import { useEffect } from "react";
 
-interface defaultValues {
-  token: StableToken;
-  date: Date | null;
-  amount: number;
-  rate: number;
-}
-
 export default function LoanBox() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { kit, address, network } = useCelo();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  let baseInterest: number;
 
   if (!getAuthentication()) {
     logout();
@@ -83,33 +75,34 @@ export default function LoanBox() {
     contractAddress,
   ) as any as CentralizedLoan;
 
-  const [formValues, setFormValues] = React.useState<defaultValues>({
-    token: StableToken.cUSD,
-    date: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
-    amount: 1,
-    rate: 5,
-  });
+  const [amount, setAmount] = React.useState(1);
+  const [interestRate, setInterestRate] = React.useState(5);
+  const [baseInterestRate, setBaseInterestRate] = React.useState(0);
+  const [date, setDate] = React.useState<Date | null>(
+    new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+  );
+  const [stableToken, setStableToken] = React.useState<StableToken>(StableToken.cUSD);
   const [loading, setLoading] = React.useState(false);
 
-  const handleChange = (prop: keyof defaultValues) => (event: any) => {
+  const handleChangeAmount = (newValue: any) => {
+    setAmount(newValue.target.value);
+    console.log("amount", amount);
     updateInterestRate();
-    if (prop === "token") {
-      setFormValues({ ...formValues, [prop]: event.target.value as StableToken });
-    } else if (prop === "date") {
-      setFormValues({ ...formValues, [prop]: event.target.value as Date });
-    } else if (prop === "amount") {
-      setFormValues({ ...formValues, [prop]: parseFloat(event.target.value) });
-    }
+  };
+
+  const handleChangeToken = (newValue: any) => {
+    setStableToken(newValue.target.value);
   };
 
   const handleChangeDate = (newValue: Date | null) => {
-    setFormValues({ ...formValues, date: newValue });
+    setDate(newValue);
+    updateInterestRate();
   };
 
   useEffect(() => {
     // You need to restrict it at some point
     // This is just dummy code and should be replaced by actual
-    if (!baseInterest) {
+    if (!baseInterestRate) {
       getInterestRate();
     }
   }, []);
@@ -129,13 +122,14 @@ export default function LoanBox() {
       });
 
       if (!response.ok) {
-        enqueueSnackbar("Error getting interest rate!", { variant: "error" });
+        enqueueSnackbar("Error getting loan rate!", { variant: "error" });
         return false;
       }
 
       const data = await response.json();
-      baseInterest = data.base_interest;
-      console.log("Received base interest", baseInterest);
+      console.log("Base interest rate:", data.base_interest_rate);
+      setBaseInterestRate(data.base_interest_rate);
+      updateInterestRate();
       return true;
     } catch (err) {
       enqueueSnackbar("Error submitting loan information!", { variant: "error" });
@@ -144,18 +138,20 @@ export default function LoanBox() {
   };
 
   const updateInterestRate = () => {
-    const conditionalInterest = formValues.amount * 0.0001;
-    setFormValues({ ...formValues, rate: baseInterest + conditionalInterest });
+    const interestRate = baseInterestRate + amount * 0.001;
+    // + (formValues.date!.getTime() - new Date().getTime() / 1000 / 1000);
+    console.log("Interest rate:", interestRate);
+    setInterestRate(Number(interestRate));
   };
 
-  const postLoan = async (formValues: defaultValues, borrower: string, ercAddress: string) => {
+  const postLoan = async (borrower: string, ercAddress: string) => {
     try {
       const response = await fetch("http://localhost:3000/loan", {
         method: "POST",
         body: JSON.stringify({
-          loanAmount: Number(formValues.amount),
-          interestAmount: Number(formValues.amount) * (formValues.rate / 100),
-          repayByTimestamp: formValues.date ? Math.round(formValues.date.getTime() / 1000) : 0,
+          loanAmount: Number(amount),
+          interestAmount: Number(amount) * (interestRate / 100),
+          repayByTimestamp: date ? Math.round(date.getTime() / 1000) : 0,
           borrower: borrower,
           ercAddress: ercAddress,
         }),
@@ -202,8 +198,8 @@ export default function LoanBox() {
 
   const handleSubmit = async () => {
     setLoading(true);
-    const token = await kit.contracts.getStableToken(formValues.token);
-    await postLoan(formValues, address!, token.address);
+    const token = await kit.contracts.getStableToken(stableToken);
+    await postLoan(address!, token.address);
     await takeLoanAndAcceptTerms();
     setLoading(false);
   };
@@ -226,7 +222,7 @@ export default function LoanBox() {
                       <DesktopDatePicker
                         label="Repay date"
                         inputFormat="dd/MM/yyyy"
-                        value={formValues.date}
+                        value={date}
                         onChange={handleChangeDate}
                         renderInput={params => <TextField {...params} />}
                       />
@@ -234,7 +230,7 @@ export default function LoanBox() {
                       <MobileDatePicker
                         label="Repay date"
                         inputFormat="dd/MM/yyyy"
-                        value={formValues.date}
+                        value={date}
                         onChange={handleChangeDate}
                         renderInput={params => <TextField {...params} />}
                       />
@@ -244,12 +240,7 @@ export default function LoanBox() {
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
                 <InputLabel htmlFor="token">Token</InputLabel>
-                <Select
-                  id="token"
-                  label="Token"
-                  value={formValues.token}
-                  onChange={handleChange("token")}
-                >
+                <Select id="token" label="Token" value={stableToken} onChange={handleChangeToken}>
                   <MenuItem value={StableToken.cUSD}>cUSD</MenuItem>
                   <MenuItem value={StableToken.cEUR}>cEUR</MenuItem>
                   <MenuItem value={StableToken.cREAL}>cREAL</MenuItem>
@@ -261,12 +252,12 @@ export default function LoanBox() {
                   id="amount"
                   label="Amount"
                   type="number"
-                  value={formValues.amount}
-                  endAdornment={<InputAdornment position="end">{formValues.token}</InputAdornment>}
-                  onChange={handleChange("amount")}
-                  error={formValues.amount <= 0}
+                  value={amount}
+                  endAdornment={<InputAdornment position="end">{stableToken}</InputAdornment>}
+                  onChange={handleChangeAmount}
+                  error={amount <= 0}
                 />
-                {formValues.amount <= 0 ? (
+                {amount <= 0 ? (
                   <FormHelperText id="amount" error>
                     The amount must be greater than 0
                   </FormHelperText>
@@ -278,7 +269,7 @@ export default function LoanBox() {
                   id="interest-rate"
                   label="Interest Rate"
                   type="number"
-                  value={formValues.rate}
+                  value={interestRate}
                   disabled={true}
                   endAdornment={<InputAdornment position="end">%</InputAdornment>}
                 />

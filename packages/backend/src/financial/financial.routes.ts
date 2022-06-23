@@ -19,10 +19,10 @@ import FinancialController from "./financial.controller";
 export class FinancialRoutes {
   public static configureRoutes(app: Application) {
     app
-      .route("/interest")
+      .route("/loan_rate")
       .get([
         AuthController.authenticate,
-        FinancialController.getBaseInterest.bind(FinancialController),
+        FinancialController.getLoanRate.bind(FinancialController),
       ]);
   }
 }

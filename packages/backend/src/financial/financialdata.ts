@@ -24,15 +24,15 @@
 interface FinancialData {
   username: string;
   balance: number;
-  income_last_month: number;
-  expenses_last_month: number;
+  average_income_per_month: number;
+  average_expenses_last_month: number;
 }
 const financialDatabase: FinancialData[] = [
   {
     username: "max.muster@capgemini.com",
     balance: 10254.98,
-    income_last_month: 3014.56,
-    expenses_last_month: -2234.41,
+    average_income_per_month: 3014.56,
+    average_expenses_last_month: -2234.41,
   },
 ];
 

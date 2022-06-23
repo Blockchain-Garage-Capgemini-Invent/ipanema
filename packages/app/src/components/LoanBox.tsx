@@ -128,15 +128,11 @@ export default function LoanBox() {
         },
       });
 
-      if (!response.ok) {
+      if (!response.ok || !response.body) {
         enqueueSnackbar("Error submitting loan information!", { variant: "error" });
         return false;
       }
-      // OPTIONAL: show transaction id or whatever
-      if (!response.body) {
-        console.log("No data returned from server");
-        return false;
-      }
+
       baseInterest = JSON.parse(response.body.toString()).interest_rate;
       return true;
     } catch (err) {
@@ -205,9 +201,8 @@ export default function LoanBox() {
   const handleSubmit = async () => {
     setLoading(true);
     const token = await kit.contracts.getStableToken(formValues.token);
-    if (await postLoan(formValues, address!, token.address)) {
-      await takeLoanAndAcceptTerms();
-    }
+    await postLoan(formValues, address!, token.address);
+    await takeLoanAndAcceptTerms();
     setLoading(false);
   };
 
@@ -269,7 +264,11 @@ export default function LoanBox() {
                   onChange={handleChange("amount")}
                   error={formValues.amount <= 0}
                 />
-                {formValues.amount <= 0 ? (<FormHelperText id="amount" error>The amount must be greater than 0</FormHelperText>) : null}
+                {formValues.amount <= 0 ? (
+                  <FormHelperText id="amount" error>
+                    The amount must be greater than 0
+                  </FormHelperText>
+                ) : null}
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
                 <InputLabel htmlFor="interest-rate">Interest Rate</InputLabel>

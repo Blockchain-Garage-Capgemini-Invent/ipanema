@@ -18,9 +18,11 @@ export class FinancialService {
   constructor() {}
 
   public getBaseInterest(username: string): number | undefined {
+    console.log("[FINANCIAL] get base interest for user: " + username);
     const baseInterest = 2;
     const financialData = getFinancialData(username);
     if (!financialData) {
+      console.log("[FINANCIAL] financial data for user " + username + " not found");
       return undefined;
     }
     const historicInterest =
@@ -33,7 +35,7 @@ export class FinancialService {
     const baseInterest = 2;
     const financialData = getFinancialData(username);
     if (!financialData) {
-      console.log("[FinancialService] base interest calculation failed");
+      console.log("[FINANCIAL] base interest calculation failed");
       return undefined;
     }
     const historicInterest =

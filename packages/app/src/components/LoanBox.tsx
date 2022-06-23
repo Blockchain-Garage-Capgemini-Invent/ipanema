@@ -123,17 +123,19 @@ export default function LoanBox() {
       const response = await fetch("http://localhost:3000/interest", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json",
+          Accept: "application/json",
           Authorization: getAuthentication(),
         },
       });
 
-      if (!response.ok || !response.body) {
-        enqueueSnackbar("Error submitting loan information!", { variant: "error" });
+      if (!response.ok) {
+        enqueueSnackbar("Error getting interest rate!", { variant: "error" });
         return false;
       }
 
-      baseInterest = JSON.parse(response.body.toString()).interest_rate;
+      const data = await response.json();
+      baseInterest = data.base_interest;
+      console.log("Received base interest", baseInterest);
       return true;
     } catch (err) {
       enqueueSnackbar("Error submitting loan information!", { variant: "error" });

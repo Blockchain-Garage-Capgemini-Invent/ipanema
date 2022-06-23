@@ -15,7 +15,7 @@
 import { getFinancialData } from "./financialdata";
 
 export class FinancialService {
-  static getLoanRate(username: string): number | undefined {
+  static getBaseInterestRate(username: string): number | undefined {
     const financialData = getFinancialData(username);
     if (!financialData) {
       console.log("[FINANCIAL] financial data for user " + username + " not found");
@@ -25,6 +25,6 @@ export class FinancialService {
   }
 
   static calculateInterestAmount(username: string, loanAmount: number, repayByTimestamp: number): number {
-    return loanAmount * this.getLoanRate(username)!;
+    return loanAmount * this.getBaseInterestRate(username)!;
   }
 }

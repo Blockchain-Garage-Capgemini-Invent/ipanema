@@ -20,14 +20,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CG-Europe-ABL/ipanema.git"
+    "url": "git+https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CG-Europe-ABL/ipanema/issues"
+    "url": "https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/issues"
   },
-  "homepage": "https://github.com/CG-Europe-ABL/ipanema#readme",
+  "homepage": "https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema.git",
   "workspaces": {
     "packages": [
       "packages/*"

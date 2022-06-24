@@ -61,8 +61,12 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Typography variant="h3">Ipanema Demo Bank</Typography>
-          <Typography variant="body1">Please log in to your online banking account</Typography>
+          <Typography variant="h3" align="center">
+            Ipanema Demo Bank
+          </Typography>
+          <Typography variant="body1" align="center">
+            Please log in to your online banking account
+          </Typography>
           <Avatar sx={{ m: 3, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>

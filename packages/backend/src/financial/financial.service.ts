@@ -27,7 +27,7 @@ export class FinancialService {
   static calculateInterestAmount(username: string, loanAmount: number, repayByTimestamp: number): number {
     const currentDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
     const loanDuration = (repayByTimestamp - Math.round( currentDate.getTime() / 1000)) / 1000;
-    // return (loanAmount * 0.001) + (loanDuration * 0.001) + this.getBaseInterestRate(username)!;
-    return (loanAmount * 0.001) + this.getBaseInterestRate(username)!;
+    return Math.round(((loanAmount * 0.001) + (loanDuration * 0.001) + this.getBaseInterestRate(username)!) / 100 * 100) / 100;
+    // return (loanAmount * 0.001) + this.getBaseInterestRate(username)!;
   }
 }

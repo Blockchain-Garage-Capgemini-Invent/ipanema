@@ -15,9 +15,7 @@ Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stable
 
 The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and consultants [Seyhan Ilhan](https://github.com/seyhdervis). 
 
-## 🔄 Live Demo
-
-The live demo version of Ipanema can be tested here: http://159.69.213.123/
+## 🔄 Demo Flow
 
 ### Authetication
 1. Customer logs into his/hers online banking account

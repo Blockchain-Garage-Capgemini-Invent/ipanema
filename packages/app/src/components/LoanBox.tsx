@@ -77,7 +77,7 @@ export default function LoanBox() {
 
   const [amount, setAmount] = React.useState(1);
   const [interestRate, setInterestRate] = React.useState(5);
-  const [baseInterestRate, setBaseInterestRate] = React.useState(0);
+  const [baseInterestRate, setBaseInterestRate] = React.useState(1.35);
   const [date, setDate] = React.useState<Date | null>(
     new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
   );
@@ -145,7 +145,7 @@ export default function LoanBox() {
     // const interestRate = baseInterestRate + amount * 0.001;
     // + (formValues.date!.getTime() - new Date().getTime() / 1000 / 1000);
     console.log("Interest rate:", interestRate);
-    setInterestRate(Math.round(Number(interestRate) * 100) / 100);
+    setInterestRate(Number(interestRate.toFixed(4)));
   };
 
   const postLoan = async (borrower: string, ercAddress: string) => {
@@ -154,7 +154,7 @@ export default function LoanBox() {
         method: "POST",
         body: JSON.stringify({
           loanAmount: Number(amount),
-          interestAmount: Math.round(((amount * interestRate) / 100) * 100) / 100,
+          interestAmount: Number(((amount * interestRate) / 100).toFixed(4)),
           repayByTimestamp: date ? Math.round(date.getTime() / 1000) : 0,
           borrower: borrower,
           ercAddress: ercAddress,

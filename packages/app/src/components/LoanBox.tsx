@@ -76,8 +76,8 @@ export default function LoanBox() {
   ) as any as CentralizedLoan;
 
   const [amount, setAmount] = React.useState(1);
-  const [interestRate, setInterestRate] = React.useState(5);
-  const [baseInterestRate, setBaseInterestRate] = React.useState(1.35);
+  const [interestRate, setInterestRate] = React.useState(0);
+  const [baseInterestRate, setBaseInterestRate] = React.useState(0);
   const [date, setDate] = React.useState<Date | null>(
     new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
   );
@@ -87,7 +87,6 @@ export default function LoanBox() {
   const handleChangeAmount = (newValue: any) => {
     setAmount(newValue.target.value);
     console.log("amount", amount);
-    updateInterestRate();
   };
 
   const handleChangeToken = (newValue: any) => {
@@ -96,7 +95,6 @@ export default function LoanBox() {
 
   const handleChangeDate = (newValue: Date | null) => {
     setDate(newValue);
-    updateInterestRate();
   };
 
   useEffect(() => {
@@ -106,6 +104,10 @@ export default function LoanBox() {
       getInterestRate();
     }
   }, []);
+
+  useEffect(() => {
+    updateInterestRate();
+  }, [amount, baseInterestRate, date]);
 
   const getInterestRate = async () => {
     // baseInterest = interest based on account history (will be taken from backend at the beginning)
@@ -129,7 +131,6 @@ export default function LoanBox() {
       const data = await response.json();
       console.log("Base interest rate:", data.base_interest_rate);
       setBaseInterestRate(data.base_interest_rate);
-      updateInterestRate();
       return true;
     } catch (err) {
       enqueueSnackbar("Error submitting loan information!", { variant: "error" });
@@ -138,6 +139,10 @@ export default function LoanBox() {
   };
 
   const updateInterestRate = () => {
+    console.log("amount", amount);
+    console.log("baseInterestRate", baseInterestRate);
+    console.log("date", date);
+    console.log("stableToken", stableToken);
     const currentDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
     const durationDate = date ? Math.round(date.getTime() / 1000) : 0;
     const loanDuration = (durationDate - Math.round(currentDate.getTime() / 1000)) / 1000;

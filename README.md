@@ -74,8 +74,11 @@ The Ipanema mobile-first decentralized application is written in Typescript usin
 
 # 🏗️ How to build/run
 
-TODO
+Please take a look at the unterlaying documents:
 
+- [Hardhat](https://github.com/CG-Europe-ABL/ipanema/tree/develop/packages/hardhat)
+- [Backend](https://github.com/CG-Europe-ABL/ipanema/tree/develop/packages/backend)
+- [App](https://github.com/CG-Europe-ABL/ipanema/tree/develop/packages/app)
 
 --- 
 Copyright: [Volker Dufner](https://github.com/dFohlen) @ Capgemini Invent | 2022

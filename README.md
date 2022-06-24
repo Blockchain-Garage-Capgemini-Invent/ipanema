@@ -1,11 +1,5 @@
 # Ipanema
 
-## 📑 Table of Contents
-1. [General Info](#ℹ%EF%B8%8F-general-info)
-2. [Technologies](#-technologies)
-3. [First Steps](#-first-steps)
-4. [FAQs](#%EF%B8%8F-faqs)
-
 ## ℹ️ General Info
 Ipanema builds the bridge between traditional banks and the blockchain ecosystem. It is a platform that enables banks to grant loans via the Celo blockchain to their customers.
 

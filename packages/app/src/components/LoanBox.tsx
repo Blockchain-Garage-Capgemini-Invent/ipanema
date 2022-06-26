@@ -31,6 +31,7 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
+import InfoIcon from "@mui/icons-material/Info";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -44,6 +45,14 @@ import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 import { useEffect } from "react";
+
+interface FinancialData {
+  balance: number;
+  averageMonthlyIncome: number;
+  averageMonthlyExpenses: number;
+  currency: string;
+  baseInterestRate: number;
+}
 
 export default function LoanBox() {
   const theme = useTheme();
@@ -77,11 +86,17 @@ export default function LoanBox() {
 
   const [amount, setAmount] = React.useState(1);
   const [interestRate, setInterestRate] = React.useState(0);
-  const [baseInterestRate, setBaseInterestRate] = React.useState(0);
   const [date, setDate] = React.useState<Date | null>(
-    new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+    new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
   );
   const [stableToken, setStableToken] = React.useState<StableToken>(StableToken.cUSD);
+  const [financialData, setFinancialData] = React.useState<FinancialData>({
+    balance: 0,
+    averageMonthlyIncome: 0,
+    averageMonthlyExpenses: 0,
+    currency: "",
+    baseInterestRate: 0,
+  });
   const [loading, setLoading] = React.useState(false);
 
   const handleChangeAmount = (newValue: any) => {
@@ -98,24 +113,20 @@ export default function LoanBox() {
   };
 
   useEffect(() => {
-    // You need to restrict it at some point
-    // This is just dummy code and should be replaced by actual
-    if (!baseInterestRate) {
-      getInterestRate();
+    if (!financialData.balance) {
+      getFinancialData();
     }
   }, []);
 
   useEffect(() => {
     updateInterestRate();
-  }, [amount, baseInterestRate, date]);
+  }, [amount, financialData.baseInterestRate, date]);
 
-  const getInterestRate = async () => {
+  const getFinancialData = async () => {
     // baseInterest = interest based on account history (will be taken from backend at the beginning)
-    // conditionalInterest = interest based on amount and time range (will be calculated in the frontend)
     // interestRate = baseInterest + conditional Interest (will be calculated in the frontend AND in the backend)
-
     try {
-      const response = await fetch("http://localhost:3000/interest", {
+      const response = await fetch("http://localhost:3000/financial_data", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -124,31 +135,31 @@ export default function LoanBox() {
       });
 
       if (!response.ok) {
-        enqueueSnackbar("Error getting loan rate!", { variant: "error" });
         return false;
       }
 
       const data = await response.json();
-      console.log("Base interest rate:", data.base_interest_rate);
-      setBaseInterestRate(data.base_interest_rate);
-      return true;
+      console.log("financial_data", data);
+      setFinancialData({
+        balance: data.financial_data.balance,
+        averageMonthlyIncome: data.financial_data.average_monthly_income,
+        averageMonthlyExpenses: data.financial_data.average_monthly_expenses,
+        currency: data.financial_data.currency,
+        baseInterestRate: data.base_interest_rate,
+      });
     } catch (err) {
-      enqueueSnackbar("Error submitting loan information!", { variant: "error" });
       console.log(err);
     }
+    return financialData;
   };
 
   const updateInterestRate = () => {
     console.log("amount", amount);
-    console.log("baseInterestRate", baseInterestRate);
+    console.log("baseInterestRate", financialData.baseInterestRate);
     console.log("date", date);
     console.log("stableToken", stableToken);
-    const currentDate = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
-    const durationDate = date ? Math.round(date.getTime() / 1000) : 0;
-    const loanDuration = (durationDate - Math.round(currentDate.getTime() / 1000)) / 1000;
-    const interestRate = baseInterestRate + amount * 0.001 + loanDuration * 0.001;
-    // const interestRate = baseInterestRate + amount * 0.001;
-    // + (formValues.date!.getTime() - new Date().getTime() / 1000 / 1000);
+    const loanDuration = (date!.getTime() - new Date(Date.now()).getTime()) / 1000 / 60 / 60 / 24;
+    const interestRate = financialData.baseInterestRate + amount * 0.0001 + loanDuration * 0.0001;
     console.log("Interest rate:", interestRate);
     setInterestRate(Number(interestRate.toFixed(4)));
   };
@@ -282,6 +293,44 @@ export default function LoanBox() {
                   disabled={true}
                   endAdornment={<InputAdornment position="end">%</InputAdornment>}
                 />
+              </FormControl>
+              <FormControl fullWidth sx={{ m: 1 }}>
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <InfoIcon />
+                  <Typography variant="body1">
+                    The interest rate is calculated from your financial balance and the
+                    income-expenditure ratio of your account, the loan amount and the loan term.
+                  </Typography>
+                </Stack>
+                <Stack direction="column" sx={{ m: 1 }}>
+                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                    Your account statistics:
+                  </Typography>
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <Typography variant="body1">Balance</Typography>
+                    {financialData.balance >= 0 ? (
+                      <Typography variant="body1" color="green">
+                        {financialData.balance} {financialData.currency}
+                      </Typography>
+                    ) : (
+                      <Typography variant="body1" color="red">
+                        {financialData.balance} {financialData.currency}
+                      </Typography>
+                    )}
+                  </Stack>
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <Typography variant="body1">Average monthly income</Typography>
+                    <Typography variant="body1" color="green">
+                      {financialData.averageMonthlyIncome} {financialData.currency}
+                    </Typography>
+                  </Stack>
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <Typography variant="body1">Average monthly expenses</Typography>
+                    <Typography variant="body1" color="red">
+                      {financialData.averageMonthlyExpenses} {financialData.currency}
+                    </Typography>
+                  </Stack>
+                </Stack>
               </FormControl>
               <FormControl fullWidth sx={{ m: 1 }}>
                 <LoadingButton

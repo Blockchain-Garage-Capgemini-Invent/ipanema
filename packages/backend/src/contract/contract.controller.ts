@@ -76,7 +76,7 @@ class ContractController {
       }
 
       const interestAmount = req.body.loanAmount * interestRate;
-      if (interestAmount !== req.body.interestAmount) {
+      if (Math.round(interestAmount) !== Math.round(req.body.interestAmount)) {
         console.log(
           "[CONTRACT] interest amount mismatch - backend: " +
             interestAmount +

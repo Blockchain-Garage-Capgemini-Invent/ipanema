@@ -50,7 +50,6 @@ class AuthController {
   public async authenticate(req: Request, res: Response, next: NextFunction) {
     console.log("[AUTH] authenticate request");
     try {
-      console.log("[AUTH] authenticate request: " + JSON.stringify(req.headers));
       const authHeader = req.headers.authorization;
       if (!authHeader || !authHeader.split(" ")[1]) {
         console.log("[AUTH] auth header is missing");

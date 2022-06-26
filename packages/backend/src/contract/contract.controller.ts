@@ -98,6 +98,7 @@ class ContractController {
       if (!offerLoanTx) {
         console.log("[CONTRACT] offer loan failed");
         res.status(500).json({ status: "offer loan failed" });
+        return;
       }
 
       console.log("[CONTRACT] offer loan successful");

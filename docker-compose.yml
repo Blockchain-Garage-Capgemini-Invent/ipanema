@@ -18,4 +18,4 @@ services:
     env_file:
       - packages/app/.env
     ports:
-      - '8080:80'
+      - '80:80'

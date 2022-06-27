@@ -20,7 +20,7 @@ import { ContractRoutes } from "./contract/contract.routes";
 import { FinancialRoutes } from "./financial/financial.routes";
 dotenv.config();
 
-const host: string = process.env.HOST || "localhost";
+const host: string = process.env.HOST || "0.0.0.0";
 const port: number = Number(process.env.PORT);
 
 const main = async () => {

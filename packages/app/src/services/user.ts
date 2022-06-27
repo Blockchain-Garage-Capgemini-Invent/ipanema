@@ -12,9 +12,6 @@
  **********************************************************************************
  */
 
-import * as dotenv from "dotenv";
-dotenv.config();
-
 export async function login(username: string, password: string): Promise<boolean> {
   try {
     const response = await fetch(`http://localhost:3000/login`, {

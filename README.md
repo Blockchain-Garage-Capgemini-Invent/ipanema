@@ -4,7 +4,7 @@
 Ipanema builds the bridge between traditional banks and the blockchain ecosystem. It is a platform that enables banks to grant loans via the Celo blockchain to their customers.
 
 ### The Problem
-In the last years, decentralized finance protocols that operate independently from banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values as digital tokens. Many financial services are already rebuilt in DeFi. Due to the missing authentication tools, loans can only be provided if an asset is locked up in a smart contract as col-lateral. This keeps DeFi developers from creating many more use cases. 
+In the last years, decentralized finance protocols that operate independently of banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values as digital tokens. Many financial services are already rebuilt in DeFi. Due to the missing authentication tools, loans can only be provided if an asset is locked up in a smart contract as col-lateral. This keeps DeFi developers from creating many more use cases. 
 Parallel to this, traditional banks implemented online banking applications that offer a user-friendly frontend with secure KYC solutions meeting all regulatory requirements. The banking systems rely on legacy banking infrastructure that was set up decades ago therefore many systems are not up to date and processes are slow and expensive. 
 
 ### Large Opportunity
@@ -66,11 +66,16 @@ The Ipanema mobile-first decentralized application is written in Typescript usin
 
 # 🏗️ How to build/run
 
-Please take a look at the unterlaying documents:
+Please take a look at the underlying documents:
 
 - [Hardhat](https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/tree/develop/packages/hardhat)
 - [Backend](https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/tree/develop/packages/backend)
 - [App](https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/tree/develop/packages/app)
+
+or using Docker 🐳
+
+1. Run `docker-compose build` to build the images.
+2. Run `docker-compose up` to start the containers.
 
 --- 
 Copyright: [Volker Dufner](https://github.com/dFohlen) @ Capgemini Invent | 2022

@@ -4,9 +4,7 @@
   "description": "ipanema monorepo",
   "private": true,
   "scripts": {
-    "app:build": "yarn workspace @ipanema/app build",
-    "app:start": "yarn workspace @ipanema/app start",
-    "app:lint": "yarn workspace @ipanema/app lint",
+    "hardhat:compile": "cd packages/hardhat && yarn && npx hardhat compile && npx hardhat typechain",
     "hardhat:test": "yarn workspace @ipanema/hardhat test",
     "hardhat:deploy": "yarn workspace @ipanema/hardhat deploy",
     "hardhat:watch": "yarn workspace @ipanema/hardhat watch",
@@ -14,9 +12,15 @@
     "hardhat:devchain": "yarn workspace @ipanema/hardhat devchain",
     "hardhat:fork-mainnet": "yarn workspace @ipanema/hardhat fork-mainnet",
     "hardhat:deploy-reset-watch": "yarn workspace @ipanema/hardhat deploy-reset-watch",
+    "backend:build": "yarn hardhat:compile && yarn workspace @ipanema/backend build",
+    "backend:start": "yarn workspace @ipanema/backend start",
+    "backend:lint": "yarn workspace @ipanema/backend lint",
+    "app:build": "yarn hardhat:compile && yarn workspace @ipanema/app build",
+    "app:start": "yarn workspace @ipanema/app start",
+    "app:lint": "yarn workspace @ipanema/app lint",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "contract-types": "cd packages/hardhat && yarn && npx hardhat typechain",
-    "build-ui": "yarn contract-types && cd packages/app && yarn && yarn build"
+    "all:build": "yarn app:build && yarn backend:build",
+    "all:start": "yarn backend:start && yarn app:start"
   },
   "repository": {
     "type": "git",
@@ -32,5 +36,9 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "prettier": "^2.7.0",
+    "eslint-plugin-prettier": "^4.0.0"
   }
 }

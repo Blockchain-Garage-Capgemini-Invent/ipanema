@@ -13,22 +13,22 @@ Blockchains provide layers for settlements and transactions that are faster, mor
 ### Team & Background
 Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stablecoin in Web3 &amp; Sustainability. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 
 
-The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and consultants [Seyhan Ilhan](https://github.com/seyhdervis). 
+The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and the consultant [Seyhan Ilhan](https://github.com/seyhdervis). 
 
 ## 🔄 Demo Flow
 
-### Authetication
-1. Customer logs into his/hers online banking account
-2. Customer connects a wallet of his/her choice to receive the loan.
-3. (planned) Bank verifies wallet
+### Authentication
+1. The customer logs into their online banking account.
+2. The customer connects a wallet of their choice to receive the loan.
+3. (planned) The bank verifies the customer's wallet e.g. with soulbound tokens.
 
 ### Taking a loan
-3. Customer uses Ipanema frontend to request loan
-4. Bank checks loan request and calculates costs and the interest rate
-5. Customer takes loan
+3. The customer uses the Ipanema demo frontend to request a loan.
+4. The bank checks the loan request and verifies the interest rate. Then the bank publishes a loan offer to the Celo blockchain
+6. The customer takes the loan from the smart contract.
 
 ### Repaying a loan
-6. Customer repays loan + interest in time | Bank liquidates loan after the due date has passed
+7. The Customer repays the loan + interest amount in time. Then Bank liquidates the loan after the due date has passed.
 
 The customer has no collateral by default if the loan is not repaid the bank can take legal actions in the real world in contrast to other DeFi applications. 
 

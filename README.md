@@ -25,10 +25,10 @@ The Ipanema team consists of the german Capgemini Invent programmers [Volker Duf
 ### Taking a loan
 3. The customer uses the Ipanema demo frontend to request a loan.
 4. The bank checks the loan request and verifies the interest rate. Then the bank publishes a loan offer to the Celo blockchain
-6. The customer takes the loan from the smart contract.
+5. The customer takes the loan from the smart contract.
 
 ### Repaying a loan
-7. The Customer repays the loan + interest amount in time. Then Bank liquidates the loan after the due date has passed.
+6. The Customer repays the loan + interest amount in time. Then Bank liquidates the loan after the due date has passed.
 
 The customer has no collateral by default if the loan is not repaid the bank can take legal actions in the real world in contrast to other DeFi applications. 
 

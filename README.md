@@ -38,7 +38,7 @@ In the future, updates can be implemented that provide a better user experience,
 
 - Customer verification/KYC: banks are generally not allowed to provide loans to unauthenticated customers. Ipanema will integrate functions that use the bank’s KYC methods to verify each customer. Example: the customer enters his wallet address in his online banking application where KYC was already done. The bank will send a verification token to the customer’s wallet. Only customers with a verification token will be allowed to take loans. 
 
-- Several categories of loans: currently there is only one version of fixed loans, that have to be fully repaid after a certain time. In the future, more versions of loans for example with variable interest rates and variable repayments could be implemented. 
+- Several categories of loans: currently there is only one version of fixed loans, that have to be fully repaid after a certain time. In the future, more versions of loans for example with variable interest rates and variable repayments could be implemented. We also want to introduce collateralized loans that can not only be covered by Bitcoin and Co., but also by tokenized real world assets.
 
 - Full integration in a bank’s backend: the bank will be able to implement its risk models and provide each customer with a calculated interest rate.  
 

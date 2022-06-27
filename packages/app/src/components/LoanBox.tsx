@@ -126,7 +126,7 @@ export default function LoanBox() {
     // baseInterest = interest based on account history (will be taken from backend at the beginning)
     // interestRate = baseInterest + conditional Interest (will be calculated in the frontend AND in the backend)
     try {
-      const response = await fetch("http://localhost:3000/financial_data", {
+      const response = await fetch("http://0.0.0.0:3000/financial_data", {
         method: "GET",
         headers: {
           Accept: "application/json",
@@ -166,7 +166,7 @@ export default function LoanBox() {
 
   const postLoan = async (borrower: string, ercAddress: string) => {
     try {
-      const response = await fetch("http://localhost:3000/loan", {
+      const response = await fetch("http://0.0.0.0:3000/loan", {
         method: "POST",
         body: JSON.stringify({
           loanAmount: Number(amount),

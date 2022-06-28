@@ -19,7 +19,6 @@ import DateRangeIcon from "@mui/icons-material/DateRange";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
-import { MiniContractKit } from "@celo/contractkit/lib/mini-kit";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
 import deployedContracts from "@ipanema/hardhat/deployments/hardhat_contracts.json";
 import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
@@ -33,23 +32,6 @@ enum LoanState {
   Taken,
   Repayed,
   Defaulted,
-}
-
-async function getStableToken(kit: MiniContractKit, ercAddress: string): Promise<StableToken> {
-  let tokenAddress = await kit.celoTokens.getAddress(StableToken.cUSD);
-  if (tokenAddress === ercAddress) {
-    return StableToken.cUSD;
-  }
-  tokenAddress = await kit.celoTokens.getAddress(StableToken.cEUR);
-  if (tokenAddress === ercAddress) {
-    return StableToken.cEUR;
-  }
-  tokenAddress = await kit.celoTokens.getAddress(StableToken.cREAL);
-  if (tokenAddress === ercAddress) {
-    return StableToken.cREAL;
-  }
-  console.log("Failed to resolve token address", ercAddress);
-  return StableToken.cUSD;
 }
 
 export default function MaintenanceBox() {
@@ -93,6 +75,16 @@ export default function MaintenanceBox() {
     }
   }, []);
 
+  async function getStableToken(address: string): Promise<StableToken | null>  {
+    const tokens = await kit.celoTokens.getWrappers();
+    for (const [symbol, token] of Object.entries(tokens)) {
+      if (token.address === address) {
+        return symbol as StableToken;
+      }
+    }
+    return null;
+  }
+
   const getLoanInformation = async () => {
     try {
       console.log("Requesting loan information");
@@ -106,7 +98,11 @@ export default function MaintenanceBox() {
       setRepaymentAmount(Number(loanAmount) + Number(interestAmount));
       setDate(new Date(Number(loanData._repayByTimestamp) * 1000));
       setErcAddress(loanData._ercAddress);
-      const stableToken = await getStableToken(kit, loanData._ercAddress);
+      const stableToken = await getStableToken(loanData._ercAddress);
+      if (!stableToken) {
+        console.error("Could not find stable token for address: ", loanData._ercAddress);
+        return;
+      }
       setStableToken(stableToken);
     } catch (err) {
       console.log(err);
@@ -122,7 +118,11 @@ export default function MaintenanceBox() {
           repaymentAmount.toString(),
           "ether",
         );
-        const stableToken = await getStableToken(kit, ercAddress);
+        const stableToken = await getStableToken(ercAddress);
+        if (!stableToken) {
+            console.error("Could not find stable token for address: ", ercAddress);
+            return;
+        }
         const token = await kit.contracts.getStableToken(stableToken);
         const approveTx = await token!
           .approve(loanContract.options.address, amountToExchange)

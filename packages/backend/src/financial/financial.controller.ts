@@ -41,14 +41,17 @@ class FinancialController {
         return;
       }
 
-      console.log("[FINANCIAL] base interest rate for user: " + res.locals.username + " is: " + baseInterestRate);
-      res
-        .status(200)
-        .json({
-          status: "base interest rate successful",
-          financial_data: financialData,
-          base_interest_rate: baseInterestRate
-        });
+      console.log(
+        "[FINANCIAL] base interest rate for user: " +
+          res.locals.username +
+          " is: " +
+          baseInterestRate,
+      );
+      res.status(200).json({
+        status: "base interest rate successful",
+        financial_data: financialData,
+        base_interest_rate: baseInterestRate,
+      });
     } catch (error: any) {
       console.error("[FINANCIAL] error at getBaseInterestRate:\n", error);
       res.status(500).json({ status: "error" });

@@ -64,19 +64,18 @@ class ContractController {
         return;
       }
 
-      const interestRate = FinancialService.calculateInterestAmount(
+      const interestAmount = FinancialService.calculateInterestAmount(
         res.locals.username,
         req.body.loanAmount,
         req.body.repayByTimestamp,
       );
-      if (interestRate === undefined) {
-        console.log("[CONTRACT] interest rate not found");
-        res.status(500).json({ status: "internal server error - interest rate not found" });
+      if (interestAmount === undefined) {
+        console.log("[CONTRACT] interest amount not found");
+        res.status(500).json({ status: "internal server error - interest amount not found" });
         return;
       }
 
-      const interestAmount = req.body.loanAmount * interestRate;
-      if (Math.round(interestAmount) !== Math.round(req.body.interestAmount)) {
+      if (interestAmount !== req.body.interestAmount) {
         console.log(
           "[CONTRACT] interest amount mismatch - backend: " +
             interestAmount +

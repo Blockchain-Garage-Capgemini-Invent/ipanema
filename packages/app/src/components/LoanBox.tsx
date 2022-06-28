@@ -160,8 +160,10 @@ export default function LoanBox() {
     console.log("baseInterestRate", financialData.baseInterestRate);
     console.log("date", date);
     console.log("stableToken", stableToken);
-    const loanDuration = (date!.getTime() - new Date(Date.now()).getTime()) / 1000 / 60 / 60 / 24;
-    const interestRate = financialData.baseInterestRate + amount * 0.0001 + loanDuration * 0.0001;
+    const loanDuration = Math.round(
+      (date!.getTime() - new Date(Date.now()).getTime()) / 1000 / 60 / 60 / 24,
+    );
+    const interestRate = financialData.baseInterestRate + amount * 0.0001 + loanDuration * 0.001;
     console.log("Interest rate:", interestRate);
     setInterestRate(Number(interestRate.toFixed(4)));
   };

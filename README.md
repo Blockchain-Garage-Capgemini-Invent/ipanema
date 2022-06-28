@@ -15,6 +15,8 @@ Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stable
 
 The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and the consultant [Seyhan Ilhan](https://github.com/seyhdervis). 
 
+[![Youtube: Ipanema - Celo x Huobi: Stablecoin in Web3 & Sustainability](http://img.youtube.com/vi/0tGJYdqTGI0/0.jpg)](https://www.youtube.com/watch?v=0tGJYdqTGI0 "Ipanema - Celo x Huobi: Stablecoin in Web3 & Sustainability")
+
 ## 🔄 Demo Flow
 
 ### Authentication

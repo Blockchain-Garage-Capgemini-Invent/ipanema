@@ -1,7 +1,7 @@
 import { CustomThemeProvider } from "./contexts/userTheme";
 import { BrowserRouter as BrowserRouter, Route, Routes } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
-import { CeloProvider } from "@celo/react-celo";
+import { CeloProvider, Alfajores, NetworkNames } from "@celo/react-celo";
 import "@celo/react-celo/lib/styles.css";
 import Header from "./components/Header";
 import LoanBox from "./components/LoanBox";
@@ -20,6 +20,14 @@ export default function App() {
             description: "A demo DApp to showcase functionality",
             url: "",
             icon: "",
+          }}
+          networks={[Alfajores]}
+          network={{
+              name: NetworkNames.Alfajores,
+              rpcUrl: 'https://alfajores-forno.celo-testnet.org',
+              graphQl: 'https://alfajores-blockscout.celo-testnet.org/graphiql',
+              explorer: 'https://alfajores-blockscout.celo-testnet.org',
+              chainId: 44787,
           }}
         >
           <BrowserRouter>

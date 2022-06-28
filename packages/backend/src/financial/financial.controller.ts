@@ -30,18 +30,14 @@ class FinancialController {
       const financialData = FinancialService.getFinancialData(res.locals.username);
       if (!financialData) {
         console.log("[FINANCIAL] get financial data failed");
-        res
-          .status(500)
-          .json({ status: "internal server error - get financial data failed" });
+        res.status(500).json({ status: "internal server error - get financial data failed" });
         return;
       }
 
       const baseInterestRate = FinancialService.calculateBaseInterestRate(res.locals.username);
       if (!baseInterestRate) {
         console.log("[FINANCIAL] get base interest rate failed");
-        res
-          .status(500)
-          .json({ status: "internal server error - get base interest rate failed" });
+        res.status(500).json({ status: "internal server error - get base interest rate failed" });
         return;
       }
 
@@ -53,8 +49,8 @@ class FinancialController {
           financial_data: financialData,
           base_interest_rate: baseInterestRate
         });
-    } catch (e) {
-      console.error("[FINANCIAL] error at getBaseInterestRate:\n", e);
+    } catch (error: any) {
+      console.error("[FINANCIAL] error at getBaseInterestRate:\n", error);
       res.status(500).json({ status: "error" });
     }
   }

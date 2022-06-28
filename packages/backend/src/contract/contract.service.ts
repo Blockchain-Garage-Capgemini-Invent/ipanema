@@ -105,8 +105,8 @@ export class ContractService {
       );
 
       return offerLoanTx;
-    } catch (e) {
-      console.log("[CONTRACT] Error:\n", e);
+    } catch (error: any) {
+      console.log("[CONTRACT] Error:\n", error);
     }
   }
 }

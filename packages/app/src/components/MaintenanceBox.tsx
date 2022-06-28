@@ -104,8 +104,8 @@ export default function MaintenanceBox() {
         return;
       }
       setStableToken(stableToken);
-    } catch (err) {
-      console.log(err);
+    } catch (error: any) {
+      console.log(error);
       navigate("/getloan");
     }
   };
@@ -153,9 +153,9 @@ export default function MaintenanceBox() {
         enqueueSnackbar("Loan successfully repaid!", { variant: "success" });
         navigate("/getloan");
       });
-    } catch (err) {
-      console.log(err);
-      enqueueSnackbar("Failed to repay loan", { variant: "error" });
+    } catch (error: any) {
+      console.log(error);
+      enqueueSnackbar("Failed to repay loan! Message: " + error.message, { variant: "error" });
     }
   };
 

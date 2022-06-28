@@ -42,8 +42,8 @@ export async function login(username: string, password: string): Promise<boolean
     console.log("Storing user data in local storage");
     localStorage.setItem("user", window.btoa(username + ":" + password));
     return true;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
     return false;
   }
 }

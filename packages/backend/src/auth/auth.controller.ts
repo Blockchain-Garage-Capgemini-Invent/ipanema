@@ -42,8 +42,8 @@ class AuthController {
 
       console.log("[AUTH] user authenticated: " + req.body.username);
       res.status(200).json({ status: "ok", data: user });
-    } catch (err) {
-      res.status(500).json({ status: "error", error: err });
+    } catch (error: any) {
+      res.status(500).json({ status: "error", error: error });
     }
   }
 
@@ -79,8 +79,8 @@ class AuthController {
       console.log("[AUTH] user authenticated: " + username);
       res.locals.username = username;
       next();
-    } catch (e) {
-      console.error("[AUTH] error at authenticate:\n", e);
+    } catch (error: any) {
+      console.error("[AUTH] error at authenticate:\n", error);
       res.status(500).json({ status: "error" });
     }
   }

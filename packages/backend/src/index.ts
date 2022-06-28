@@ -40,6 +40,6 @@ const main = async () => {
   });
 };
 
-main().catch(e => {
-  console.error("[MAIN] Error:\n", e);
+main().catch(error => {
+  console.error("[MAIN] Error:\n", error);
 });

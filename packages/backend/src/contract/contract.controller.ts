@@ -103,8 +103,8 @@ class ContractController {
 
       console.log("[CONTRACT] offer loan successful");
       res.status(200).json({ status: "offer loan successful", tx: offerLoanTx });
-    } catch (e) {
-      console.error("[CONTRACT] error at offerLoan:\n", e);
+    } catch (error: any) {
+      console.error("[CONTRACT] error at offerLoan:\n", error);
       res.status(500).json({ status: "error" });
     }
   }

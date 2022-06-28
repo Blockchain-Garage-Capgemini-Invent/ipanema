@@ -149,8 +149,8 @@ export default function LoanBox() {
         currency: data.financial_data.currency,
         baseInterestRate: data.base_interest_rate,
       });
-    } catch (err) {
-      console.log(err);
+    } catch (error: any) {
+      console.log(error);
     }
     return financialData;
   };
@@ -190,9 +190,11 @@ export default function LoanBox() {
 
       // OPTIONAL: show transaction id or whatever
       return true;
-    } catch (err) {
-      enqueueSnackbar("Error submitting loan information!", { variant: "error" });
-      console.log(err);
+    } catch (error: any) {
+      console.log(error);
+      enqueueSnackbar("Error submitting loan information! Message: " + error.message, {
+        variant: "error",
+      });
     }
     return false;
   };
@@ -212,9 +214,9 @@ export default function LoanBox() {
       }
       enqueueSnackbar("Congratulations! You have taken a loan!", { variant: "success" });
       navigate("/maintenance");
-    } catch (err) {
-      console.log(err);
-      enqueueSnackbar("Error taking the loan!", { variant: "error" });
+    } catch (error: any) {
+      console.log(error);
+      enqueueSnackbar("Error taking the loan! Message: " + error.message, { variant: "error" });
     }
   };
 

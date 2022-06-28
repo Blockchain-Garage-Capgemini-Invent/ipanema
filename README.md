@@ -66,7 +66,7 @@ The backend consists of a service that demonstrates the banks backend, inclduing
 ### Ipanema: Mobile-First dApp
 The Ipanema mobile-first decentralized application is written in Typescript including the [React](https://reactjs.org/) framework. Using the [react-celo](https://github.com/celo-org/react-celo) React hook, we manage access to Celo with an integrated headless modal system for connecting to the wallet of your choice.
 
-# 🏗️ How to build/run
+## 🏗️ How to build/run
 
 Please take a look at the underlying documents:
 

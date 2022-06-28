@@ -1,7 +1,7 @@
 import { useCelo } from "@celo/react-celo";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { Box, Typography, Button } from "@mui/material";
+import {Box, Button, Link, Typography,} from "@mui/material";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useThemeContext } from "../contexts/userTheme";
 
@@ -46,7 +46,7 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Ipanema Finance
+            <Link href="/" color="inherit" underline="none">Ipanema Finance</Link>
           </Typography>
           <AccountDetails />
           <ThemeSwitcher

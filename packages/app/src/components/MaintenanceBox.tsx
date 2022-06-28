@@ -124,6 +124,7 @@ export default function MaintenanceBox() {
             return;
         }
         const token = await kit.contracts.getStableToken(stableToken);
+        kit.connection.defaultGasPrice = 1000000000;
         const approveTx = await token!
           .approve(loanContract.options.address, amountToExchange)
           .send({ from: address as string });

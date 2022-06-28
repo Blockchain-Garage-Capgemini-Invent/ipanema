@@ -75,7 +75,7 @@ export default function MaintenanceBox() {
     }
   }, []);
 
-  async function getStableToken(address: string): Promise<StableToken | null>  {
+  async function getStableToken(address: string): Promise<StableToken | null> {
     const tokens = await kit.celoTokens.getWrappers();
     for (const [symbol, token] of Object.entries(tokens)) {
       if (token.address === address) {
@@ -120,8 +120,8 @@ export default function MaintenanceBox() {
         );
         const stableToken = await getStableToken(ercAddress);
         if (!stableToken) {
-            console.error("Could not find stable token for address: ", ercAddress);
-            return;
+          console.error("Could not find stable token for address: ", ercAddress);
+          return;
         }
         const token = await kit.contracts.getStableToken(stableToken);
         kit.connection.defaultGasPrice = 1000000000;

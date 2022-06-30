@@ -1,7 +1,7 @@
 import { useCelo } from "@celo/react-celo";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import {Box, Button, Link, Typography,} from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useThemeContext } from "../contexts/userTheme";
 
@@ -22,7 +22,12 @@ function AccountDetails() {
         ""
       )}
       {address ? (
-        <Button variant="outlined" color="inherit" onClick={destroy}>
+        <Button
+          variant="outlined"
+          color="inherit"
+          onClick={() => destroy().catch(e => console.log(e))}
+          sx={{ borderRadius: "12px" }}
+        >
           Disconnect {truncateAddress(address)}
         </Button>
       ) : (
@@ -30,6 +35,7 @@ function AccountDetails() {
           color="inherit"
           variant="outlined"
           onClick={() => connect().catch(e => console.log(e))}
+          sx={{ borderRadius: "12px" }}
         >
           Connect wallet
         </Button>
@@ -46,7 +52,9 @@ export default function Header() {
       <AppBar position="static">
         <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <Link href="/" color="inherit" underline="none">Ipanema Finance</Link>
+            <Link href="/" color="inherit" underline="none">
+              Ipanema Finance
+            </Link>
           </Typography>
           <AccountDetails />
           <ThemeSwitcher

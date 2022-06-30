@@ -14,9 +14,20 @@
 
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, Grid, Typography, Stack, Chip } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+  Stack,
+  Chip,
+  CardHeader,
+} from "@mui/material";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import CurrencyBitcoinIcon from "@mui/icons-material/CurrencyBitcoin";
+import InfoIcon from "@mui/icons-material/Info";
 import FormControl from "@mui/material/FormControl";
 import { useCelo } from "@celo/react-celo";
 import { StableToken } from "@celo/contractkit/lib/celo-tokens";
@@ -160,38 +171,75 @@ export default function MaintenanceBox() {
   };
 
   return (
-    <Grid sx={{ m: 1 }} container justifyContent="center">
-      <Grid item sm={6} xs={12} sx={{ m: 2 }}>
-        <Typography variant="h3">Repay your loan</Typography>
-        <Typography variant="body1">
-          Thank you for using our service to get a DeFi loan from your bank.
-          <br />
-          Please note that repaying before the deadline will result in a positive score, which will
-          improve the terms of your next loan.
+    <Grid sx={{ mt: 5 }} container justifyContent="center">
+      <Grid item sm={6} xs={12} sx={{ mr: 2, ml: 2 }}>
+        <Stack direction="row" alignItems="center" gap={2}>
+          <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+            Repay your{" "}
+          </Typography>
+          <Typography variant="h2" color="secondary" sx={{ fontWeight: "bold" }}>
+            loan
+          </Typography>
+        </Stack>
+        <Typography variant="body1" marginTop={3}>
+          Thanks for using our service to get a DeFi loan from your bank.
         </Typography>
-        <Card sx={{ mt: 5 }}>
-          <CardContent>
+        <Card
+          sx={{
+            mt: 3,
+            p: 3,
+            borderRadius: "18px",
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <CardHeader
+            title={
+              <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+                Loan details
+              </Typography>
+            }
+          ></CardHeader>
+          <CardContent
+            sx={{
+              alignContent: "center",
+            }}
+          >
             <Stack direction="column" spacing={1} justifyContent="left">
-              <Typography variant="h5">Loan conditions</Typography>
               <Chip
                 icon={<DateRangeIcon />}
                 label={date.toLocaleString()}
                 variant="outlined"
-                style={{ width: "fit-content" }}
+                sx={{ width: "fit-content" }}
               />
               <Chip
                 icon={<CurrencyBitcoinIcon />}
                 label={repaymentAmount + " " + stableToken}
                 variant="outlined"
-                style={{ width: "fit-content" }}
+                sx={{ width: "fit-content" }}
               />
-              <FormControl fullWidth sx={{ m: 1 }}>
-                <Button variant="contained" type="submit" color="primary" onClick={handleSubmit}>
-                  Make repayment
-                </Button>
-              </FormControl>
+            </Stack>
+            <Stack direction="row" alignItems="top" gap={1} marginTop={3}>
+              <InfoIcon />
+              <Typography variant="body1">
+                Please note that repaying before the deadline will result in a positive score, which
+                will improve the terms of your next loan.
+              </Typography>
             </Stack>
           </CardContent>
+          <CardActions sx={{ m: 1, flexDirection: "column" }}>
+            <FormControl fullWidth>
+              <Button
+                variant="contained"
+                type="submit"
+                color="primary"
+                onClick={handleSubmit}
+                sx={{ borderRadius: "12px" }}
+              >
+                Make repayment
+              </Button>
+            </FormControl>
+          </CardActions>
         </Card>
       </Grid>
     </Grid>

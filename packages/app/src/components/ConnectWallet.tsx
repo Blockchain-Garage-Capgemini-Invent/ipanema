@@ -13,8 +13,15 @@
  */
 
 import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, Grid, Typography } from "@mui/material";
-import FormControl from "@mui/material/FormControl";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { useCelo } from "@celo/react-celo";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
@@ -34,33 +41,62 @@ export default function ConnectWallet() {
   }
 
   return (
-    <Grid sx={{ m: 1 }} container justifyContent="center">
-      <Grid item sm={6} xs={12} sx={{ m: 2 }}>
-        <Card sx={{ mt: 5, display: "flex", flexDirection: "column", alignItems: "center" }}>
-          <CardContent>
-            <Typography variant="h5">Connect your Wallet</Typography>
-            <FormControl fullWidth sx={{ m: 1 }}>
-              <Button
-                variant="contained"
-                type="submit"
-                color="primary"
-                onClick={() => connect().catch(e => console.log(e))}
-              >
-                Choose Wallet
-              </Button>
-            </FormControl>
-          </CardContent>
+    <Grid container justifyContent="center">
+      <Grid item sm={6} xs={12} sx={{ ml: 2, mr: 2 }}>
+        <Card
+          sx={{
+            mt: 5,
+            p: 3,
+            borderRadius: "18px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <CardHeader
+            title={
+              <Typography variant="h4" align="center" sx={{ fontWeight: "bold" }}>
+                Connect your Wallet
+              </Typography>
+            }
+          ></CardHeader>
+          <CardActions>
+            <Button
+              variant="contained"
+              type="submit"
+              color="primary"
+              onClick={() => connect().catch(e => console.log(e))}
+              sx={{ borderRadius: "12px" }}
+            >
+              Choose Wallet
+            </Button>
+          </CardActions>
         </Card>
-
-        <Card sx={{ mt: 5 }}>
+        <Card
+          sx={{
+            mt: 5,
+            p: 3,
+            borderRadius: "18px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <CardHeader
+            title={
+              <Typography variant="h4" align="center" sx={{ fontWeight: "bold" }}>
+                How it works
+              </Typography>
+            }
+          ></CardHeader>
           <CardContent>
-            <Typography variant="h5">How it works:</Typography>
-            <Typography variant="h6" marginTop={2}>
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               1. Authenticate
             </Typography>
             <Typography>- Enter your wallet address at your banking app</Typography>
             <Typography>- Your bank will verify your address</Typography>
-            <Typography variant="h6" marginTop={2}>
+            <Typography variant="h6" marginTop={2} sx={{ fontWeight: "bold" }}>
               2. Get a loan
             </Typography>
             <Typography>- Connect your wallet in the frontend</Typography>

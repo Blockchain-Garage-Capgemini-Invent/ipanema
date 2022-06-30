@@ -29,7 +29,7 @@ export default function SignIn() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState<defaultValues>({
-    email: "max.muster@capgemini.com",
+    email: "max.muster@ipanema.com",
     password: "12345678",
   });
   const [loading, setLoading] = React.useState(false);

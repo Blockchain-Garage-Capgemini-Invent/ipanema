@@ -47,6 +47,7 @@ import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 import { useEffect } from "react";
+import MarketData from "./MarketData";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -248,6 +249,7 @@ export default function LoanBox() {
             Welcome to the Ipanema DeFi borrowing platform. Here you can get DeFi loans from your
             bank in just a few seconds! These loans are currently on Celo Alfajores network.
           </Typography>
+          <MarketData />
           <Card
             sx={{
               mt: 3,

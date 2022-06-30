@@ -36,6 +36,7 @@ import { CentralizedLoan } from "@ipanema/hardhat/types/CentralizedLoan";
 import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
+import MarketData from "./MarketData";
 
 enum LoanState {
   Offered,
@@ -184,6 +185,7 @@ export default function MaintenanceBox() {
         <Typography variant="body1" marginTop={3}>
           Thanks for using our service to get a DeFi loan from your bank.
         </Typography>
+        <MarketData />
         <Card
           sx={{
             mt: 3,

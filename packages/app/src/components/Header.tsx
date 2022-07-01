@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import { Box, Button, Link, Typography } from "@mui/material";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 import { useThemeContext } from "../contexts/userTheme";
+import Logo from "./images/ipanema-logo.png";
 
 export function truncateAddress(address: string) {
   return `${address.slice(0, 6)}...${address.slice(38)}`;
@@ -51,6 +52,9 @@ export default function Header() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" color="default">
         <Toolbar sx={{ gap: { md: 2, xs: 0.5 } }}>
+          <Link href="/">
+            <img src={Logo} alt="ipanema logo" style={{ height: "35px" }} />
+          </Link>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link href="/" color="inherit" underline="none">
               Ipanema Finance

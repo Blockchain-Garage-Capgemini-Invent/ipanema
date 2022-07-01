@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Ipanema",
+  "name": "Ipanema - Get a crypto loan from your bank",
   "icons": [
     {
       "src": "favicon.ico",

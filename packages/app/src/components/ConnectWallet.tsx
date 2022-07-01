@@ -41,11 +41,11 @@ export default function ConnectWallet() {
   }
 
   return (
-    <Grid container justifyContent="center">
+    <Grid sx={{ mt: 5 }} container justifyContent="center">
       <Grid item sm={6} xs={12} sx={{ ml: 2, mr: 2 }}>
         <Card
           sx={{
-            mt: 5,
+            mt: 3,
             p: 3,
             borderRadius: "18px",
             display: "flex",

@@ -23,7 +23,6 @@ export default function MarketData() {
         Market
       </Typography>
       <Typography variant="body1">
-        {" "}
         <b>13</b> Loan(s) taken
       </Typography>
       <Typography variant="body1">

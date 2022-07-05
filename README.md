@@ -61,10 +61,10 @@ The Ipanema smart contract is written in Solidity and will initially be deployed
 The [multiLoanErc20.sol](packages/hardhat/contracts/multiLoanErc20.sol) contract enables peer-to-peer loans using any ERC20 token.
 
 ### Ipanema: Backend
-The backend consists of a service that demonstrates the banks backend, inclduing the wallet and calculation of the credit conditions. It is also written in Typescript and uses the Celo [ContractKit](https://github.com/celo-org/celo-monorepo/tree/master/packages/sdk/contractkit) to access the Ipanema smart contract.
+The backend consists of a service that demonstrates the banks backend, including the wallet and calculation of the credit conditions. It is written in Typescript and uses the Celo [ContractKit](https://github.com/celo-org/celo-monorepo/tree/master/packages/sdk/contractkit) to access the Ipanema smart contract.
 
 ### Ipanema: Mobile-First dApp
-The Ipanema mobile-first decentralized application is written in Typescript including the [React](https://reactjs.org/) framework. Using the [react-celo](https://github.com/celo-org/react-celo) React hook, we manage access to Celo with an integrated headless modal system for connecting to the wallet of your choice.
+The Ipanema mobile-first decentralized application is also written in Typescript including the [React](https://reactjs.org/) framework. Using the [react-celo](https://github.com/celo-org/react-celo) React hook, we manage access to Celo with an integrated headless modal system for connecting to the wallet of your choice.
 
 ## 🏗️ How to build/run
 

@@ -19,7 +19,7 @@
       "chainId": "44787",
       "contracts": {
         "CentralizedLoan": {
-          "address": "0x42364B29A61894B70D40356a00C23bf8Ec4E9d4f",
+          "address": "0xE74fDdBbeF26eF7F26D697FEf7AA44062fD9152F",
           "abi": [
             {
               "inputs": [],
@@ -231,6 +231,49 @@
               "type": "function"
             },
             {
+              "inputs": [],
+              "name": "getDetailedStatistics",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_totalLoansTaken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_totalLoansRepaid",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_totalLoansLiquidated",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "_erc20Addresses",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "uint256[]",
+                  "name": "_totalLoanAmountTaken",
+                  "type": "uint256[]"
+                },
+                {
+                  "internalType": "uint256[]",
+                  "name": "_totalLoanAmountRepaid",
+                  "type": "uint256[]"
+                },
+                {
+                  "internalType": "uint256[]",
+                  "name": "_totalLoanAmountLiquidated",
+                  "type": "uint256[]"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
               "inputs": [
                 {
                   "internalType": "address",
@@ -297,6 +340,34 @@
                   "internalType": "enum CentralizedLoan.LoanState",
                   "name": "_state",
                   "type": "uint8"
+                }
+              ],
+              "stateMutability": "view",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "getStatistics",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "_totalLoansTaken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "_totalLoansRepaid",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address[]",
+                  "name": "_erc20Addresses",
+                  "type": "address[]"
+                },
+                {
+                  "internalType": "uint256[]",
+                  "name": "_totalLoanAmountTaken",
+                  "type": "uint256[]"
                 }
               ],
               "stateMutability": "view",
@@ -428,6 +499,29 @@
               "name": "repay",
               "outputs": [],
               "stateMutability": "payable",
+              "type": "function"
+            },
+            {
+              "inputs": [],
+              "name": "statistics",
+              "outputs": [
+                {
+                  "internalType": "uint256",
+                  "name": "totalLoansTaken",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalLoansRepaid",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalLoansLiquidated",
+                  "type": "uint256"
+                }
+              ],
+              "stateMutability": "view",
               "type": "function"
             },
             {

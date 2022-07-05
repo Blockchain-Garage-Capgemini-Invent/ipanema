@@ -42,7 +42,7 @@ enum LoanState {
   Offered,
   Recalled,
   Taken,
-  Repayed,
+  Repaid,
   Defaulted,
 }
 

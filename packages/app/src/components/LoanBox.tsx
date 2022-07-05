@@ -119,7 +119,10 @@ export default function LoanBox() {
 
   useEffect(() => {
     if (!financialData.balance) {
-      getFinancialData();
+      const fetchData = async () => {
+        await getFinancialData();
+      };
+      fetchData().catch(console.error);
     }
   }, []);
 

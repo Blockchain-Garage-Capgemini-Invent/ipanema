@@ -51,7 +51,7 @@ const getLightTheme = createTheme({
       styleOverrides: {
         body: {
           backgroundImage:
-            "radial-gradient(circle farthest-corner at top left, rgba(0, 155, 150, 1) 0%, rgba(255, 255, 255, 0.5) 50%),\n" +
+            "radial-gradient(circle farthest-corner at top left, rgba(255, 255, 255, 1) 0%, rgba(0, 155, 150, 0.5) 50%),\n" +
             "radial-gradient(circle farthest-corner at bottom right, rgba(225, 183, 82, 1) 0%, rgba(255, 255, 255, 0.5) 50%)",
           backgroundAttachment: "fixed",
         },

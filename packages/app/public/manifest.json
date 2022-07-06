@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Ipanema",
+  "name": "Ipanema - Get a crypto loan from your bank",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,7 +8,7 @@
       "type": "image/x-icon"
     },
     {
-      "src": "ipanema-logo.png",
+      "src": "ipanema-app.png",
       "type": "image/png",
       "sizes": "200x200"
     }

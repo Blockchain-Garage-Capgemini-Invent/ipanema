@@ -16,7 +16,9 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
+  CardActions,
   CardContent,
+  CardHeader,
   FormControl,
   FormHelperText,
   Grid,
@@ -45,6 +47,7 @@ import { useSnackbar } from "notistack";
 import { getAuthentication } from "../helpers/auth";
 import { logout } from "../services/user";
 import { useEffect } from "react";
+import MarketData from "./MarketData";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -116,7 +119,10 @@ export default function LoanBox() {
 
   useEffect(() => {
     if (!financialData.balance) {
-      getFinancialData();
+      const fetchData = async () => {
+        await getFinancialData();
+      };
+      fetchData().catch(console.error);
     }
   }, []);
 
@@ -232,47 +238,80 @@ export default function LoanBox() {
 
   return (
     <>
-      <Grid sx={{ m: 1 }} container justifyContent="center">
-        <Grid item sm={6} xs={12} sx={{ m: 2 }}>
-          <Typography variant="h3">Get a loan from your bank</Typography>
-          <Typography variant="body1">
+      <Grid sx={{ mt: 5 }} container justifyContent="center">
+        <Grid item sm={6} xs={12} sx={{ mr: 2, ml: 2 }}>
+          <Stack direction="row" alignItems="center" gap={2}>
+            <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+              Get a loan from your{" "}
+            </Typography>
+            <Typography variant="h2" color="secondary" sx={{ fontWeight: "bold" }}>
+              bank
+            </Typography>
+          </Stack>
+          <Typography variant="body1" marginTop={3}>
             Welcome to the Ipanema DeFi borrowing platform. Here you can get DeFi loans from your
             bank in just a few seconds! These loans are currently on Celo Alfajores network.
           </Typography>
-          <Card sx={{ mt: 5 }}>
-            <CardContent>
-              <FormControl fullWidth sx={{ m: 1 }}>
+          <MarketData />
+          <Card
+            sx={{
+              mt: 3,
+              p: 3,
+              borderRadius: "18px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <CardHeader
+              title={
+                <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+                  Loan details
+                </Typography>
+              }
+            ></CardHeader>
+            <CardContent
+              sx={{
+                alignContent: "center",
+              }}
+            >
+              <FormControl fullWidth>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack spacing={3}>
-                    {!isMobile ? (
-                      <DesktopDatePicker
-                        label="Repay date"
-                        inputFormat="dd/MM/yyyy"
-                        value={date}
-                        onChange={handleChangeDate}
-                        renderInput={params => <TextField {...params} />}
-                      />
-                    ) : (
-                      <MobileDatePicker
-                        label="Repay date"
-                        inputFormat="dd/MM/yyyy"
-                        value={date}
-                        onChange={handleChangeDate}
-                        renderInput={params => <TextField {...params} />}
-                      />
-                    )}
-                  </Stack>
+                  {!isMobile ? (
+                    <DesktopDatePicker
+                      label="Repay date"
+                      inputFormat="dd/MM/yyyy"
+                      value={date}
+                      onChange={handleChangeDate}
+                      renderInput={params => <TextField {...params} />}
+                      InputProps={{ style: { borderRadius: "12px" } }}
+                    />
+                  ) : (
+                    <MobileDatePicker
+                      label="Repay date"
+                      inputFormat="dd/MM/yyyy"
+                      value={date}
+                      onChange={handleChangeDate}
+                      renderInput={params => <TextField {...params} />}
+                      InputProps={{ style: { borderRadius: "12px" } }}
+                    />
+                  )}
                 </LocalizationProvider>
               </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
+              <FormControl fullWidth sx={{ mt: 3 }}>
                 <InputLabel htmlFor="token">Token</InputLabel>
-                <Select id="token" label="Token" value={stableToken} onChange={handleChangeToken}>
+                <Select
+                  sx={{ borderRadius: "12px" }}
+                  id="token"
+                  label="Token"
+                  value={stableToken}
+                  onChange={handleChangeToken}
+                >
                   <MenuItem value={StableToken.cUSD}>cUSD</MenuItem>
                   <MenuItem value={StableToken.cEUR}>cEUR</MenuItem>
                   <MenuItem value={StableToken.cREAL}>cREAL</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
+              <FormControl fullWidth sx={{ mt: 3 }}>
                 <InputLabel htmlFor="amount">Amount</InputLabel>
                 <OutlinedInput
                   id="amount"
@@ -282,6 +321,7 @@ export default function LoanBox() {
                   endAdornment={<InputAdornment position="end">{stableToken}</InputAdornment>}
                   onChange={handleChangeAmount}
                   error={amount <= 0}
+                  sx={{ borderRadius: "12px" }}
                 />
                 {amount <= 0 ? (
                   <FormHelperText id="amount" error>
@@ -289,7 +329,7 @@ export default function LoanBox() {
                   </FormHelperText>
                 ) : null}
               </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
+              <FormControl fullWidth sx={{ mt: 3 }}>
                 <InputLabel htmlFor="interest-rate">Interest Rate</InputLabel>
                 <OutlinedInput
                   id="interest-rate"
@@ -298,47 +338,48 @@ export default function LoanBox() {
                   value={interestRate}
                   disabled={true}
                   endAdornment={<InputAdornment position="end">%</InputAdornment>}
+                  sx={{ borderRadius: "12px" }}
                 />
               </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
+              <Stack direction="row" alignItems="top" gap={1} marginTop={3}>
+                <InfoIcon />
+                <Typography variant="body1">
+                  The interest rate is calculated from your financial balance and the
+                  income-expenditure ratio of your account, the loan amount and the loan term.
+                </Typography>
+              </Stack>
+              <Stack direction="column" marginTop={3}>
+                <Typography variant="body1" sx={{ fontWeight: "bold" }}>
+                  Your account statistics:
+                </Typography>
                 <Stack direction="row" alignItems="center" gap={1}>
-                  <InfoIcon />
-                  <Typography variant="body1">
-                    The interest rate is calculated from your financial balance and the
-                    income-expenditure ratio of your account, the loan amount and the loan term.
-                  </Typography>
-                </Stack>
-                <Stack direction="column" sx={{ m: 1 }}>
-                  <Typography variant="body1" sx={{ fontWeight: "bold" }}>
-                    Your account statistics:
-                  </Typography>
-                  <Stack direction="row" alignItems="center" gap={1}>
-                    <Typography variant="body1">Balance</Typography>
-                    {financialData.balance >= 0 ? (
-                      <Typography variant="body1" color="green">
-                        {financialData.balance} {financialData.currency}
-                      </Typography>
-                    ) : (
-                      <Typography variant="body1" color="red">
-                        {financialData.balance} {financialData.currency}
-                      </Typography>
-                    )}
-                  </Stack>
-                  <Stack direction="row" alignItems="center" gap={1}>
-                    <Typography variant="body1">Average monthly income</Typography>
+                  <Typography variant="body1">Balance</Typography>
+                  {financialData.balance >= 0 ? (
                     <Typography variant="body1" color="green">
-                      {financialData.averageMonthlyIncome} {financialData.currency}
+                      {financialData.balance} {financialData.currency}
                     </Typography>
-                  </Stack>
-                  <Stack direction="row" alignItems="center" gap={1}>
-                    <Typography variant="body1">Average monthly expenses</Typography>
+                  ) : (
                     <Typography variant="body1" color="red">
-                      {financialData.averageMonthlyExpenses} {financialData.currency}
+                      {financialData.balance} {financialData.currency}
                     </Typography>
-                  </Stack>
+                  )}
                 </Stack>
-              </FormControl>
-              <FormControl fullWidth sx={{ m: 1 }}>
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <Typography variant="body1">Average monthly income</Typography>
+                  <Typography variant="body1" color="green">
+                    {financialData.averageMonthlyIncome} {financialData.currency}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" gap={1}>
+                  <Typography variant="body1">Average monthly expenses</Typography>
+                  <Typography variant="body1" color="red">
+                    {financialData.averageMonthlyExpenses} {financialData.currency}
+                  </Typography>
+                </Stack>
+              </Stack>
+            </CardContent>
+            <CardActions sx={{ m: 1, flexDirection: "column" }}>
+              <FormControl fullWidth>
                 <LoadingButton
                   variant="contained"
                   type="submit"
@@ -346,11 +387,12 @@ export default function LoanBox() {
                   loading={loading}
                   loadingIndicator="Waiting for approval..."
                   onClick={handleSubmit}
+                  sx={{ borderRadius: "12px" }}
                 >
-                  Get Loan
+                  TAKE OUT LOAN
                 </LoadingButton>
               </FormControl>
-            </CardContent>
+            </CardActions>
           </Card>
         </Grid>
       </Grid>

@@ -1,9 +1,35 @@
-import { createTheme, CssBaseline, ThemeProvider, useMediaQuery, PaletteMode } from "@mui/material";
+import { createTheme, CssBaseline, ThemeProvider, useMediaQuery } from "@mui/material";
 import React, { PropsWithChildren, useContext } from "react";
 
-const getDesignTokens = (mode: PaletteMode) => ({
+const getDarkTheme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundImage:
+            "radial-gradient(circle farthest-corner at top left, rgba(0, 0, 0, 0.10) 0%, rgba(0, 155, 150, 0.5) 50%),\n" +
+            "radial-gradient(circle farthest-corner at bottom right, rgba(225, 183, 82, 1) 0%, rgba(0, 0, 0, 0.5) 50%)",
+          backgroundAttachment: "fixed",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: "rgba(0,0,0,.5)",
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          background: "rgba(0,0,0,.5)",
+        },
+      },
+    },
+  },
   palette: {
-    mode,
+    mode: "dark",
     primary: {
       light: "#35D07F",
       main: "#009B96",
@@ -13,8 +39,52 @@ const getDesignTokens = (mode: PaletteMode) => ({
     secondary: {
       light: "#FFDA69",
       main: "#FBCC5C",
-      dark: "E1B752",
-      contrastText: "#000",
+      dark: "#E1B752",
+      contrastText: "#000000",
+    },
+  },
+});
+
+const getLightTheme = createTheme({
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          backgroundImage:
+            "radial-gradient(circle farthest-corner at top left, rgba(255, 255, 255, 1) 0%, rgba(0, 155, 150, 0.5) 50%),\n" +
+            "radial-gradient(circle farthest-corner at bottom right, rgba(225, 183, 82, 1) 0%, rgba(255, 255, 255, 0.5) 50%)",
+          backgroundAttachment: "fixed",
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          background: "rgba(255,255,255,.5)",
+        },
+      },
+    },
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          background: "rgba(255,255,255,.5)",
+        },
+      },
+    },
+  },
+  palette: {
+    mode: "light",
+    primary: {
+      light: "#35D07F",
+      main: "#009B96",
+      dark: "#007088",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#FFDA69",
+      main: "#FBCC5C",
+      dark: "#E1B752",
+      contrastText: "#000000",
     },
   },
 });
@@ -37,7 +107,10 @@ export const CustomThemeProvider = (props: PropsWithChildren<unknown>) => {
     else setTheme(checked);
   };
   const { children } = props;
-  const mTheme = React.useMemo(() => createTheme(getDesignTokens(themeString(theme))), [theme]);
+  const mTheme = React.useMemo(
+    () => (themeString(theme) === "dark" ? getDarkTheme : getLightTheme),
+    [theme],
+  );
   return (
     <CustomThemeContext.Provider
       value={{

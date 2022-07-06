@@ -12,7 +12,7 @@
  **********************************************************************************
  */
 
-const users = [{ email: "max.muster@capgemini.com", password: "12345678" }];
+const users = [{ email: "max.muster@ipanema.com", password: "12345678" }];
 
 export class User {
   static getUsers() {

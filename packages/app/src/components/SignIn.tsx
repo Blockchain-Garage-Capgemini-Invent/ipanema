@@ -14,7 +14,20 @@
 
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import { Avatar, Box, FormControl, Grid, Link, TextField, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  FormControl,
+  Grid,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  Typography,
+} from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useSnackbar } from "notistack";
@@ -29,7 +42,7 @@ export default function SignIn() {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const [formValues, setFormValues] = React.useState<defaultValues>({
-    email: "max.muster@capgemini.com",
+    email: "max.muster@ipanema.com",
     password: "12345678",
   });
   const [loading, setLoading] = React.useState(false);
@@ -51,82 +64,97 @@ export default function SignIn() {
   };
 
   return (
-    <Grid sx={{ m: 1 }} container justifyContent="center">
-      <Grid item sm={3} xs={12} sx={{ m: 2 }}>
-        <Box
-          sx={{
-            mt: 5,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h3" align="center">
-            Ipanema Demo Bank
-          </Typography>
-          <Typography variant="body1" align="center">
-            Please log in to your online banking account
-          </Typography>
-          <Avatar sx={{ m: 3, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <FormControl fullWidth sx={{ m: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              name="email"
-              label="Email Address"
-              type="email"
-              autoComplete="email"
-              autoFocus
-              variant="outlined"
-              value={formValues.email}
-              onChange={handleChange("email")}
-            />
-          </FormControl>
-          <FormControl fullWidth sx={{ m: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              variant="outlined"
-              value={formValues.password}
-              onChange={handleChange("password")}
-            />
-          </FormControl>
-          <FormControl fullWidth sx={{ m: 1 }}>
-            <LoadingButton
-              variant="contained"
-              type="submit"
-              color="primary"
-              loading={loading}
-              loadingIndicator="Waiting for authentication..."
-              onClick={handleSubmit}
+    <>
+      <Grid sx={{ mt: 5 }} container justifyContent="center">
+        <Grid item sm={6} xs={12} sx={{ mr: 2, ml: 2 }}>
+          <Card
+            sx={{
+              mt: 3,
+              p: 3,
+              borderRadius: "18px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <CardHeader
+              title={
+                <Typography variant="h3" align="center" sx={{ fontWeight: "bold" }}>
+                  Ipanema Demo Bank
+                </Typography>
+              }
+            ></CardHeader>
+            <CardContent
+              sx={{
+                alignContent: "center",
+              }}
             >
-              Sign In
-            </LoadingButton>
-          </FormControl>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <Avatar sx={{ bgcolor: "secondary.main" }}>
+                  <LockOutlinedIcon />
+                </Avatar>
+              </Box>
+              <Typography variant="body1" align="center" marginTop={3}>
+                Please log in to your online banking account
+              </Typography>
+              <FormControl fullWidth sx={{ mt: 3 }}>
+                <InputLabel htmlFor="email">Email Address</InputLabel>
+                <OutlinedInput
+                  id="email"
+                  type="email"
+                  label="Email Address"
+                  autoFocus
+                  autoComplete="email"
+                  required={true}
+                  value={formValues.email}
+                  onChange={handleChange("email")}
+                  sx={{ borderRadius: "12px" }}
+                />
+              </FormControl>
+              <FormControl fullWidth sx={{ mt: 3 }}>
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <OutlinedInput
+                  id="password"
+                  name="password"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  required={true}
+                  value={formValues.password}
+                  onChange={handleChange("password")}
+                  sx={{ borderRadius: "12px" }}
+                />
+              </FormControl>
+            </CardContent>
+            <CardActions sx={{ m: 1, flexDirection: "column" }}>
+              <FormControl fullWidth>
+                <LoadingButton
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  loading={loading}
+                  loadingIndicator="Waiting for authentication..."
+                  onClick={handleSubmit}
+                  sx={{ borderRadius: "12px" }}
+                >
+                  Sign In
+                </LoadingButton>
+              </FormControl>
+              <Grid container marginTop={1}>
+                <Grid item xs>
+                  <Link href="#" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="#" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+            </CardActions>
+          </Card>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 }

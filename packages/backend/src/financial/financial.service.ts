@@ -22,7 +22,7 @@ interface FinancialData {
 
 const financialDatabase: FinancialData[] = [
   {
-    username: "max.muster@capgemini.com",
+    username: "max.muster@ipanema.com",
     balance: 10254.98,
     average_monthly_income: 3014.56,
     average_monthly_expenses: -2234.41,

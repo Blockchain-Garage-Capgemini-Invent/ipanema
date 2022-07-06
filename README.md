@@ -4,16 +4,18 @@
 Ipanema builds the bridge between traditional banks and the blockchain ecosystem. It is a platform that enables banks to grant loans via the Celo blockchain to their customers.
 
 ### The Problem
-In the last years, decentralized finance protocols that operate independently of banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values as digital tokens. Many financial services are already rebuilt in DeFi. Due to the missing authentication tools, loans can only be provided if an asset is locked up in a smart contract as col-lateral. This keeps DeFi developers from creating many more use cases. 
+In the last years, decentralized finance protocols that operate independently of banks and the traditional infrastructure recorded a giant growth. The new platforms use blockchains like Ethereum as core infrastructure and enable users to transfer values as digital tokens. Many financial services are already rebuilt in DeFi. Due to the missing authentication tools, loans can only be provided if an asset is locked up in a smart contract as collateral. This keeps DeFi developers from creating many more use cases. 
 Parallel to this, traditional banks implemented online banking applications that offer a user-friendly frontend with secure KYC solutions meeting all regulatory requirements. The banking systems rely on legacy banking infrastructure that was set up decades ago therefore many systems are not up to date and processes are slow and expensive. 
 
 ### Large Opportunity
 Blockchains provide layers for settlements and transactions that are faster, more secure, more transparent, and more interoperable than in the banking world. But the lack of providing loans in DeFi is a large opportunity for banks. With Ipanema, they can easily get access to the DeFi world and offer loans in cryptocurrencies to their customers. Ipanema builds the bridge between the traditional world and the blockchain ecosystem, by combining the advantages of banking interfaces with KYC solutions and the open world of blockchains. 
 
 ### Team & Background
-Ipanema was created as part of the Celo x Huobi Hackathon with a focus on Stablecoin in Web3 &amp; Sustainability. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 
+Ipanema was created as part of the [Celo x Huobi Hackathon](https://celohuobihack.com/) with a focus on Stablecoin in Web3 &amp; Sustainability. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 
 
 The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and the consultant [Seyhan Ilhan](https://github.com/seyhdervis). 
+
+[![Youtube: Ipanema - Celo x Huobi: Stablecoin in Web3 & Sustainability](http://img.youtube.com/vi/0tGJYdqTGI0/0.jpg)](https://www.youtube.com/watch?v=0tGJYdqTGI0 "Ipanema - Celo x Huobi: Stablecoin in Web3 & Sustainability")
 
 ## 🔄 Demo Flow
 
@@ -23,14 +25,14 @@ The Ipanema team consists of the german Capgemini Invent programmers [Volker Duf
 3. (planned) The bank verifies the customer's wallet e.g. with soulbound tokens.
 
 ### Taking a loan
-3. The customer uses the Ipanema demo frontend to request a loan.
-4. The bank checks the loan request and verifies the interest rate. Then the bank publishes a loan offer to the Celo blockchain
-5. The customer takes the loan from the smart contract.
+4. The customer uses the Ipanema demo frontend to request a loan.
+5. The bank checks the loan request and verifies the interest rate. Then the bank publishes a loan offer to the Celo blockchain
+6. The customer takes the loan from the smart contract.
 
 ### Repaying a loan
-6. The Customer repays the loan + interest amount in time. Then Bank liquidates the loan after the due date has passed.
+7. The customer repays the loan + interest amount on time, otherwise the bank liquidates the loan after the due date.
 
-The customer has no collateral by default if the loan is not repaid the bank can take legal actions in the real world in contrast to other DeFi applications. 
+Note: The customer has no collateral by default, if the loan is not repaid the bank can take legal actions in the real world in contrast to other DeFi applications. 
 
 ## 📣 What comes next?
 The current version of Ipanema gives just a small insight into how banks could be integrated into the decentralized financial system. 
@@ -56,21 +58,21 @@ In the future, updates can be implemented that provide a better user experience,
 ### Ipanema: Smart Contract
 The Ipanema smart contract is written in Solidity and will initially be deployed on the [Alfajores test-net](https://docs.celo.org/getting-started/alfajores-testnet).
 
-The ```multiLoanErc20.sol``` contract enables peer-to-peer loans using any ERC20 token.
+The [multiLoanErc20.sol](packages/hardhat/contracts/multiLoanErc20.sol) contract enables peer-to-peer loans using any ERC20 token.
 
 ### Ipanema: Backend
-The backend consists of a service that demonstrates the banks backend, inclduing the wallet and calculation of the credit conditions. It is also written in Typescript and uses the Celo [ContractKit](https://github.com/celo-org/celo-monorepo/tree/master/packages/sdk/contractkit) to access the Ipanema smart contract.
+The backend consists of a service that demonstrates the banks backend, including the wallet and calculation of the credit conditions. It is written in Typescript and uses the Celo [ContractKit](https://github.com/celo-org/celo-monorepo/tree/master/packages/sdk/contractkit) to access the Ipanema smart contract.
 
 ### Ipanema: Mobile-First dApp
-The Ipanema mobile-first decentralized application is written in Typescript including the [React](https://reactjs.org/) framework. Using the [react-celo](https://github.com/celo-org/react-celo) React hook, we manage access to Celo with an integrated headless modal system for connecting to the wallet of your choice.
+The Ipanema mobile-first decentralized application is also written in Typescript including the [React](https://reactjs.org/) framework. Using the [react-celo](https://github.com/celo-org/react-celo) React hook, we manage access to Celo with an integrated headless modal system for connecting to the wallet of your choice.
 
-# 🏗️ How to build/run
+## 🏗️ How to build/run
 
 Please take a look at the underlying documents:
 
-- [Hardhat](https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/tree/develop/packages/hardhat)
-- [Backend](https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/tree/develop/packages/backend)
-- [App](https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/tree/develop/packages/app)
+- [Hardhat](packages/hardhat)
+- [Backend](packages/backend)
+- [App](packages/app)
 
 or using Docker 🐳
 

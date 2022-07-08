@@ -13,7 +13,7 @@ Blockchains provide layers for settlements and transactions that are faster, mor
 ### Team & Background
 Ipanema was created as part of the [Celo x Huobi Hackathon](https://celohuobihack.com/) with a focus on Stablecoin in Web3 &amp; Sustainability. The hackathon offered three topics of which we took the 3rd one 'Stablecoins + DeFi mobile solutions'. 
 
-The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh) and the consultant [Seyhan Ilhan](https://github.com/seyhdervis). 
+The Ipanema team consists of the german Capgemini Invent programmers [Volker Dufner](https://github.com/dFohlen), [Tim Schmitz](https://github.com/0x0tim), [Jonas Engelhardt](https://github.com/joengelh), consultant [Seyhan Ilhan](https://github.com/seyhdervis) and our team lead [Eugen Luft](https://github.com/0x0tim). 
 
 [![Youtube: Ipanema - Celo x Huobi: Stablecoin in Web3 & Sustainability](http://img.youtube.com/vi/0tGJYdqTGI0/0.jpg)](https://www.youtube.com/watch?v=0tGJYdqTGI0 "Ipanema - Celo x Huobi: Stablecoin in Web3 & Sustainability")
 

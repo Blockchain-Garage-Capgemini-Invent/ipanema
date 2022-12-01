@@ -1,9 +1,10 @@
 {
   "name": "@ipanema/app",
   "version": "1.0.0",
-  "private": true,
-  "engines": {
-    "node": ">=12.x"
+  "license": "MIT",
+  "author": {
+    "name": "Volker Dufner",
+    "email": "dufnervolker@gmail.com"
   },
   "scripts": {
     "start": "react-scripts start",

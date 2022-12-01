@@ -1,10 +1,11 @@
 {
   "name": "@ipanema/hardhat",
   "version": "1.0.0",
-  "license": "MIT",
-  "engines": {
-    "node": ">=12.x"
+  "author": {
+    "name": "Volker Dufner",
+    "email": "dufnervolker@gmail.com"
   },
+  "license": "MIT",
   "scripts": {
     "test": "hardhat test",
     "test-local": "hardhat test --network hardhat",

@@ -1,8 +1,12 @@
 {
   "name": "@ipanema/monorepo",
   "version": "1.0.0",
-  "description": "ipanema monorepo",
-  "private": true,
+  "description": "Ipanema builds the bridge between traditional banks and the blockchain ecosystem. It is a platform that enables banks to grant loans via the Celo blockchain to their customers.",
+  "author": {
+    "name": "Volker Dufner",
+    "email": "dufnervolker@gmail.com"
+  },
+  "license": "MIT",
   "scripts": {
     "hardhat:compile": "cd packages/hardhat && yarn && npx hardhat compile && npx hardhat typechain",
     "hardhat:test": "yarn workspace @ipanema/hardhat test",
@@ -22,23 +26,13 @@
     "all:build": "yarn app:build && yarn backend:build",
     "all:start": "yarn backend:start && yarn app:start"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema.git"
+  "dependencies": {
+    "prettier": "^2.7.0",
+    "eslint-plugin-prettier": "^4.0.0"
   },
-  "author": "",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema/issues"
-  },
-  "homepage": "https://github.com/Blockchain-Garage-Capgemini-Invent/ipanema.git",
   "workspaces": {
     "packages": [
       "packages/*"
     ]
   },
-  "dependencies": {
-    "prettier": "^2.7.0",
-    "eslint-plugin-prettier": "^4.0.0"
-  }
 }
